@@ -1,0 +1,76 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="ftw.dashboard.dragndrop">
+
+    <include package="plone.app.contentmenu" />
+	<include package="plone.app.portlets" />
+
+    <!-- Resource directory -->
+    <browser:resourceDirectory
+        name="ftw.dashboard.dragndrop.resources"
+        directory="resources"
+        /> 
+
+    <adapter 
+      factory=".ftwDashboardPortletManagerRenderer.FtwDashboardPortletManagerRenderer"
+      provides="plone.portlets.interfaces.IPortletManagerRenderer"
+      />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+        name="dashboard"
+	    class=".dashboard.FTWDashBoard"
+        permission="plone.app.portlets.ManageOwnPortlets"
+        template="templates/dashboard.pt"
+        />
+	<!--
+        class="plone.app.layout.dashboard.dashboard.DashboardView"
+	-->
+
+	<browser:page
+		for="plone.app.layout.navigation.interfaces.INavigationRoot"
+		name="dashboardEditLinkView"
+		class=".dashboardEditLinkView.DashboardEditLinkView"
+		permission="plone.app.portlets.ManageOwnPortlets"
+		/>
+		
+	<browser:page
+		for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+		name="manage-dashboard"
+		permission="plone.app.portlets.ManageOwnPortlets"
+        class=".dashboard.FTWDashBoard"
+		template="templates/manage-dashboard.pt"
+		/>
+	
+    <browser:page
+        for="*"
+        name="ftw.dashboard.dragndrop-update_order"
+        permission="zope.Public"
+        class=".updateorder.UpdateOrder"
+        />
+
+    <browser:page
+        for="*"
+        name="ftw.dashboard.dragndrop-removeportlet"
+        permission="zope.Public"
+        class=".removeportlet.RemovePortlet"
+        />
+
+    <browser:page
+        for="*"
+        name="ftw.dashboard.dragndrop-foldportlet"
+        permission="zope.Public"
+        class=".foldportlet.FoldPortlet"
+        />
+    
+    <browser:page
+        for="*"
+        name="reset-dashboard"
+        permission="zope.Public"
+        class=".reset.ResetView"
+        />
+        
+        
+</configure>

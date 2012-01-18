@@ -1,0 +1,101 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="anz.dashboard">
+
+	<include file="templates.zcml" />
+	
+	<!-- merged request view -->
+	<browser:page
+        name="mergedRequest"
+        for="*"
+        class=".mergedrequestview.MergedRequestView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IMergedRequestView"
+        />
+    
+    <!-- message catalog view -->
+	<browser:page
+        name="msgCatalog"
+        for="*"
+        class=".messagecatalogview.MessageCatalogView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IMessageCatalogView"
+        />
+    
+	<!-- widget view -->
+	<browser:page
+        name="widgetView"
+        for="*"
+        class=".widgetview.WidgetView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IWidgetView"
+        />
+    
+    <!-- dashboard view -->
+    <browser:page
+        name="dashboardView"
+        for="..interfaces.IDashboard"
+        class=".dashboardview.DashboardView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IDashboardView"
+        />
+    
+    <browser:page
+        name="dashboardEdit"
+        for="..interfaces.IDashboard"
+        class=".dashboardview.DashboardEditView"
+        permission="cmf.ModifyPortalContent"
+        allowed_interface="..interfaces.IDashboardEditView"
+        />
+    
+	<browser:page
+        name="dashboardCreate"
+        for="Products.Archetypes.BaseFolder.BaseFolder"
+        class=".dashboardview.DashboardCreateView"
+        permission="cmf.AddPortalContent"
+        allowed_interface="..interfaces.IDashboardCreateView"
+        />
+
+	<browser:page
+        name="dashboardCreate"
+        for="Products.CMFPlone.Portal.PloneSite"
+        class=".dashboardview.DashboardCreateView"
+        permission="cmf.AddPortalContent"
+        allowed_interface="..interfaces.IDashboardCreateView"
+        />
+    
+    <!-- all kinds of widgets view -->
+    <browser:page
+        name="rssWidget"
+        for="..interfaces.IDashboard"
+        class=".rsswidgetview.RssWidgetView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IRssWidgetView"
+        />
+    
+    <browser:page
+        name="weatherWidget"
+        for="..interfaces.IDashboard"
+        class=".weatherwidgetview.WeatherWidgetView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IWeatherWidgetView"
+        />
+    
+    <browser:page
+        name="calendarWidget"
+        for="..interfaces.IDashboard"
+        class=".calendarwidgetview.CalendarWidgetView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.ICalendarWidgetView"
+        />
+    
+    <browser:page
+        name="folderContentsWidget"
+        for="..interfaces.IDashboard"
+        class=".foldercontentswidgetview.FolderContentsWidgetView"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IFolderContentsWidgetView"
+        />
+
+</configure>

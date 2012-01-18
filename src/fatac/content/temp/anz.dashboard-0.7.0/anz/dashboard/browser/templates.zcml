@@ -1,0 +1,24 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="anz.dashboard">
+
+    <browser:page
+        name="view"
+        for="..interfaces.IDashboard"
+        class=".dashboardview.DashboardView"
+        template="templates/dashboardview.pt"
+        permission="zope2.View"
+        allowed_interface="..interfaces.IDashboardView"
+        />
+    
+    <browser:page
+        name="layout"
+        for="..interfaces.IDashboard"
+        class=".dashboardview.DashboardEditView"
+        template="templates/dashboardlayout.pt"
+        permission="cmf.ModifyPortalContent"
+        allowed_interface="..interfaces.IDashboardEditView"
+        />
+    
+</configure>

@@ -1,0 +1,30 @@
+Changelog
+=========
+
+0.7.0 (2011-10-17)
+------------------
+- Plone 4 compatibility (stick with anz.dashboard==0.6.2 if you need
+  Plone 3 compatibility) (ajung)
+
+
+0.62
+----
+
+Update to support Plone4.
+
+Bugfix:
+
+- folder contents widget show sub-folders bug;
+- static text widget content encode bug;
+
+
+0.61
+----
+
+Register skins directory bugfix. Without recursive="True" deeper directories won't be registered.
+
+
+0.6
+---
+
+- Initial release

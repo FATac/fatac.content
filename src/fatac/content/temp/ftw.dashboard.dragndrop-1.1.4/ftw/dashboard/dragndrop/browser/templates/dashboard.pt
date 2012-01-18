@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="dummy python:request.set('disable_border',1)" />
+</head>
+
+<body>
+
+<tal:comment replace="nothing">
+    Please note that this template fills the "content" slot instead of the
+    "main" slot, this is done so we can provide stuff like the content
+    tabs. This also means that we have to supply things that are normally
+    present from main_template.
+</tal:comment>
+
+<metal:left fill-slot="column_one_slot" />
+<metal:right fill-slot="column_two_slot" />
+
+<metal:main fill-slot="content">
+    <tal:main-macro metal:define-macro="main"
+                    tal:define="memberinfo here/portal_membership/getMemberInfo;
+                                member context/@@plone_portal_state/member;
+                                name python:memberinfo['fullname'] or member.getId() or member.getId()">
+    <div tal:define="editable python: not (context.portal_properties.get('ftw.dashboard', False) and context.portal_properties.get('ftw.dashboard').getProperty('dashboardEditable', False)) and 'documentEditable'"
+
+       tal:attributes="id string:regio-content;
+                       class editable;" >
+        <h5 class="hiddenStructure">Views</h5>
+        <tal:editable tal:condition="not:python:context.portal_properties.get('ftw.dashboard') and context.portal_properties.get('ftw.dashboard').getProperty('dashboardEditable')">
+        <ul
+			id="content-views"
+			class="contentViews">
+          <li class="selected">
+            <a href=""
+               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
+               i18n:translate="label_dashboard">Dashboard</a>
+          </li>
+          <li>
+            <a href=""
+               tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
+               i18n:translate="label_edit">Edit</a>
+          </li>
+        </ul>
+
+        <div class="contentActions">
+          &nbsp;
+        </div>
+		</tal:editable>
+
+        <div class="documentContent dashboardContent" id="content">
+
+            <a name="documentContent"></a>
+                    
+            <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+                Portal status message
+            </div>
+
+			
+			
+            <div id="dashboard-actions"
+                 tal:define="controlPanel python:modules['Products.CMFCore.utils'].getToolByName(here, 'portal_controlpanel');
+                             groups python:controlPanel.getGroups('member');
+                             getIconFor nocall:context/plone_utils/getIconFor" >
+            </div>
+            
+            <h1 class="documentFirstHeading" i18n:translate="heading_dashboard">
+                <span tal:replace="name" i18n:name="user_name" />'s dashboard
+            </h1>
+            
+            <dl tal:condition="view/empty"
+                class="portalMessage info visualClear" id="dashboard-info-message">
+                <dt i18n:translate="">Info</dt>
+                <dd i18n:translate="info_empty_dashboard">
+                    Your dashboard is currently empty. Click the 
+                    <em>edit</em> tab to assign some personal
+                    portlets.
+                </dd>
+            </dl>
+            
+            <div id="dashboard">
+				<div id="dashboard-add-portlet" tal:condition="python:context.portal_properties.get('ftw.dashboard') and context.portal_properties.get('ftw.dashboard').getProperty('dashboardEditable')" tal:define="referer python:context.absolute_url()+'/'+ view.__name__;
+								userid python:member.getId();">
+					<form tal:attributes="action python:context.portal_url()">
+	                    <textarea style="display:none" tal:content="referer" name="referer"></textarea>
+						<select name=":action"
+							tal:condition="view/dashboard_props">
+	                        	<option value=""><tal:block i18n:translate="">choose Portlet</tal:block></option>
+	                        	<tal:portlets tal:repeat="p view/registered_portlelts">
+	                            	<option tal:attributes="value string:/++dashboard++plone.dashboard1+${userid}/+/${p/id}"
+	                                	tal:content="p/title" i18n:translate=""> portlet
+	                            	</option>
+	                        	</tal:portlets>
+						</select>
+						<input type="submit" class="submit" value="add" i18n:attributes="value">
+					</form>
+				</div>
+                <div class="visualClear"><!-- --></div>
+                
+				<tal:columns tal:define="columns python: context.portal_properties.get('ftw.dashboard') and range(1,context.portal_properties.get('ftw.dashboard').columnNumber + 1) or range(1,5)"
+				tal:repeat="i columns" >
+					<div tal:content="structure provider:plone.dashboard${i}"
+						tal:attributes="id string:dashboard-portlets${i};
+										class string:dashboard-column;"
+					/>
+					
+				</tal:columns>
+			
+            </div>
+            <div class="visualClear"><!-- --></div>
+        </div>
+
+    </div> <!-- end simulated tabs -->
+
+    </tal:main-macro>
+
+</metal:main>
+
+</body>
+</html>

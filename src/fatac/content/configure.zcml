@@ -1,0 +1,181 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="fatac.content">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+  <includeDependencies package="." />
+  <grok:grok package="." />
+
+  <include file="permissions.zcml" />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Fatac Content"
+      directory="profiles/default"
+      description="Installs the fatac.content package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+
+  <!-- 
+      Alerta!! Plone conte un bug a l'hora de declarar importSteps!!
+      Es pot comprovar l'error aqui: https://dev.plone.org/ticket/8350
+      No afecta al correcte funcionament del producte ni del Plone, simplement
+      dona un "Warning" en el Log. (GenericSetup There are unresolved or circular dependencies.)
+  -->
+  <genericsetup:importStep
+      name="setupVarious"
+      handler=".setuphandlers.setupVarious"
+      title="Setup Security Settings"
+      description="Setup Security Settings enabling user folder creation">
+      <depends name="fatac.content"/> 
+  </genericsetup:importStep>
+
+  <class class="Products.PluggableAuthService.PropertiedUser.PropertiedUser">
+     <implements interface=".interfaces.IPortalUser" />
+  </class>
+
+  <!-- Configuracio del Dashboard per defecte -->
+  <adapter factory=".dashboard.FatacPortalDefaultDashboard"/>
+
+  <browser:page
+      for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
+      name="dashboard"
+	    class=".dashboard.FatacDashBoard"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/dashboard.pt"
+      />
+
+  <browser:page
+      name="manage-groups"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.UserMembershipControlPanel"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      template="browser/manage-groups.pt"
+      />
+
+  <browser:page
+      name="edit-group-details"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.ManageGroupsPanel"
+      permission="plone.app.controlpanel.UsersAndGroups"
+      template="browser/edit-group-details.pt"
+      />
+
+  <browser:page
+      name="my-playlists"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.FatacDashBoard"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/my-playlists.pt"
+      />
+
+  <browser:page
+      name="my-activity"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.FatacDashBoard"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/my-activity.pt"
+      />
+
+  <browser:page
+      name="group-view"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.FatacDashBoard"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/group-view.pt"
+      />
+
+  <browser:page
+      name="group-members"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.UserMembershipControlPanel"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/group-members.pt"
+      />
+
+  <browser:page
+      name="group-activity"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.FatacDashBoard"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/group-activity.pt"
+      />
+
+  <browser:page
+      name="deleteUserGroup"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.deleteUserGroup"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      />
+
+  
+
+
+
+  <!-- Configuracio de Portlets -->
+  <include package="plone.app.portlets" />
+
+  <genericsetup:registerProfile
+        name="fatac.portlets"
+        title="Playlists Items"
+        directory="profiles/default"
+        description="Playlists Portlets"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+  <plone:portlet
+        name="fatac.portlets.PortletPlaylists"
+        interface=".portletPlaylists.IPlaylistsPortlet"
+        assignment=".portletPlaylists.Assignment"
+        renderer=".portletPlaylists.Renderer"
+        addview=".portletPlaylists.AddForm"
+        editview=".portletPlaylists.EditForm"
+        />
+
+  <plone:portlet
+        name="fatac.portlets.PortletMyGroups"
+        interface=".portletMyGroups.IMyGroupsPortlet"
+        assignment=".portletMyGroups.Assignment"
+        renderer=".portletMyGroups.Renderer"
+        addview=".portletMyGroups.AddForm"
+        editview=".portletMyGroups.EditForm"
+        />
+
+  <plone:portlet
+        name="fatac.portlets.PortletMyFiles"
+        interface=".portletMyFiles.IMyFilesPortlet"
+        assignment=".portletMyFiles.Assignment"
+        renderer=".portletMyFiles.Renderer"
+        addview=".portletMyFiles.AddForm"
+        editview=".portletMyFiles.EditForm"
+        />
+
+  
+
+<!-- Vista customitzada que no s'utilitza
+  <adapter
+      for="Products.CMFCore.interfaces.IFolderish
+           Products.CMFDefault.interfaces.ICMFDefaultSkin
+           plone.dexterity.interfaces.IDexterityFTI"
+      provides="zope.publisher.interfaces.browser.IBrowserPage"
+      factory=".playlist.AddView"
+      name="fatac.playlist"
+      />
+
+  <browser:page
+      name="groupSelection"
+      for="Products.CMFDynamicViewFTI.interfaces.IBrowserDefault"
+      class=".groupSelectWidget.getGroupSelection"
+      permission="fatac.AddPlaylist"
+      />
+-->
+
+</configure>

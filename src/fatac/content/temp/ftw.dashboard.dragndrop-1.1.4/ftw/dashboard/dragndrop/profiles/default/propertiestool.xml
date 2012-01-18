@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+ <object name="ftw.dashboard" meta_type="Plone Property Sheet">
+	<property name="title">Edit functionality </property>
+	<property name="dashboardEditable" type="boolean">Dashboard Editable</property>
+	<property name="addable_portlets" type="lines" purge="false">
+	   	<element value="portlets.rss"/>
+		<element value="portlets.Calendar"/>
+		<element value="portlets.Classics"/>
+  	</property>
+	<property name="columnNumber" type="int">4</property>
+ </object>
+</object>

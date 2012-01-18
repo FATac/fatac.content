@@ -1,0 +1,491 @@
+msgid ""
+msgstr ""
+
+"Project-Id-Version: anz.dashboard\n"
+"POT-Creation-Date: 2010-02-10 10:30+8000\n"
+"PO-Revision-Date: 2010-02-10 10:30+8000\n"
+"Last-Translator: jiangdongjin <eastxing@gmail.com>\n"
+"Language-Team: Anzsoft <eastxing@gmail.com>\n"
+"MIME-Version: \n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Language-Code: zh-cn\n"
+"Language-Name: 简体中文\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: anz.dashboard\n"
+
+msgid "Anz Dashboard"
+msgstr "仪表板"
+
+msgid "A content type which displays content in a netvibes like portal aggregating view"
+msgstr "一个可以构建类似netvibes的portal视图的内容类型。"
+
+msgid "Layout"
+msgstr "布局"
+
+msgid "label_page_layout_mode"
+msgstr "页面布局模式"
+
+msgid "help_page_layout_mode"
+msgstr "有‘平铺模式’和‘标签模式’两种模式供选择。‘平铺模式’下，所有页面从上至下显示，可以用来构建复杂的复合页面。‘标签模式’下，各个页面以标签页的形式显示。"
+
+msgid "page_layout_tile"
+msgstr "平铺模式"
+
+msgid "page_layout_tab"
+msgstr "标签模式"
+
+msgid "Add widget"
+msgstr "添加面板"
+
+msgid "Add column"
+msgstr "添加列"
+
+msgid "Add page"
+msgstr "添加页"
+
+msgid "Move page up"
+msgstr "上移该页"
+
+msgid "Move page down"
+msgstr "下移该页"
+
+msgid "Edit page"
+msgstr "编辑该页"
+
+msgid "Delete page"
+msgstr "删除该页"
+
+msgid "Move column left"
+msgstr "左移该列"
+
+msgid "Move column right"
+msgstr "右移该列"
+
+msgid "Delete the column"
+msgstr "删除该列"
+
+msgid "Collapse the widget"
+msgstr "折叠该面板"
+
+msgid "Config the widget"
+msgstr "配置该面板"
+
+msgid "print"
+msgstr "打印"
+
+msgid "copy"
+msgstr "拷贝"
+
+msgid "color"
+msgstr "颜色"
+
+msgid "up"
+msgstr "向上移动"
+
+msgid "right"
+msgstr "向右移动"
+
+msgid "down"
+msgstr "向下移动"
+
+msgid "left"
+msgstr "向左移动"
+
+msgid "Refresh the widget"
+msgstr "刷新该面板"
+
+msgid "Edit the widget"
+msgstr "编辑该面板"
+
+msgid "Delete the widget"
+msgstr "删除该面板"
+
+msgid "page"
+msgstr "页面"
+
+msgid "Are you sure you want to delete this page?"
+msgstr "你确定要删除该页面吗？"
+
+msgid "column"
+msgstr "列"
+
+msgid "Are you sure you want to delete this column?"
+msgstr "你确定要删除该列吗？"
+
+msgid "Save widget options..."
+msgstr "保存面板设置..."
+
+msgid "Are you sure to delete this widget?"
+msgstr "你确定要删除该面板吗？"
+
+msgid "Delete widget..."
+msgstr "删除面板..."
+
+msgid "Can not delete the last page!"
+msgstr "不能删除最后一页！"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Collapse"
+msgstr "折叠"
+
+msgid "Sorry, we can not get data successfully now, you should refresh the whole page later to try again."
+msgstr "对不起，现在无法正确获取数据，你可以稍后刷新整个页面来尝试再次获取。"
+
+# widget common
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Show title?"
+msgstr "显示标题？"
+
+msgid "View"
+msgstr "视图"
+
+msgid "Sorry, get data fail, rettry later."
+msgstr "对不起，获取数据失败，待会重试。"
+
+msgid "Widgets list"
+msgstr "可选面板列表"
+
+msgid "OK"
+msgstr "确定"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Widget name"
+msgstr "面板名称"
+
+msgid "Description"
+msgstr "描述"
+
+# widget static text
+
+msgid "Static text widget"
+msgstr "静态文本面板"
+
+msgid "This widget is used to render static HTML contents."
+msgstr "该面板可用于显示静态HTML内容。"
+
+msgid "Get widgets success."
+msgstr "获取面板列表成功。"
+
+msgid "Get widget success."
+msgstr "获取面板成功。"
+
+msgid 'No widget with id "${id}" found.'
+msgstr "没有找到id为“${id}”的面板。"
+
+msgid "body"
+msgstr "内容"
+
+msgid "Type text here"
+msgstr "在此处输入文本"
+
+# widget calendar
+
+msgid "Calendar widget"
+msgstr "日程面板"
+
+msgid "This widget can show events information in calendar."
+msgstr "该面板以日历的方式显示事件信息。"
+
+msgid "Start day of week"
+msgstr "一周的首日"
+
+msgid "Sun"
+msgstr "周日"
+
+msgid "Mon"
+msgstr "周一"
+
+msgid "Tue"
+msgstr "周二"
+
+msgid "Wed"
+msgstr "周三"
+
+msgid "Thu"
+msgstr "周四"
+
+msgid "Fri"
+msgstr "周五"
+
+msgid "Sat"
+msgstr "周六"
+
+msgid "No event today."
+msgstr "该日没有事件。"
+
+msgid "Month"
+msgstr "月视图"
+
+msgid "Week"
+msgstr "周视图"
+
+msgid "Agenda"
+msgstr "日程视图"
+
+msgid "Get events success."
+msgstr "获取日程成功。"
+
+msgid "Events in this day"
+msgstr "该日事件"
+
+# widget weather
+
+msgid "Weather widget"
+msgstr "天气面板"
+
+msgid "This widget can show weather information of specific city."
+msgstr "该面板可以显示指定城市的天气。"
+
+msgid "City"
+msgstr "城市"
+
+msgid "Units"
+msgstr "单位"
+
+msgid "Celsius"
+msgstr "摄氏"
+
+msgid "Fahrenheit"
+msgstr "华氏"
+
+msgid "Feels Like"
+msgstr "体感温度"
+
+msgid "Barometer"
+msgstr "气压"
+
+msgid "Humidity"
+msgstr "湿度"
+
+msgid "Visibility"
+msgstr "能见度"
+
+msgid "Wind"
+msgstr "风速"
+
+msgid "Sunrise"
+msgstr "日出"
+
+msgid "Sunset"
+msgstr "日落"
+
+msgid "Get weather info success."
+msgstr "获取天气信息成功。"
+
+msgid "High"
+msgstr "高温"
+
+msgid "Low"
+msgstr "低温"
+
+msgid "Compact"
+msgstr "今明两天"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Tornado"
+msgstr "龙卷风"
+
+msgid "Tropical storm"
+msgstr "热带风暴"
+
+msgid "Hurricane"
+msgstr "飓风"
+
+msgid "Severe thunderstorms"
+msgstr "严重雷暴 "
+
+msgid "Thunderstorms"
+msgstr "雷雨"
+
+msgid "Mixed rain and snow"
+msgstr "雨夹雪"
+
+msgid "Mixed rain and sleet"
+msgstr "雨夹冰雹"
+
+msgid "Mixed snow and sleet"
+msgstr "雪夹冰雹"
+
+msgid "Freezing drizzle"
+msgstr "冻毛雨"
+
+msgid "Drizzle"
+msgstr "小雨"
+
+msgid "Freezing rain"
+msgstr "冻雨"
+
+msgid "Showers"
+msgstr "阵雨"
+
+msgid "Snow flurries"
+msgstr "小雪"
+
+msgid "Light snow showers"
+msgstr "小阵雪"
+
+msgid "Blowing snow"
+msgstr "高吹雪"
+
+msgid "Snow"
+msgstr "雪"
+
+msgid "Hail"
+msgstr "冰雹"
+
+msgid "Sleet"
+msgstr "雨夹雪"
+
+msgid "Dust"
+msgstr "沙尘"
+
+msgid "Foggy"
+msgstr "雾"
+
+msgid "Haze"
+msgstr "霾"
+
+msgid "Smoky"
+msgstr "烟"
+
+msgid "Blustery"
+msgstr "狂风"
+
+msgid "Windy"
+msgstr "风"
+
+msgid "Cold"
+msgstr "寒冷"
+
+msgid "Cloudy"
+msgstr "多云"
+
+msgid "Mostly cloudy"
+msgstr "多云"
+
+msgid "Partly cloudy"
+msgstr "晴间多云"
+
+msgid "Clear"
+msgstr "晴朗"
+
+msgid "Mixed rain and hail"
+msgstr "雨夹冰雹"
+
+msgid "Sunny"
+msgstr "晴天"
+
+msgid "Fair"
+msgstr "晴朗"
+
+msgid "Hot"
+msgstr "炎热"
+
+msgid "Isolated thunderstorms"
+msgstr "局部雷雨"
+
+msgid "Scattered thunderstorms"
+msgstr "零星雷雨"
+
+msgid "Scattered showers"
+msgstr "零星阵雨"
+
+msgid "Heavy snow"
+msgstr "大雪 "
+
+msgid "Scattered snow showers"
+msgstr "零星阵雪"
+
+msgid "Thundershowers"
+msgstr "雷阵雨"
+
+msgid "Snow showers"
+msgstr "阵雪"
+
+msgid "Isolated thundershowers"
+msgstr "局部雷雨大风"
+
+# widget rss
+
+msgid "Rss widget"
+msgstr "RSS面板"
+
+msgid "This widget can show contents of specific RSS feed."
+msgstr "该面板可显示指定RSS的内容。"
+
+msgid "days before"
+msgstr "日前"
+
+msgid "hours before"
+msgstr "小时前"
+
+msgid "minutes before"
+msgstr "分钟前"
+
+msgid "Normal"
+msgstr "标准"
+
+msgid "Magazine"
+msgstr "杂志"
+
+msgid "Slideshow"
+msgstr "幻灯"
+
+msgid "Headline"
+msgstr "摘要"
+
+msgid "Paging?"
+msgstr "显示分页？"
+
+msgid "Count"
+msgstr "每页条目数"
+
+msgid "Fetch RSS entries success."
+msgstr "获取RSS数据成功。"
+
+msgid "prev"
+msgstr "前页"
+
+msgid "next"
+msgstr "后页"
+
+# widget folder contents
+
+msgid "Folder contents widget"
+msgstr "文件夹内容面板"
+
+msgid "This widget can show contents of specific types under specific folders."
+msgstr "该面板可显示指定文件夹下的指定内容类型的内容。"
+
+msgid "Search sub-directory?"
+msgstr "搜索子文件夹？"
+
+msgid "Types"
+msgstr "内容类型"
+
+msgid "Paths"
+msgstr "文件夹路径"
+
+msgid "Root"
+msgstr "站点根"
+
+msgid "Recent days"
+msgstr "最近n天"
+
+msgid "Max count"
+msgstr "条目总数"
+
+msgid "Get folder contents success."
+msgstr "获取文件夹内容成功。"

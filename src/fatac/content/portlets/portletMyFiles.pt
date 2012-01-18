@@ -1,0 +1,27 @@
+<dl class="portlet portletMyFiles"
+    i18n:domain="fatac.content">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        Els meus Fitxers
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <tal:items tal:repeat="file view/myfiles">
+        <dd class="portletItem"
+            tal:define="oddrow repeat/file/odd;"
+            tal:attributes="class python:oddrow and 'portletItem even' or 'portletItem odd'">
+
+            <a href="" tal:attributes="href file/url; title file/title;">
+                <span class="portletItemDetails" tal:content="file/title">Playlist Title</span>
+            </a>
+
+        </dd>
+    </tal:items>
+    
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>

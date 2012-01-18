@@ -1,0 +1,28 @@
+<dl class="portlet portletPlaylists"
+    i18n:domain="fatac.content">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        Les Meves Playlists
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <tal:items tal:repeat="playlist view/playlists">
+        <dd class="portletItem"
+            tal:define="oddrow repeat/playlist/odd;"
+            tal:attributes="class python:oddrow and 'portletItem even' or 'portletItem odd'">
+
+            <a href="" tal:attributes="href playlist/url; title playlist/title;">
+                <span class="portletItemDetails" tal:content="playlist/title">Playlist Title</span>
+                <!-- <span class="portletItemDetails" tal:content="playlist/summary">Playlist Summary</span> -->
+            </a>
+
+        </dd>
+    </tal:items>
+    
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>

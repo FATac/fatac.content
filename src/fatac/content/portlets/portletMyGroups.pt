@@ -1,0 +1,27 @@
+<dl class="portlet portletMyGroups"
+    i18n:domain="fatac.content">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        Els meus Grups
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <tal:items tal:repeat="group view/mygroups">
+        <dd class="portletItem"
+            tal:define="oddrow repeat/group/odd;"
+            tal:attributes="class python:oddrow and 'portletItem even' or 'portletItem odd'">
+
+            <a href="@@usergroup-groupdetails" tal:attributes="href string:@@usergroup-groupdetails?groupname=${group/groupId}">
+                <span class="portletItemDetails" tal:content="group/groupName">Group Title</span>
+            </a>
+
+        </dd>
+    </tal:items>
+    
+    <dd class="portletFooter">
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+
+</dl>

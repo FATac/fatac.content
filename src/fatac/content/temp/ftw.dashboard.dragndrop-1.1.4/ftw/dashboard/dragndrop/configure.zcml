@@ -1,0 +1,44 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="ftw.dashboard.dragndrop">
+
+    <!-- Include configuration for dependencies listed in setup.py -->
+    <includeDependencies package="." />
+
+	<include package=".browser" />
+
+	<!-- Register the installation GenericSetup extension profile -->
+    <genericsetup:registerProfile
+      name="default"
+      title="ftw.dashboard.dragndrop"
+      directory="profiles/default"
+      description="Dashboard with drag'n'drop support."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+    <browser:resource
+        name="icon_close_box.gif"
+        file="icons/icon_close_box.gif"
+        />
+
+   <browser:resource
+        name="icon_open_box.gif"
+        file="icons/icon_open_box.gif"
+        />
+
+   <browser:resource
+        name="icon_remove_box.gif"
+        file="icons/icon_remove_box.gif"
+        />
+
+   <browser:resource
+        name="icon_edit_box.gif"
+        file="icons/icon_edit_box.gif"
+        />
+
+</configure>

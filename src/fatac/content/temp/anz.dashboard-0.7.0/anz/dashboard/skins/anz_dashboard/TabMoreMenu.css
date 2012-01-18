@@ -1,0 +1,25 @@
+.x-tab-strip-more {
+    position:relative;
+}
+.x-tab-strip .x-tab-strip-more a.x-tab-strip-close {
+    opacity:.6;
+    -moz-opacity:.6;
+    background-repeat:no-repeat;
+    display:block;
+	width:14px;
+    height:13px;
+    position:absolute;
+    top:5px;
+    right:3px;
+    cursor:pointer;
+    z-index:2;
+    background-image:url(tab-more.gif);
+}
+.x-tab-strip .x-tab-strip-more a.x-tab-strip-close:hover{
+    opacity:1;
+    -moz-opacity:1;
+}
+
+.x-tab-strip-top .x-tab-left {
+	padding-right: 20px;
+}

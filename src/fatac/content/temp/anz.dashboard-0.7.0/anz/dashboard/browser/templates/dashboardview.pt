@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+	metal:use-macro="context/main_template/macros/master"
+	i18n:domain="anz.dashboard">
+
+<head tal:define="portal_url context/@@plone_context_state/portal_url;">
+    <metal:css fill-slot="style_slot">
+    	<link rel="stylesheet" type="text/css"
+    		tal:attributes="href string:${portal_url}/ext3/resources/css/ext-all.css" />
+    	<!--
+    	<link rel="stylesheet" type="text/css"
+    		tal:attributes="href string:${portal_url}/anz_dashboard.css" />
+    	<link rel="stylesheet" type="text/css"
+    		tal:attributes="href string:${portal_url}/carousel.css" />
+    	-->
+    	<link rel="stylesheet" type="text/css"
+    		tal:attributes="href string:${portal_url}/anz.dashboard.view-min.css" />
+    </metal:css>
+    <metal:javascript metal:fill-slot="javascript_head_slot">
+    	<script type="text/javascript"
+	        tal:attributes="src string:${portal_url}/ext3/adapter/ext/ext-base.js">
+	    </script>
+	    <script type="text/javascript"
+	        tal:attributes="src string:${portal_url}/ext3/ext-all-debug.js">
+	    </script>
+	    <script type="text/javascript"
+	        tal:attributes="src string:${portal_url}/ext3/ext-ux.js">
+	    </script>
+    </metal:javascript>
+</head>
+  
+<body>
+<div metal:fill-slot="main">
+	<!--
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/anzi18n.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/anz_widget.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/widget_rss.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/carousel.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/widget_static_text.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/widget_weather.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/widget_calendar.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/widget_folder_contents.js">
+    </script>
+    <script type="text/javascript"
+        tal:attributes="src string:${portal_url}/anz_dashboard_view.js">
+    </script>
+	-->
+   	<script type="text/javascript"
+        tal:attributes="src string:${portal_url}/anz.dashboard.view-min.js">
+    </script>
+
+    <script type="text/javascript"
+    	tal:define="here_url 	context/@@plone_context_state/object_url;
+                	contextPath python:'/'.join(context.aq_parent.getPhysicalPath());"
+		tal:content="string:var portalUrl='${portal_url}';
+							var contextUrl='${here_url}';
+							">
+    </script>
+    <script type="text/javascript">
+	    Ext.onReady( function() {
+	    	var app = Anz.dashboard.view;
+	    	app.init( portalUrl, contextUrl );
+	    } );
+	</script>
+</div>
+</body>
+</html>

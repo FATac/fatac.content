@@ -1,0 +1,2 @@
+
+PROJECTNAME = 'anz.dashboard'

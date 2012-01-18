@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<object name="portal_actions" meta_type="Plone Actions Tool"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <action-provider name="portal_actions"/>
+ <object name="dashboard_widgets" meta_type="CMF Action Category">
+  <property name="title">Dashboard widgets</property>
+  <object name="widget_static_text" meta_type="CMF Action"
+     i18n:domain="anz.dashboard">
+   <property name="title" i18n:translate="">Static text widget</property>
+   <property name="description"
+      i18n:translate="">This widget is used to render static HTML contents.</property>
+   <property name="url_expr"></property>
+   <property name="icon_expr">string:widget_static_text_icon</property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="widget_rss" meta_type="CMF Action"
+     i18n:domain="anz.dashboard">
+   <property name="title" i18n:translate="">Rss widget</property>
+   <property name="description"
+      i18n:translate="">This widget can show contents of specific RSS feed.</property>
+   <property name="url_expr"></property>
+   <property name="icon_expr">string:widget_rss_icon</property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="widget_weather" meta_type="CMF Action"
+     i18n:domain="anz.dashboard">
+   <property name="title" i18n:translate="">Weather widget</property>
+   <property name="description"
+      i18n:translate="">This widget can show weather information of specific city.</property>
+   <property name="url_expr"></property>
+   <property name="icon_expr">string:widget_weather_icon</property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="widget_calendar" meta_type="CMF Action"
+     i18n:domain="anz.dashboard">
+   <property name="title" i18n:translate="">Calendar widget</property>
+   <property name="description"
+      i18n:translate="">This widget can show events information in calendar.</property>
+   <property name="url_expr"></property>
+   <property name="icon_expr">string:widget_calendar_icon</property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="widget_folder_contents" meta_type="CMF Action"
+     i18n:domain="anz.dashboard">
+   <property name="title" i18n:translate="">Folder contents widget</property>
+   <property name="description"
+      i18n:translate="">This widget can show contents of specific types under specific folders.</property>
+   <property name="url_expr"></property>
+   <property name="icon_expr">string:widget_folder_contents_icon</property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+ </object>
+</object>

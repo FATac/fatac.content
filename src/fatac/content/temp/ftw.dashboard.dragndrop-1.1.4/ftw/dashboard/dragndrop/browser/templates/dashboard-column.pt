@@ -1,0 +1,10 @@
+<tal:block repeat="portlet options/portlets">
+<div tal:define="class string:portletwrapper kssattr-portlethash-${portlet/hash};
+				 folded python:getattr(portlet['assignment'],'isFolded',False) and 'folded' or '';
+				 editable python:view.isEditable(portlet['assignment']) and 'editable' or ''; 
+				 class string:${class} ${folded} ${editable};
+				"
+	tal:attributes="id string:portletwrapper-${portlet/hash};
+					class class"
+     tal:content="structure python:view.safe_render(portlet['renderer'])" />
+</tal:block>

@@ -1,0 +1,33 @@
+#submenu {
+    font-size: 90%;
+    margin-bottom: 1em;
+}
+
+#submenu a.link-submenu, span.selectedTag {
+    color: black;
+    padding: 0.25em 0.5em;
+    background: #ddd;
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+}
+#submenu a.link-submenu:hover {
+    background: #205c90;
+    color: white !important;
+    border-color: #205c90;
+}
+
+#submenu a.link-submenu.selected {
+    background: #ffffff;
+    color: black !important;
+    border-color: #ddd !important;
+    border-style: solid !important;
+    border-radius: 0.5em;
+    border-width: 1px !important;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+}
+
+#submenu .separator {
+    display: none;
+}

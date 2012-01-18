@@ -1,0 +1,50 @@
+Changelog
+=========
+
+
+1.1.4
+-----
+
+
+1.2.0-dev
+---------
+* Fixed missing 'var' in JS
+
+* Fixed package namespace declaration [Thomas Buchberger]
+
+* Added z3c.autoinclude entry point to mark this as a Plone plugin
+  [Thomas Buchberger]
+
+* updated jquery.ui version for correct plone4 support 
+  [08.07.2010, phgross]
+
+* fixed some templates and css styles, so that it work's fine with plone4
+  [07.07.2010, phgross]
+
+1.1.2
+-----
+* Removed unused livequery.js in the jsregistry
+
+1.1.1
+---
+
+* Added some additional css classes
+  [23.03.2010, jbaumann]
+  
+* Removed unused configlet icons 
+  [24.03.2010, fsprenger]
+
+1.1
+---
+
+* added the new user friendly name function, also for the manage-dashboard page
+  [26.02.2010, phgross]
+
+* In selection to add new portlet in dashboard, can have a user friendly 
+  name, in stead of portlet.Calendar, you can use Calendar, just in 
+  addable_portlets use: portlet.Calendar:Calendar 
+  [lucmult]
+
+1.0
+---
+initial release
