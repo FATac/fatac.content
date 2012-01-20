@@ -6,15 +6,20 @@ from z3c.form.widget import MultiWidget
 from zope import interface, component, schema
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from operator import attrgetter
-
-from Products.CMFDynamicViewFTI.interfaces import IBrowserDefault
-from five import grok
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.dexterity.browser.view import DefaultView
+from Products.CMFCore.utils import getToolByName
 
 """
-    GroupSelecion Widget:
-    Widget per a seleccionar els grups en els que es pot mostrar la Playlist
+    * GroupSelecion Widget:
+      Widget per a seleccionar els grups en els que es pot mostrar la Playlist
+
+    * Funcionament:
+      Al template (groupSelectWidget.pt) es crea una llista oculta per poder fer
+      el recompte d'objectes que s'han d'afegir al valor del camp. Per tant, tenim
+      que hi ha una llista origen "From", una llista de desti "TO" on van els elements
+      de la llista original, i tenim una serie d'imputs "hidden" que es generen/eliminen
+      automaticament (des de JavaScript) un cop s'apreta qualsevol boto d'afegir o 
+      treure elments de les llistes "FROM"(>>) i "TO"(<<).
 """
 
 class IGroupsSelectionWidget(interfaces.IMultiWidget):
@@ -29,7 +34,7 @@ class GroupsSelectionWidget(MultiWidget):
     buttons = button.Buttons()
 
     prefix = 'widget'
-    klass = u'multi-widget'
+    klass = u'textarea-widget'
     items = ()
 
     showLabel = True # show labels for item subwidgets or not
@@ -38,18 +43,7 @@ class GroupsSelectionWidget(MultiWidget):
     _adapterValueAttributes = widget.MultiWidget._adapterValueAttributes + \
         ('showLabel',)
 
-
-    #def updateActions(self):
-    #    self.updateAllowAddRemove()
-    #    if self.name is not None:
-    #        self.prefix = self.name
-    #    self.actions = component.getMultiAdapter(
-    #        (self, self.request, self), interfaces.IActions)
-    #    self.actions.update()
-
-
     def update(self):
-        print self.value
         """See z3c.form.interfaces.IWidget."""
         # Ensure that updateWidgets is called.
         super(MultiWidget, self).update()
@@ -57,61 +51,58 @@ class GroupsSelectionWidget(MultiWidget):
             self.updateWidgets()
 
     def render(self):
+        """
+            Retorna el Template del widget
+        """
         return self.input_template(self)
-        
 
-    #def setField(self, value):
+    def extract(self):
         """
-            The field information is passed to the widget after it is
-            initialised.  Use this call to initialise the column
-            definitions.
+            Captura els valors del form que s'han de guardar (quan fas submit)
         """
+        super(MultiWidget, self).extract()
+        if self.request.get(self.name) != None:
+            self.value = self.request.get(self.name)
+            return self.value
+        else:
+            return []
+
+    def selectedItems(self):
         """
-        self._field = value
-        print "setfield"
-
-        self.columns = []
-        for name, field in getFieldsInOrder(self._field.value_type.schema):
-            col = {
-                'name': name,
-                'label': field.title,
-                'required': field.required,
-                'mode': None,
-            }
-            self.columns.append(col)
+            Retorna la llista/valor guardat del camp
         """
+        context = self.context
+        try:
+            return self.field.get(context)
+        except:
+            return []
 
-
-    #def getWidget(self, idx):
-        """Create the object widget. This is used to avoid looking up
-        the widget.
+    def notSelectedItems(self):
         """
+            Retorna la llista de grups que es poden afegir al camp
         """
-        valueType = self.field.value_type
-        widget = component.getMultiAdapter((valueType, self.request), interfaces.ITextLinesWidget)
+        context = self.context
+        mtool = getToolByName(context, 'portal_membership')
+        gtool = getToolByName(context, 'portal_groups')
 
-        widget.__parent__ = self
+        member = mtool.getAuthenticatedMember();
+        groups = gtool.getGroupsByUserId(member.getId());
 
-        widget.mode = self.mode
-        widget.klass = 'groupselection-row'
-        #set widget.form (objectwidget needs this)
-        if interfaces.IFormAware.providedBy(self):
-            widget.form = self.form
-            interface.alsoProvides(
-                widget, interfaces.IFormAware)
-        widget.update()
-        print "getWidget"
-        return widget
-        """
+        try:
+            fieldValue = self.field.get(context)
+        except:
+            fieldValue = None
+        nselItems = [] # Llista de grups per afegir
 
-    #def updateWidgets(self):
-        # if the field has configuration data set - copy it
-    #    print "updateWidgets"
-    #    super(GroupsSelectionWidget, self).updateWidgets()
+        # Si hi havien valors guardats els filtem
+        if fieldValue != None:
+            for group in groups:
+                if group.getId() not in fieldValue:
+                    nselItems.append(group)
 
-    #def get(self, request):
-    #    print "get"
-    #    return self.field
+            return nselItems
+        else:
+            return groups
 
 
 @component.adapter(schema.interfaces.ITextLine, interfaces.IFormLayer)
