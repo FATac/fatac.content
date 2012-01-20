@@ -73,6 +73,26 @@ class FatacDashBoard(DashboardView):
 
 
 
+class groupActivity(DashboardView):
+    """ 
+        Returns The group activity content
+    """
+    def searchActivityResults(self, groupmembers, groupname):
+        context = self.context
+        elementsList = []
+        search = context.portal_catalog.searchResults(creator=groupmembers, sort_on='modified', sort_order='reverse',)
+
+        for item in search:
+            if ((item.visibleInGroupsList != None) and (item.Type == 'Playlist')):
+                if groupname in item.visibleInGroupsList:
+                    elementsList.append(item)
+            else:
+                elementsList.append(item)
+
+        return elementsList
+
+
+
 class deleteUserGroup(grok.View):
     """
        View for deleting Group of the User
