@@ -115,10 +115,12 @@
             </a>
 
             <div id="group-activity" class="row">
-
+<!--
                 <div class="span10" tal:define="search python:context.portal_catalog.searchResults(creator=groupmembers, 
                                                                                                    sort_on='modified',
                                                                                                    sort_order='reverse',)">
+-->
+                <div class="span10" tal:define="search python:view.searchActivityResults(groupmembers, groupname)">
                     <tal:re tal:repeat="obj search" tal:define="plone_view context/@@plone;
                                                                      getIcon nocall:plone_view/getIcon;
                                                                      normalizeString nocall:plone_view/normalizeString;
