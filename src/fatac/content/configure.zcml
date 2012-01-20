@@ -42,6 +42,9 @@
      <implements interface=".interfaces.IPortalUser" />
   </class>
 
+  <!-- Configuracio adicional de la Playlist -->
+  <adapter name="visibleInGroupsList" factory=".playlist.vigListIndexer" />
+
   <!-- Configuracio del Dashboard per defecte -->
   <adapter factory=".dashboard.FatacPortalDefaultDashboard"/>
 
@@ -104,7 +107,7 @@
   <browser:page
       name="group-activity"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".dashboard.FatacDashBoard"
+      class=".dashboard.groupActivity"
       permission="plone.app.portlets.ManageOwnPortlets"
       template="browser/group-activity.pt"
       />
