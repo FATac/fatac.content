@@ -23,6 +23,7 @@ from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
 from plone.directives import dexterity
 from z3c.form import button, field
 from groupSelectWidget import GroupsSelectionWidgetFactory
+from plone.indexer import indexer
 
 
 
@@ -71,6 +72,18 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
     #Amaguem els camps a l'edicio
     form.omitted('listToPlay','orderedList')
 
+
+
+@indexer(IPlaylist)
+def vigListIndexer(playlist):
+    """
+        Index en el Cataleg del camp 'visibleInGroupsList'
+    """
+    if playlist.visibleInGroupsList != None:
+        return playlist.visibleInGroupsList
+    else:
+        return []
+grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
 
 
