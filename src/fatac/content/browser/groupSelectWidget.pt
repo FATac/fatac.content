@@ -1,51 +1,22 @@
 <i18n:domain i18n:domain="fatac.content.playlist" tal:define="portal_url context/portal_url;">
 
-<!--
-
-    <tal:cond tal:condition="python: hasattr(context, 'visibleInGroupsList')">
-        <tal:visible tal:condition="python: view.field.get(context) != None">
-            <div tal:repeat="group python: view.field.get(context)">
-                <input type="check" value="group" />
-                <span tal:content="group" />
-            </div>
-     	    <input class="btn warning"
-                   type="button"
-                   name="form.button.RemoveGroups"
-                   value="Treu els Grups Seleccionats"
-            />
-        </tal:visible>
-    </tal:cond>
-
-
-
-
-        <input class="btn warning"
-               type="submit"
-               name="form.button.AddGroup"
-               value="Afegeix una nova Playlist"
-               i18n:attributes="value label_add_new_playlist;"
-        />
-
--->
-
-    <tal:def tal:define="fieldName string:${view/id};
-                         member python:context.portal_membership.getAuthenticatedMember();
-                         vocab python:context.portal_groups.getGroupsByUserId(member.getId());
+    <tal:def tal:define="fieldId string:${view/id};
+                         fieldName string:${view/name};
+                         vocab view/notSelectedItems;
                          value python:[];
                          selectionview context/@@at_selection_widget;
                          selection python:selectionview.getSelected(vocab, value);
-                         vlen python:len(vocab)">
-<span tal:content="python: view.field.get(context)" />
-<span tal:content="string:${view/id}" />
+                         ">
+
         <div>
             <table style="border:none;margin:0em;padding:0em;margin-right:0.5em;width:auto;" cellpadding="0" cellspacing="0">
             <tr>
                 <td style="padding-left:0em;padding-top:0em;">
                     <select class="firstToFocus"
                             multiple="multiple"
-                            tal:attributes="name string:${fieldName}_options;
-                                            id string:${fieldName}_options;
-                                            onDblClick string:javascript:groups_moveKeywords('${fieldName}_options','${fieldName}','${fieldName}')">
+                            tal:attributes="name string:${fieldName}_from;
+                                            id string:${fieldId}_from;
+                                            onDblClick string:javascript:groups_moveKeywords('${fieldId}_from','${fieldId}_to','${fieldId}_to','${fieldId}_to')">
 
                         <tal:block tal:repeat="vocab_item vocab">
                             <option tal:define="label string:${vocab_item/getGroupTitleOrName}"
@@ -62,27 +33,38 @@
 
                 <td style="vertical-align:middle;padding-left:0.5em;padding-right:0.5em">
                     <input type="button" class="context" value="&gt;&gt;"
-                           tal:attributes="onClick string:javascript:groups_moveKeywords('${fieldName}_options','${fieldName}','${fieldName}')"
+                           tal:attributes="onClick string:javascript:groups_moveKeywords('${fieldId}_from','${fieldId}_to','${fieldId}_to','${fieldId}_to')"
                              />
                     <br />
                     <input type="button" class="context" value="&lt;&lt;"
-                           tal:attributes="onClick string:javascript:groups_moveKeywords('${fieldName}','${fieldName}_options','${fieldName}')"
+                           tal:attributes="onClick string:javascript:groups_moveKeywords('${fieldId}_to','${fieldId}_from','${fieldId}_to','${fieldId}_to')"
                              />
                 </td>
                 <td>
                     <select multiple="multiple"
-                            tal:attributes="name string:${fieldName}:list;
-                                            id string:${fieldName};
-                                            onDblClick string:javascript:groups_moveKeywords('${fieldName}','${fieldName}_options','${fieldName}')">
+                            tal:attributes="name string:${fieldName}_to:list;
+                                            id string:${fieldId}_to;
+                                            onDblClick string:javascript:groups_moveKeywords('${fieldId}_to','${fieldId}_from','${fieldId}_to','${fieldId}_to')">
     
-                        <tal:block tal:repeat="single_value selection">
-                            <option tal:attributes="value single_value;"
-                                    tal:content="python:vocab.getValue(single_value)"
+                        <tal:block tal:repeat="group view/selectedItems">
+                            <option tal:define="groupname python:context.portal_groups.getGroupById(group).getGroupTitleOrName()"
+                                    tal:attributes="value group;"
+                                    tal:content="groupname"
                                     selected="selected"
                                     i18n:translate="">
                                 option
                             </option>
                         </tal:block>
+
+                        <input name="foo-empty-marker" type="hidden"
+                               tal:attributes="name string:${view/name}_to-empty-marker"/>
+                        <span id="toDataContainer"
+                              tal:attributes="id string:${view/id}_to-toDataContainer">
+                            <tal:hidden tal:repeat="group view/selectedItems" tal:condition="view/selectedItems">
+                                <input type="hidden" tal:attributes="name string:${view/name}:list; value group;"/>
+                            </tal:hidden>
+                        </span>
+                        
                     </select>
                 </td>
             </tr>
