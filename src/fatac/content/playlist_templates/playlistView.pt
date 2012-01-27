@@ -1,0 +1,130 @@
+<!-- TODO: he carregat el js a jsregistry.xml de forma global, potser cal afegir ocndicions xq no carreguin sempre ¿? -->
+<!-- TODO: fer la crida on toqui! -->
+<div id="zona_resultats" tal:define="dades_paginacio view/retDadesPaginacio">
+    <tal:co tal:condition="python: dades_paginacio['num_total_pagines'] > 0">
+        <script type="text/javascript">
+            $(document).ready(function() {
+                inicialitza_js_resultats(crida_inicial=1);
+            });
+        </script>
+
+        <div id="ordre_y_tipus_cerca" class="div_dotted_line">
+            <img class="arrow_top" src="++resource++fatac.theme.images/ico_arrow_up.png" />
+            <span class="arial13c999999" i18n:translate="Visualització de búsqueda">Visualització de búsqueda</span>
+
+            <dl class="llista_desplegable llista_desplegable_gris actionMenu deactivated">
+                <dt class="actionMenuHeader">
+                    <a i18n:attributes="title mes_opcions" href="" class="arial11c666666">
+                        tipus d'entrada <span class="arrowDownAlternative"><img src="++resource++fatac.theme.images/arrow_down_grey.gif" /></span>
+                    </a>
+                </dt>
+                <dd class="actionMenuContent">
+                    <ul>
+                        <li><a class="arial11c666666 selected" href="">document</a></li>
+                        <li><a class="arial11c666666" href="">expedient</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
+            <dl class="llista_desplegable llista_desplegable_gris actionMenu deactivated">
+                <dt class="actionMenuHeader">
+                    <a i18n:attributes="title mes_opcions" href="" class="arial11c666666">
+                        tipus d'ordre <span class="arrowDownAlternative"><img src="++resource++fatac.theme.images/arrow_down_grey.gif" /></span>
+                    </a>
+                </dt>
+                <dd class="actionMenuContent">
+                    <ul>
+                        <li><a class="arial11c666666" href="">alfabètic</a></li>
+                        <li><a class="arial11c666666 selected" href="">cronològic</a></li>
+                        <li><a class="arial11c666666" href="">ordre original</a></li>
+                    </ul>
+                </dd>
+            </dl>
+
+        </div>
+
+        <div class="visualClear"><!--  --></div>
+
+        <div>
+
+            <div id="resultats_cerca" class="div_dotted_line">
+                <div id="resultats">
+
+                    <a class="arrow_left_resultats prev browse left disabled"><img src="++resource++fatac.theme.images/ico_left.png" i18n:attributes="title esquerra" /></a>
+
+                    <a class="arrow_right_resultats next browse right disabled"><img src="++resource++fatac.theme.images/ico_right.png" i18n:attributes="title dreta" /></a>
+
+                    <div id="wrapper_resultats" class="scrollable">
+                        <div class="pagines_resultats">
+                            <tal:repl tal:replace="structure view/retDadesResultats" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="visualClear"><!--  --></div>
+
+            <div id="controls_resultats">
+
+                <div id="dades_paginacio_cerca">
+                    <!-- TODO: es correcte? o en compte sde guardar-ho a input hidden, millor a $('#visual-portal-wrapper').get(0).num_resultats??? Com??? -->
+                    <input id="num_resultats" type="hidden" tal:attributes="value dades_paginacio/num_total_obj" />
+
+                    <span i18n:translate="pagina" id="pagina">pàgina</span>:
+                    <!-- TODO: si ok sense guardar pagina_actual a rel, esborrar
+                    <span id="pagina_actual" tal:attributes="rel dades_paginacio/pagina_actual" tal:content="dades_paginacio/pagina_actual">1</span>
+                    -->
+                    <span id="pagina_actual" tal:content="dades_paginacio/pagina_actual">1</span>
+                    <span i18n:translate="de">de</span>
+                    <span id="pagina_total" tal:attributes="rel dades_paginacio/num_total_pagines" tal:content="dades_paginacio/num_total_pagines">5</span>
+                    /
+                    <span i18n:translate="arxius" id="arxius">arxius</span>:
+                    <span id="arxiu_inicial" tal:content="dades_paginacio/num_obj_inicial">15</span>
+                    -
+                    <span id="arxiu_final" tal:content="dades_paginacio/num_obj_final">75</span>
+                </div>
+
+                <div id="visualitzacio_resultats" tal:define="dades_visualitzacio view/retDadesVisualitzacio; visualitzacio dades_visualitzacio/visualitzacio; zoom dades_visualitzacio/zoom">
+                    <div id="zoom_resultats" tal:attributes="class python: visualitzacio == 'imatge' and 'link_visualitzacio selected' or 'link_visualitzacio hidden'" rel="imatge">
+                        <a href="#" id="zoom_menys"><img src="++resource++fatac.theme.images/small.png" i18n:attributes="title small" /></a>
+                        <div tal:attributes="rel zoom" id="slider-wrap-zoom" class="slider-wrap-zoom"></div>
+                        <a href="#" id="zoom_mes"><img id="zoom_mes" src="++resource++fatac.theme.images/large.png" i18n:attributes="title large" /></a>
+                    </div>
+                    <a rel="imatge" href="#" tal:attributes="class python: visualitzacio == 'imatge' and 'link_visualitzacio link_visualitzacio1 hidden' or 'link_visualitzacio link_visualitzacio1'"><img src="++resource++fatac.theme.images/ico_1.png" i18n:attributes="title visualitzacio1" /></a>
+                    <a rel="fitxa_cerca" href="#" tal:attributes="class python: visualitzacio == 'fitxa_cerca' and 'link_visualitzacio selected' or 'link_visualitzacio'"><img src="++resource++fatac.theme.images/ico_2.png" i18n:attributes="title visualitzacio2" /></a>
+                    <a rel="fitxa_ampliada_cerca" href="#" tal:attributes="class python: visualitzacio == 'fitxa_ampliada_cerca' and 'link_visualitzacio selected' or 'link_visualitzacio'"><img src="++resource++fatac.theme.images/ico_3.png" i18n:attributes="title visualitzacio3" /></a>
+                    <a rel="fitxa_ampliada_cerca_overlay" href="#" tal:attributes="class python: visualitzacio == 'fitxa_ampliada_cerca_overlay' and 'link_visualitzacio selected' or 'link_visualitzacio'"><img src="++resource++fatac.theme.images/ico_4.png" i18n:attributes="title visualitzacio4" /></a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="visualClear"><!--  --></div>
+
+        <div id="accions_cerca" class="div_dotted_line">
+            <dl class="llista_desplegable llista_desplegable_verd actionMenu deactivated">
+                <dt class="actionMenuHeader">
+                    <a class="arial16c339933bold" i18n:attributes="title mes_opcions" href="">
+                        + <span class="arrowDownAlternative"><img src="++resource++fatac.theme.images/arrow_down_green.gif" /></span>
+                    </a>
+                </dt>
+                <dd class="actionMenuContent">
+                    <ul>
+                        <li><a class="arial11c339933">leer después</a></li>
+                        <li><a class="arial11c339933">añadir comentario</a></li>
+                        <li><a class="arial11c339933">añadir a album 1</a></li>
+                        <li><a class="arial11c339933">añadir a album 2</a></li>
+                        <li><a class="arial11c339933">añadir a nuevo album</a></li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+
+    </tal:co>
+    <tal:co tal:condition="python: dades_paginacio['num_total_pagines'] <= 0">
+        <div class="div_dotted_line">
+            No s'han trobat resultats!
+        </div>
+    </tal:co>
+</div>
