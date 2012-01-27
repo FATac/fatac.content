@@ -147,24 +147,7 @@
                         />
                         </p>
 
-                    </form>
-
-<!-- 
-                    <p>
-
-
-                        <a href="++add++fatac.playlist" tal:define="afegir context/absolute_url" tal:attributes="href string:$afegir/++add++fatac.playlist">
-                           <button id="member-add-playlist" class="btn warning" i18n:translate="">Afegeix una nova Playlist</button>
-                        </a>
-
-                    </p>
-
-                    <p>
-                        <a href="file" tal:define="afegir context/absolute_url" tal:attributes="href string:$afegir/createObject?type_name=File">
-                            <button id="member-add-playlist" class="btn warning">Afegeix un nou Fitxer</button>
-                        </a>
-                    </p>
--->                    
+                    </form>                  
 
                 </div>               
             </div>
