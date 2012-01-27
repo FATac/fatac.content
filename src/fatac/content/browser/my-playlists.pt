@@ -71,15 +71,6 @@
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
-        <dl tal:condition="python:view.empty() and view.can_edit()"
-            class="portalMessage info visualClear" id="dashboard-info-message">
-            <dt i18n:translate="">Info</dt>
-            <dd i18n:translate="info_empty_dashboard">
-                Your dashboard is currently empty. Click the 
-                <em>edit</em> tab to assign some personal 
-                portlets.
-            </dd>
-        </dl>
 
         <div id="content">
             
