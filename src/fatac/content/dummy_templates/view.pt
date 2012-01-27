@@ -30,6 +30,8 @@
                 <a href="#" class="disable-create">Disable Create</a>
             </div>
 
+            <span tal:content="context/idObjecte" />
+
             <p id="description" class="documentDescription" tal:content="context/description" />
         </div>
 
