@@ -73,17 +73,6 @@
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
-        <dl tal:condition="python:view.empty() and view.can_edit()"
-            class="portalMessage info visualClear" id="dashboard-info-message">
-            <dt i18n:translate="">Info</dt>
-            <dd i18n:translate="info_empty_dashboard">
-                Your dashboard is currently empty. Click the 
-                <em>edit</em> tab to assign some personal 
-                portlets.
-            </dd>
-        </dl>
-
-        
 
         <div id="content">
             
@@ -112,27 +101,7 @@
                i18n:translate="label_up_to_groups_overview">
                Up to Groups Overview
             </a>
-
-<!--
-            <ul id="content-views" class="contentViews">
-                <li class="selected">
-                    <a href=""
-                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups;"
-                       i18n:translate="">Escriptori del Grup</a>
-                </li>
-                <li>
-                    <a href=""
-                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
-                       i18n:translate="">Membres</a>
-                </li>
-                <li>
-                    <a href=""
-                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
-                       i18n:translate="">Activitat</a>
-                </li>
-            </ul>
--->
-            
+  
             <div id="dades-group" class="row">
 
                 <div id="portrait" class="span2" style="float: left">
@@ -142,12 +111,6 @@
                 <div id="group-info" class="span10">
                     <span tal:content="python:group.getProperty('description')" />
                 </div>
-
-<!--
-                <tal:rep tal:repeat="prop property">
-                    <span tal:content="property" /><br/><br/>            
-                </tal:rep>
--->
 
                 <div id="actions" class="span3">
 
