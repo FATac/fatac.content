@@ -119,6 +119,13 @@
       permission="plone.app.portlets.ManageOwnPortlets"
       />
 
+  <browser:page
+      name="retornaUserGroups"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".retornaUserGroups.retornaUserGroups"
+      permission="zope2.View"
+      />
+
   
 
 
