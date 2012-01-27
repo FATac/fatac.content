@@ -118,9 +118,6 @@
 
                              <p>
                                  <span tal:content="obj/Description" />
-<!--
-                                 Modificat el: <span class="label important" tal:content="python:toLocalizedTime(playlist.ModificationDate)">May 5</span>
--->
                              </p>
 
                         </div>
