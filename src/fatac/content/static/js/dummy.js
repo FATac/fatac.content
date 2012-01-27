@@ -78,36 +78,39 @@ function contextMenu(pathname)
     var idPlaylist;
     var menuDict = new Object();
 
-    // Assign handlers immediately after making the request,
-    // and remember the jqxhr object for this request
-    $.getJSON(pathname + "returnPlaylists", function() { 
-    })
-    .error(function() { alert("No s'ha pogut carregar el menu contextual"); })
-    .complete(function( data ) {
+    // Si no estem editant l'objecte fem la cerca de playlists i carreguem el menu contextual
+    if (pathname.indexOf("@@edit") == -1 && pathname.indexOf("edit") == -1)
+    {
+        // Assign handlers immediately after making the request,
+        // and remember the jqxhr object for this request
+        $.getJSON(pathname + "returnPlaylists", function() { 
+        })
+        .error(function() { alert("No s'ha pogut carregar el menu contextual"); })
+        .complete(function( data ) {
 
-        
-        var llistaPlaylists = jQuery.parseJSON( data.responseText );
+            
+            var llistaPlaylists = jQuery.parseJSON( data.responseText );
 
-        for (i=0; i<llistaPlaylists['Titols'].length; i++)
-        {
-            titol = llistaPlaylists['Titols'][i];
-            idPlaylist = llistaPlaylists['Ids'][i];
-            menuDict[titol] = function(menuItem,menu) {
-                $.ajax({url: pathname + "updatePlaylist?idPlaylist=" + idPlaylist, type: "post", error: function(){alert("Ha donat un error al afegir a la Playlist! No s'han guardat els canvis");}
-            });};
-        }
+            for (i=0; i<llistaPlaylists['Titols'].length; i++)
+            {
+                titol = llistaPlaylists['Titols'][i];
+                idPlaylist = llistaPlaylists['Ids'][i];
+                menuDict[titol] = function(menuItem,menu) {
+                    $.ajax({url: pathname + "updatePlaylist?idPlaylist=" + idPlaylist, type: "post", error: function(){alert("Ha donat un error al afegir a la Playlist! No s'han guardat els canvis");}
+                });};
+            }
 
-        if (llistaPlaylists['Titols'].length == 0)
-        {
-            menuDict['No hi han elements'] = {onclick:function(){},disabled:true};
-        }
+            if (llistaPlaylists['Titols'].length == 0)
+            {
+                menuDict['No hi han elements'] = {onclick:function(){},disabled:true};
+            }
 
-        menu.push(menuDict);
+            menu.push(menuDict);
 
-        $('.cmenu').contextMenu(menu,{theme:'default'});
+            $('.cmenu').contextMenu(menu,{theme:'default'});
 
-    });
-
+        });
+    }
     
 }
 
@@ -128,8 +131,6 @@ function imageTagger(pathname)
    
             // Default to turned on.
             isTagCreationEnabled: true,
-
-            //cleanAJAXResponse: cleanColdFusionJSONResponse,
         });
  
  
