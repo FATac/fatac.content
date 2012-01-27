@@ -48,6 +48,12 @@ class IDummy(form.Schema, IImageScaleTraversable):
         required = False,
         )
 
+    idObjecte = schema.TextLine(
+        title = _(u"Object Id"),
+        description = _(u"This is the ID of the database object"),
+        required = False,
+        )
+
 
 class View(grok.View):
     """
@@ -67,13 +73,8 @@ class returnPlaylists(grok.View):
     grok.context(IDummy)
     grok.require('zope2.View')
     grok.name('returnPlaylists')
-    #grok.viewletmanager(IHtmlHead)
-
-    #def update(self):
-    #    self.llistaPlaylists = self.llistaPlaylists()
 
     def render(self):
-        #print "S'ha demanat la llista de Playlists"
         """
         Render the settings as inline Javascript object in HTML <head>
         """
@@ -143,34 +144,19 @@ class updatePlaylist(grok.View):
             if (playlist.orderedList != None):
                 for item in playlist.orderedList:
                     newOrderedList.append(item)
-                    if (item[1] == context.getId()):
+                    if (item[1] == context.idObjecte):
                         objectIsInOrderedList = True
 
             if (objectIsInOrderedList == False):
-                newOrderedList.append([len(newOrderedList),context.getId()])
+                newOrderedList.append([len(newOrderedList),context.idObjecte])
                 playlist.orderedList = newOrderedList
-
-            #Check if new Object is already in the playlist
-            objectIsInPlaylist = False
-            if (playlist.listToPlay != None):
-                for item in playlist.listToPlay:
-                    newRelationList.append(item)
-                    if (item.to_object.id == context.id):
-                        objectIsInPlaylist = True
-
-            if (objectIsInPlaylist == False):
-                intids = getUtility(IIntIds)
-                try:
-                    to_id = intids.getId(context)
-                except KeyError:
-                    to_id = intids.register(context)
-
-                newRelationList.append(RelationValue(to_id))
-                playlist.listToPlay = newRelationList
 
 
 
 class loadTags(grok.View):
+    """
+        Metode que retorna els tags
+    """
     grok.context(IDummy)
     grok.require('zope2.View')
     grok.name('loadTags')
@@ -201,6 +187,10 @@ class loadTags(grok.View):
 
 
 class saveTag(grok.View):
+    """
+        Metode que guarda els Tags
+    """
+
     grok.context(IDummy)
     grok.require('zope2.View')
     grok.name('saveTag')
@@ -236,6 +226,10 @@ class saveTag(grok.View):
 
 
 class deleteTag(grok.View):
+    """
+        Metode que elimina el Tag
+    """
+
     grok.context(IDummy)
     grok.require('zope2.View')
     grok.name('deleteTag')
