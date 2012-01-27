@@ -14,7 +14,6 @@
 
             <a href="" tal:attributes="href playlist/url; title playlist/title;">
                 <span class="portletItemDetails" tal:content="playlist/title">Playlist Title</span>
-                <!-- <span class="portletItemDetails" tal:content="playlist/summary">Playlist Summary</span> -->
             </a>
 
         </dd>
