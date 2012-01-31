@@ -8,5 +8,9 @@
        <permission name="Playlist: Modify Relation Field" acquire="False">
            <role name="Manager" />
        </permission>
+
+       <permission name="Add Groups" acquire="True">
+           <role name="Member" />
+       </permission>       
     </permissions>
 </rolemap>
