@@ -422,7 +422,13 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
                     self.searchResults = self.getPotentialMembers(self.searchString)
             else:
                 if findAll or not self.many_groups or self.searchString != '':
-                    self.searchResults = self.getPotentialGroups(self.searchString)
+                    grupsPotencials = self.getPotentialGroups(self.searchString)
+                    if (grupsPotencials != None and grupsPotencials != []):
+                        for grup in grupsPotencials:
+                            if grup.getId() not in ["Administrators", "Site Administrators"]:
+                                self.searchResults.append(grup)
+                    else:
+                        self.searchResults = grupsPotencials
 
 
             if search or findAll:
@@ -446,6 +452,8 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
     def getPotentialMembers(self, searchString):
         ignoredGroups = [x.id for x in self.getGroups() if x is not None]
         return self.membershipSearch(searchString, searchUsers=True, searchGroups=False, ignore=ignoredGroups)
+
+
 
 
 class GroupDetailsControlPanel(UsersGroupsControlPanelView):
