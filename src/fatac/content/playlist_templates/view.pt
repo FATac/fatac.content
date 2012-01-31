@@ -45,17 +45,21 @@
 
         <div tal:replace="structure provider:plone.abovecontenttitle" />
 
-        <h1 class="documentFirstHeading" tal:content="context/title" />
+        <div class="div_dotted_line_doble_negre">
+            <h1 class="arial13c000000upp" i18n:translate="" tal:content="context/title" />
+        </div>
         
         <div tal:replace="structure provider:plone.belowcontenttitle" />
 
         <div class="row">
-            <div class="span3">
-                <img tal:condition="context/descImage" tal:replace="structure context/@@images/descImage/thumb" />
-            </div>
- 
-            <div class="span12">
-                <p class="documentDescription" tal:content="context/description" />
+            <div class="span16">
+                <div id="descImage" style="float: left; padding: 0.5em;">
+                    <img tal:condition="context/descImage" 
+                         tal:replace="structure context/@@images/descImage/thumb" />
+                </div>
+                <div id="info">
+                    <p class="arial15c999999" style="padding: 0.5em;" tal:content="context/description" />
+                </div>
             </div>
         </div>
 
