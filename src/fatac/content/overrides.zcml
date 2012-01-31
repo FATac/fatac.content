@@ -10,7 +10,7 @@
     name="usergroup-groupdetails"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     class=".dashboard.GroupDetailsControlPanel"
-    permission="plone.app.controlpanel.UsersAndGroups"
+    permission="zope2.View"
     template="browser/usergroups_groupdetails.pt"
     />
 
