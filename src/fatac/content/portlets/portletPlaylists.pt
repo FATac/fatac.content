@@ -1,9 +1,14 @@
-<dl class="portlet portletPlaylists"
+<dl class="portlet portletFatac"
     i18n:domain="fatac.content">
 
-    <dt class="portletHeader">
+    <dt class="portletHeader arial11c339933">
         <span class="portletTopLeft"></span>
-        Les Meves Playlists
+        <a href="#"
+           class="tile"
+           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists"
+           i18n:translate="">
+           Les Meves Playlists
+        </a>
         <span class="portletTopRight"></span>
     </dt>
 
@@ -19,7 +24,13 @@
         </dd>
     </tal:items>
     
-    <dd class="portletFooter">
+    <dd class="portletFooter" i18n:domain="plone">
+        <a href="#"
+           class="tile"
+           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists"
+           i18n:translate="box_more_recently_changed">
+           All recent changes&hellip;
+        </a>
         <span class="portletBottomLeft"></span>
         <span class="portletBottomRight"></span>
     </dd>
