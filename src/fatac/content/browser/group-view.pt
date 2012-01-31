@@ -43,11 +43,13 @@
                        tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
                        i18n:translate="label_dashboard">Dashboard</a>
                 </li>
+<!--                
                 <li>
                     <a href=""
                        tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
                        i18n:translate="label_portlets">Edita Portlets</a>
                 </li>
+-->
                 <li class="selected">
                     <a href=""
                        tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -75,58 +77,49 @@
         </div>
 
         <div id="content">
-            
-            <h1 class="documentFirstHeading">
-                <span tal:replace="groupname" />
-            </h1>
 
-            <div id="submenu">
-                <a class="link-submenu selected" href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};"
-                   i18n:translate="">Escriptori del Grup</a>
+            <div class="div_dotted_line_doble_negre">
+                <div id="submenu">
+                    <a class="link-submenu selected" href=""
+                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};"
+                       i18n:translate="">Escriptori del Grup</a>
 
-                <a class="link-submenu" href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
-                   i18n:translate="">Membres</a>
+                    <a class="link-submenu" href=""
+                       tal:condition="python: member.getId() in group.getProperty('delegated_group_member_managers')"
+                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
+                       i18n:translate="">Membres</a>
 
-                <a class="link-submenu" href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
-                   i18n:translate="">Activitat</a>
+                    <a class="link-submenu" href=""
+                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
+                       i18n:translate="">Activitat</a>
+
+                </div>
+                <h1 class="arial13c000000upp" i18n:translate="">
+                  <span tal:content="group/getGroupTitleOrName" />
+                </h1>
+
+                
 
             </div>
 
-            <a href=""
-               class="link-parent"
-               tal:attributes="href string:$portal_url/@@manage-groups"
-               i18n:translate="label_up_to_groups_overview">
-               Up to Groups Overview
-            </a>
-  
-            <div id="dades-group" class="row">
-
-                <div id="portrait" class="span2" style="float: left">
-                    <!-- <img src="#" tal:attributes="src python:member.getPersonalPortrait(id=member.id).absolute_url()" /> -->
+            <div id="actions" class="div_dotted_line_bottom">
+                <div style="float:left;">
+                  <img rel="filtres" class="arrow_bottom filtres" src="++resource++fatac.theme.images/ico_arrow_down.png" />
+                  <span class="arial13c999999" i18n:translate="">Accions</span>
                 </div>
 
-                <div id="group-info" class="span10">
-                    <span tal:content="python:group.getProperty('description')" />
-                </div>
-
-                <div id="actions" class="span3">
-
+                <tal:cond tal:condition="python: member.getId() in [u.getId() for u in group.getGroupMembers()]">
                     <form action=""
                           name="playlist_add"
                           method="post"
                           tal:attributes="action string:$portal_url/++add++fatac.playlist">
 
-                        <p>
-                        <input class="btn warning"
+                        <input class="boto_filtres arial11c666666 actionButtons"
                                type="submit"
                                name="form.button.AddPlaylist"
                                value="Afegeix una nova Playlist"
                                i18n:attributes="value label_add_new_playlist;"
                         />
-                        </p>
 
                     </form>
 
@@ -135,17 +128,33 @@
                           method="post"
                           tal:attributes="action string:$portal_url/createObject?type_name=File">
 
-                        <p>
-                        <input class="btn warning"
+                        <input class="boto_filtres arial11c666666 actionButtons"
                                type="submit"
                                name="form.button.AddFile"
                                value="Afegeix una nou Fitxer"
                                i18n:attributes="value label_add_new_playlist;"
                         />
-                        </p>
 
                     </form>
-                </div>               
+                </tal:cond>
+            </div>
+
+            
+            <p>
+            <a href=""
+               class="arial11c339933"
+               tal:attributes="href string:$portal_url/@@manage-groups"
+               i18n:translate="label_up_to_groups_overview">
+               Up to Groups Overview
+            </a>
+            </p>
+  
+            <div id="dades-group" class="row">
+
+                <div id="group-info" class="span16">
+                    <p tal:content="python:group.getProperty('description')" />
+                </div>
+               
             </div>
 
             <div id="content-core">                

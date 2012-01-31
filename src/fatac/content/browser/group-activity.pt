@@ -87,6 +87,7 @@
                    i18n:translate="">Escriptori del Grup</a>
 
                 <a class="link-submenu" href=""
+                   tal:condition="python: member.getId() in group.getProperty('delegated_group_member_managers')"
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
                    i18n:translate="">Membres</a>
 

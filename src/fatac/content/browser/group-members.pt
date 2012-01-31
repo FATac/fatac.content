@@ -52,11 +52,13 @@
                        tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
                        i18n:translate="label_dashboard">Dashboard</a>
                 </li>
+<!--                
                 <li>
                     <a href=""
                        tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
                        i18n:translate="label_portlets">Edita Portlets</a>
                 </li>
+-->
                 <li class="selected">
                     <a href=""
                        tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -85,61 +87,63 @@
 
         
 
-        <div id="content">
-            
-            <h1 class="documentFirstHeading">
-                <span tal:replace="groupname" />
-            </h1>
+        <div id="content" tal:condition="python: member.getId() in group.getProperty('delegated_group_member_managers')">
 
-            <div id="submenu">
-                <a class="link-submenu" href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};"
-                   i18n:translate="">Escriptori del Grup</a>
+            <div class="div_dotted_line_doble_negre">
+                <div id="submenu">
+                    <a class="link-submenu" href=""
+                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};"
+                       i18n:translate="">Escriptori del Grup</a>
 
-                <a class="link-submenu selected" href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
-                   i18n:translate="">Membres</a>
+                    <a class="link-submenu selected" href=""
+                       tal:condition="python: member.getId() in group.getProperty('delegated_group_member_managers')"
+                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
+                       i18n:translate="">Membres</a>
 
-                <a class="link-submenu" href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
-                   i18n:translate="">Activitat</a>
+                    <a class="link-submenu" href=""
+                       tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
+                       i18n:translate="">Activitat</a>
 
+                </div>
+
+                <h1 class="arial13c000000upp" tal:condition="not:groupname | nothing" i18n:translate="heading_group_members">
+                    Group Members
+                </h1>
+
+                <h1 class="arial13c000000upp" tal:condition="groupname | nothing" i18n:translate="heading_group_members_of">
+                     Members of the <span tal:content="group/getGroupTitleOrName" tal:omit-tag="" i18n:name="groupname">Groupname</span> group
+                </h1>
             </div>
 
-
             <tal:ifnogroups tal:condition="not:groupname | nothing">
-              <h1 class="documentFirstHeading"
-                  i18n:translate="heading_group_members">Group Members</h1>
+                <div id="content-core">
+                    <p>
+                        <a href=""
+                           class="arial11c339933"
+                           tal:attributes="href string:$portal_url/@@manage-groups"
+                           i18n:translate="label_up_to_groups_overview">
+                            Up to Groups Overview
+                        </a>
+                    </p>
 
-              <div id="content-core">
-                  <a href=""
-                     class="link-parent"
-                     tal:attributes="href string:$portal_url/@@manage-groups"
-                     i18n:translate="label_up_to_groups_overview">
-                    Up to Groups Overview
-                  </a>
+                    <p i18n:translate="label_no_group_specified">No group was specified.</p>
 
-                  <p i18n:translate="label_no_group_specified">No group was specified.</p>
-
-                  <p>
-                    <a href="@@manage-groups" i18n:translate="label_find_group">Find a group here</a>
-                  </p>
-              </div>
+                    <p>
+                        <a href="@@manage-groups" i18n:translate="label_find_group">Find a group here</a>
+                    </p>
+                </div>
             </tal:ifnogroups>
 
             <tal:ifgroups tal:condition="groupname | nothing">
-              <h1 class="documentFirstHeading"
-                  i18n:translate="heading_group_members_of">
-                  Members of the <span tal:content="groupname" tal:omit-tag="" i18n:name="groupname">Groupname</span> group
-              </h1>
-
-              <div id="content-core">
-                  <a href=""
-                     class="link-parent"
-                     tal:attributes="href string:$portal_url/@@manage-groups"
-                     i18n:translate="label_up_to_groups_overview">
-                    Up to Groups Overview
-                  </a>
+                <div id="content-core">
+                    <p>
+                        <a href=""
+                           class="arial11c339933"
+                           tal:attributes="href string:$portal_url/@@manage-groups"
+                           i18n:translate="label_up_to_groups_overview">
+                            Up to Groups Overview
+                        </a>
+                    </p>
 
                   <p i18n:translate="description_group_members_of">
                     You can add or remove groups and users from this particular group here. Note that this
@@ -156,8 +160,8 @@
                                         many_users view/many_users">
                     <div class="row">
                       <div class="span8">
-                        <h2 i18n:translate="heading_groupmembers_current">Current group members</h2>
-                          <table class="listing" summary="Group Members Listing"
+                        <h2 class="arial15c666666" i18n:translate="heading_groupmembers_current">Current group members</h2>
+                          <table class="dashboardListing" summary="Group Members Listing"
                              tal:condition="python: len(group.getGroupMembers())!=0">
 
                               <input type="hidden"
@@ -233,7 +237,8 @@
 
                           <p tal:condition="python: not len(group.getGroupMembers())!=0" i18n:translate="decription_no_members_assigned">There is no group or user attached to this group.</p>
 
-                          <input class="btn warning"
+                          <input class="boto_filtres arial11c666666 actionButtonsSimple"
+                                 style="float: left;"
                                  type="submit"
                                  name="form.button.Edit"
                                  value="Remove selected groups / users"
@@ -245,14 +250,15 @@
 
                         <tal:addusers> <!-- tal:condition="group/canAddUsers"> -->
 
-                            <h2 i18n:translate="heading_search_newmembers">Search for new group members</h2>
+                            <h2 class="arial15c666666" i18n:translate="heading_search_newmembers">Search for new group members</h2>
 
                             <input type="hidden" name="form.submitted" value="1" />
 
-                            <table class="listing" summary="Groups">
+                            <table class="dashboardListing" summary="Groups">
                               <tr>
                                 <th colspan="3">
-                                  <span tal:omit-tag="" i18n:translate="label_quick_search">Quick search</span>:
+                                  <span class="arial11c339933" 
+                                        tal:omit-tag="" i18n:translate="label_quick_search">Quick search</span>:
                                     <input class="quickSearch"
                                            type="text"
                                            name="searchstring"
@@ -261,12 +267,12 @@
                                            />
 
                                     <input type="submit"
-                                           class="searchButton"
+                                           class="boto_filtres arial11c666666 actionButtonsSimple"
                                            name="form.button.Search"
                                            value="Search"
                                            i18n:attributes="value label_search;" />
                                     <input type="submit"
-                                           class="searchButton"
+                                           class="boto_filtres arial11c666666 actionButtonsSimple"
                                            name="form.button.FindAll"
                                            value="Show all"
                                            i18n:attributes="value label_search_large;"
@@ -378,7 +384,8 @@
                                 </a>
                             </div>
 
-                            <input class="btn warning"
+                            <input class="boto_filtres arial11c666666 actionButtonsSimple"
+                                    style="float: left;margin-bottom: 1em;"
                                     type="submit"
                                     name="form.button.Add"
                                     value="Add selected groups and users to this group"
@@ -392,7 +399,6 @@
                     </div>
 
                   </form>
-
               </div>
             </tal:ifgroups>
         </div>

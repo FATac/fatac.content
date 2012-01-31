@@ -41,11 +41,13 @@
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
                    i18n:translate="label_dashboard">Dashboard</a>
               </li>
+<!--
               <li>
                 <a href=""
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
                    i18n:translate="label_portlets">Edita Portlets</a>
               </li>
+-->
               <li>
                 <a href=""
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -73,37 +75,54 @@
         </div>
 
         <div id="content">
-            
-            <h1 class="documentFirstHeading" i18n:translate="">
-                Les Playlists de <span tal:replace="name" i18n:name="user_name" />
-            </h1>
-            
-            <form action=""
-                  name="playlist_add"
-                  method="post"
-                  tal:attributes="action string:$portal_url/++add++fatac.playlist">
 
-                  <p>
-                  <input class="btn warning"
-                         type="submit"
-                         name="form.button.AddPlaylist"
-                         value="Afegeix una nova Playlist"
-                         i18n:attributes="value label_add_new_playlist;"
-                  />
-                  </p>
+            <div class="div_dotted_line_doble_negre">
+              <h1 class="arial13c000000upp" i18n:translate="">
+                  Les Playlists de <span tal:replace="name" i18n:name="user_name" />
+              </h1>
+            </div>
+            
+            <div id="actions" class="div_dotted_line_bottom">
 
-            </form>
+                <div style="float:left;">
+                  <img rel="filtres" class="arrow_bottom filtres" src="++resource++fatac.theme.images/ico_arrow_down.png" />
+                  <span class="arial13c999999" i18n:translate="">Accions</span>
+                </div>
+
+                <form action=""
+                      name="playlist_add"
+                      method="post"
+                      tal:attributes="action string:$portal_url/++add++fatac.playlist">
+
+                      <input class="boto_filtres arial11c666666 actionButtons"
+                             type="submit"
+                             name="form.button.AddPlaylist"
+                             value="Afegeix una nova Playlist"
+                             i18n:attributes="value label_add_new_playlist;"
+                      />
+
+                </form>
+            </div>
 
             <div id="my-playlists" class="row">
 
-                <div class="span10" tal:define="search python:context.portal_catalog.searchResults(portal_type='fatac.playlist', 
+                <div class="span16" tal:define="search python:context.portal_catalog.searchResults(portal_type='fatac.playlist', 
                                                                                                    creator=member.getId(), 
                                                                                                    sort_on='modified',
                                                                                                    sort_order='reverse',)">
                     <tal:re tal:repeat="playlist search">
-                        <div class="alert-message warning">
-                             <a href="" tal:attributes="href playlist/getURL"><span tal:content="playlist/Title" /></a>
-                             <p><span tal:content="playlist/Description" /></p>
+                        <div class="genericview_my_dades">
+                            <div id="descImage" style="float: left; padding: 0.5em;">
+                                <tal:cond tal:define="objecte playlist/getObject" 
+                                          tal:condition="python: objecte.Type()=='Playlist'">
+                                    <img tal:condition="objecte/descImage" 
+                                         tal:replace="structure objecte/@@images/descImage/thumb" />
+                                </tal:cond>
+                            </div>
+                            <div id="info">
+                                <a href="" tal:attributes="href playlist/getURL"><span tal:content="playlist/Title" /></a>
+                                <p><span tal:content="playlist/Description" /></p>
+                            </div>
                         </div>
                     </tal:re>
                 </div>

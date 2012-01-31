@@ -41,11 +41,13 @@
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
                    i18n:translate="label_dashboard">Dashboard</a>
               </li>
+<!--
               <li>
                 <a href=""
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
                    i18n:translate="label_portlets">Edita Portlets</a>
               </li>
+-->
               <li>
                 <a href=""
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -82,10 +84,65 @@
         </dl>
 
         <div id="content">
-            
-            <h1 class="documentFirstHeading" i18n:translate="heading_dashboard">
-                <span tal:replace="name" i18n:name="user_name" />&#8217;s dashboard
-            </h1>
+            <div class="div_dotted_line_doble_negre">
+              <h1 class="arial13c000000upp" i18n:translate="heading_dashboard">
+                  <span tal:replace="name" i18n:name="user_name" />&#8217;s dashboard
+              </h1>
+            </div>
+
+            <div id="actions" class="div_dotted_line_bottom">
+
+                <div style="float:left;">
+                  <img rel="filtres" class="arrow_bottom filtres" src="++resource++fatac.theme.images/ico_arrow_down.png" />
+                  <span class="arial13c999999" i18n:translate="">Accions</span>
+                </div>
+
+                <form action=""
+                      name="groups_add"
+                      method="post"
+                      tal:attributes="action string:$portal_url/@@usergroup-groupdetails">
+
+
+                    <input class="boto_filtres arial11c666666 actionButtons"
+                           type="submit"
+                           name="form.button.AddGroup"
+                           value="Add New Group"
+                           i18n:attributes="value label_add_new_group;"
+                    />
+
+                </form>
+
+                <form action=""
+                      name="playlist_add"
+                      method="post"
+                      tal:attributes="action string:$portal_url/Members/${member/id}/++add++fatac.playlist">
+
+
+                    <input class="boto_filtres arial11c666666 actionButtons"
+                           type="submit"
+                           name="form.button.AddPlaylist"
+                           value="Afegeix una nova Playlist"
+                           i18n:attributes="value label_add_new_playlist;"
+                    />
+
+
+                </form>
+
+                <form action=""
+                      name="file_add"
+                      method="post"
+                      tal:attributes="action string:$portal_url/Members/${member/id}/createObject?type_name=File">
+
+                    <input class="boto_filtres arial11c666666 actionButtons"
+                           type="submit"
+                           name="form.button.AddFile"
+                           value="Afegeix una nou Fitxer"
+                           i18n:attributes="value label_add_new_playlist;"
+                    />
+
+
+                </form> 
+            </div>
             
             <div id="dades-personals" class="row">
 
@@ -93,66 +150,15 @@
                     <img src="#" tal:attributes="src python:member.getPersonalPortrait(id=member.id).absolute_url()" />
                 </div>
 
-                <div id="member-info" class="span10">
+                <div id="member-info" class="span13">
                     <!-- <span tal:replace="memberinfo/username" /> <br/> -->
-                    <span tal:replace="memberinfo/description" /> <br/>
-                    <span tal:replace="memberinfo/location" />
-                    (<a href="#" tal:attributes="href memberinfo/home_page"><span tal:replace="memberinfo/home_page" /></a>) <br/>
-                </div>
-
-                <div id="actions" class="span3" >
-
-                    <form action=""
-                          name="groups_add"
-                          method="post"
-                          tal:attributes="action string:$portal_url/@@usergroup-groupdetails">
-                       
-                        <p>
-                        <input class="btn warning"
-                               type="submit"
-                               name="form.button.AddGroup"
-                               value="Add New Group"
-                               i18n:attributes="value label_add_new_group;"
-                        />
-                        </p>
-                    </form>
-
-                    <form action=""
-                          name="playlist_add"
-                          method="post"
-                          tal:attributes="action string:$portal_url/Members/${member/id}/++add++fatac.playlist">
-
-                        <p>
-                        <input class="btn warning"
-                               type="submit"
-                               name="form.button.AddPlaylist"
-                               value="Afegeix una nova Playlist"
-                               i18n:attributes="value label_add_new_playlist;"
-                        />
-                        </p>
-
-                    </form>
-
-                    <form action=""
-                          name="file_add"
-                          method="post"
-                          tal:attributes="action string:$portal_url/Members/${member/id}/createObject?type_name=File">
-
-                        <p>
-                        <input class="btn warning"
-                               type="submit"
-                               name="form.button.AddFile"
-                               value="Afegeix una nou Fitxer"
-                               i18n:attributes="value label_add_new_playlist;"
-                        />
-                        </p>
-
-                    </form>                  
-
-                </div>               
+                    <span class="text georgia11c000000" tal:replace="memberinfo/description" /> <br/>
+                    <span class="text georgia11c000000" tal:replace="memberinfo/location" />
+                    (<a href="#" class="arial12c666666" tal:attributes="href memberinfo/home_page"><span tal:replace="memberinfo/home_page" /></a>) <br/>
+                </div>            
             </div>
 
-            <div id="content-core">                
+            <div id="content-core" class="div_dotted_line">
                 <div id="dashboard">                
                     <div class="visualClear"><!-- --></div>
                     <div id="dashboard-portlets1" 

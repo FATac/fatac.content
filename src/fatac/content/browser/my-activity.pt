@@ -41,11 +41,13 @@
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
                    i18n:translate="label_dashboard">Dashboard</a>
               </li>
+<!--              
               <li>
                 <a href=""
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
                    i18n:translate="label_portlets">Edita Portlets</a>
               </li>
+-->
               <li>
                 <a href=""
                    tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -71,55 +73,54 @@
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
-        <dl tal:condition="python:view.empty() and view.can_edit()"
-            class="portalMessage info visualClear" id="dashboard-info-message">
-            <dt i18n:translate="">Info</dt>
-            <dd i18n:translate="info_empty_dashboard">
-                Your dashboard is currently empty. Click the 
-                <em>edit</em> tab to assign some personal 
-                portlets.
-            </dd>
-        </dl>
 
         <div id="content">
-            
-            <h1 class="documentFirstHeading" i18n:translate="">
-                Canvis Recents
-            </h1>
+            <div class="div_dotted_line_doble_negre">
+              <h1 class="arial13c000000upp" i18n:translate="">
+                  Canvis Recents
+              </h1>
+            </div>
             
             <div id="my-activity" class="row">
 
-                <div class="span10" tal:define="search python:context.portal_catalog.searchResults(creator=member.getId(), 
+                <div class="span16" tal:define="search python:context.portal_catalog.searchResults(creator=member.getId(), 
                                                                                                    sort_on='modified',
                                                                                                    sort_order='reverse',)">
                     <tal:re tal:repeat="obj search" tal:define="plone_view context/@@plone;
                                                                      getIcon nocall:plone_view/getIcon;
                                                                      normalizeString nocall:plone_view/normalizeString;
                                                                      toLocalizedTime nocall:plone_view/toLocalizedTime;">
-                        <div class="alert-message warning" tal:define="item_icon python:getIcon(obj);
+                        <div class="genericview_my_dades" tal:define="item_icon python:getIcon(obj);
                                                                        item_wf_state obj/review_state;
                                                                        item_wf_state_class python:'state-' + normalizeString(item_wf_state);">
+                            <div id="descImage" style="float: left; padding: 0.5em;">
+                                <tal:cond tal:define="objecte obj/getObject" 
+                                          tal:condition="python: objecte.Type()=='Playlist'">
+                                    <img tal:condition="objecte/descImage" 
+                                         tal:replace="structure objecte/@@images/descImage/thumb" />
+                                </tal:cond>
+                            </div>
+                            <div id="info">
+                                <img tal:replace="structure item_icon/html_tag" />
+                                <a href="" tal:attributes="href obj/getURL; class string:$item_wf_state_class">
+                                   <span tal:content="obj/Title" />
+                                </a>
+                                <span class="activityDiscreet" i18n:translate="text_creator_date">
+                                   by
+                                   <span tal:define="creator obj/Creator;"
+                                         tal:content="python:memberinfo and memberinfo['fullname'] or creator"
+                                         tal:omit-tag=""
+                                         i18n:name="creator">creator</span>,
+                                   last updated:
+                                   <span tal:content="python:toLocalizedTime(obj.ModificationDate, long_format=1)"
+                                         tal:omit-tag=""
+                                         i18n:name="date">date</span>
+                                </span>
 
-                             <img tal:replace="structure item_icon/html_tag" />
-                             <a href="" tal:attributes="href obj/getURL; class string:$item_wf_state_class">
-                                 <span tal:content="obj/Title" />
-                             </a>
-                             <span class="discreet" i18n:translate="text_creator_date">
-                                 by
-                                 <span tal:define="creator obj/Creator;"
-                                       tal:content="python:memberinfo and memberinfo['fullname'] or creator"
-                                       tal:omit-tag=""
-                                       i18n:name="creator">creator</span>,
-                                 last updated:
-                                 <span tal:content="python:toLocalizedTime(obj.ModificationDate, long_format=1)"
-                                       tal:omit-tag=""
-                                       i18n:name="date">date</span>
-                             </span>
-
-                             <p>
-                                 <span tal:content="obj/Description" />
-                             </p>
-
+                                <p>
+                                   <span tal:content="obj/Description" />
+                                </p>
+                            </div>
                         </div>
                     </tal:re>
                 </div>
