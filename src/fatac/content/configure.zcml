@@ -60,7 +60,7 @@
       name="manage-groups"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".dashboard.UserMembershipControlPanel"
-      permission="plone.app.controlpanel.UsersAndGroups"
+      permission="zope2.View"
       template="browser/manage-groups.pt"
       />
 
@@ -68,7 +68,7 @@
       name="edit-group-details"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".dashboard.ManageGroupsPanel"
-      permission="plone.app.controlpanel.UsersAndGroups"
+      permission="zope2.View"
       template="browser/edit-group-details.pt"
       />
 
