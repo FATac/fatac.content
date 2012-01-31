@@ -47,7 +47,9 @@
             Portal status message
         </div>
 
-        <h1 class="documentFirstHeading" tal:content="context/title" />
+        <div class="div_dotted_line_doble_negre">
+            <h1 class="arial13c000000upp" i18n:translate="" tal:content="context/title" />
+        </div>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
