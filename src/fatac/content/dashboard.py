@@ -72,6 +72,23 @@ class FatacDashBoard(DashboardView):
         return getattr(self.context.portal_properties, 'fatac.dashboard', None)
 
 
+    def retornaCountGrups(self, memberid):
+        gtool = getToolByName(self.context, 'portal_groups')
+        mgroups = gtool.getGroupsByUserId(memberid)
+        return len(mgroups)
+
+    def retornaCountPlaylists(self, memberid):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        playlists = catalog.searchResults( portal_type = 'fatac.playlist', creator = memberid )
+        return len(playlists)
+
+    def retornaCountActivitat(self, memberid):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File'], creator = memberid )
+        return len(activitat)
+
+
+
 
 class groupActivity(DashboardView):
     """ 
@@ -80,7 +97,11 @@ class groupActivity(DashboardView):
     def searchActivityResults(self, groupmembers, groupname):
         context = self.context
         elementsList = []
-        search = context.portal_catalog.searchResults(creator=groupmembers, sort_on='modified', sort_order='reverse',)
+        search = context.portal_catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'],
+                                                      creator=groupmembers, 
+                                                      sort_on='modified', 
+                                                      sort_order='reverse',
+                                                      sort_limit=20)[:20]
 
         for item in search:
             if ((item.visibleInGroupsList != None) and (item.Type == 'Playlist')):
@@ -90,6 +111,32 @@ class groupActivity(DashboardView):
                 elementsList.append(item)
 
         return elementsList
+
+
+
+
+class groupPlaylists(DashboardView):
+    """ 
+        Returns the list of playlists of the group
+    """
+    def searchPlaylistsResults(self, groupmembers, groupname):
+        context = self.context
+        elementsList = []
+        search = context.portal_catalog.searchResults(portal_type='fatac.playlist',
+                                                      creator=groupmembers, 
+                                                      sort_on='modified', 
+                                                      sort_order='reverse',
+                                                      sort_limit=20)[:20]
+
+        for item in search:
+            if (item.visibleInGroupsList != None):
+                if groupname in item.visibleInGroupsList:
+                    elementsList.append(item)
+            else:
+                elementsList.append(item)
+
+        return elementsList
+
 
 
 
@@ -452,6 +499,21 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
     def getPotentialMembers(self, searchString):
         ignoredGroups = [x.id for x in self.getGroups() if x is not None]
         return self.membershipSearch(searchString, searchUsers=True, searchGroups=False, ignore=ignoredGroups)
+
+    def retornaCountGrups(self, memberid):
+        gtool = getToolByName(self.context, 'portal_groups')
+        mgroups = gtool.getGroupsByUserId(memberid)
+        return len(mgroups)
+
+    def retornaCountPlaylists(self, memberid):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        playlists = catalog.searchResults( portal_type = 'fatac.playlist', creator = memberid )
+        return len(playlists)
+
+    def retornaCountActivitat(self, memberid):
+        catalog = getToolByName(self.context, 'portal_catalog')
+        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File'], creator = memberid )
+        return len(activitat)
 
 
 
