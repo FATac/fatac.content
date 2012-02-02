@@ -28,106 +28,14 @@
                                 member context/@@plone_portal_state/member;
                                 name python:memberinfo['fullname'] or member.getId() or member.getId();
                                 portal_url context/portal_url">
-
-
-
-        <div id="edit-bar" tal:condition="view/can_edit">
-            <h5 class="hiddenStructure">Views</h5>
-
-            <ul id="content-views"
-                class="contentViews">
-              <li class="selected">
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard"
-                   i18n:translate="label_dashboard">Dashboard</a>
-              </li>
-<!--
-              <li>
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-dashboard"
-                   i18n:translate="label_portlets">Edita Portlets</a>
-              </li>
--->
-              <li>
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
-                   i18n:translate="">Grups</a>
-              </li>
-              <li>
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists"
-                   i18n:translate="">Playlists</a>
-              </li>
-              <li>
-                <a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity"
-                   i18n:translate="">Activitat</a>
-              </li>
-            </ul>
-
-            <div class="contentActions" tal:condition="view/can_edit">
-              &nbsp;
-            </div>
-        </div>
         
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
-        <dl tal:condition="python:view.empty() and view.can_edit()"
-            class="portalMessage info visualClear" id="dashboard-info-message">
-            <dt i18n:translate="">Info</dt>
-            <dd i18n:translate="info_empty_dashboard">
-                Your dashboard is currently empty. Click the 
-                <em>edit</em> tab to assign some personal 
-                portlets.
-            </dd>
-        </dl>
 
-        <div id="content">
-            <div class="div_dotted_line_doble_negre">
-              <h1 class="arial13c000000upp" i18n:translate="heading_dashboard">
-                  <span tal:replace="name" i18n:name="user_name" />&#8217;s dashboard
-              </h1>
-            </div>
+        <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
-            <div id="actions" class="div_dotted_line_bottom">
-
-                <div style="float:left;">
-                  <img rel="filtres" class="arrow_bottom filtres" src="++resource++fatac.theme.images/ico_arrow_down.png" />
-                  <span class="arial13c999999" i18n:translate="">Accions</span>
-                </div>
-
-                <form action=""
-                      name="groups_add"
-                      method="post"
-                      tal:attributes="action string:$portal_url/@@usergroup-groupdetails">
-
-
-                    <input class="boto_filtres arial11c666666 actionButtons"
-                           type="submit"
-                           name="form.button.AddGroup"
-                           value="Add New Group"
-                           i18n:attributes="value label_add_new_group;"
-                    />
-
-                </form>
-
-                <form action=""
-                      name="playlist_add"
-                      method="post"
-                      tal:attributes="action string:$portal_url/Members/${member/id}/++add++fatac.playlist">
-
-
-                    <input class="boto_filtres arial11c666666 actionButtons"
-                           type="submit"
-                           name="form.button.AddPlaylist"
-                           value="Afegeix una nova Playlist"
-                           i18n:attributes="value label_add_new_playlist;"
-                    />
-
-
-                </form>
-
+            <div id="actions">
                 <form action=""
                       name="file_add"
                       method="post"
@@ -137,41 +45,137 @@
                            type="submit"
                            name="form.button.AddFile"
                            value="Afegeix una nou Fitxer"
-                           i18n:attributes="value label_add_new_playlist;"
+                           i18n:attributes="value label_add_new_file;"
                     />
 
 
                 </form> 
             </div>
-            
-            <div id="dades-personals" class="row">
 
-                <div id="portrait" class="span2" style="float: left">
-                    <img src="#" tal:attributes="src python:member.getPersonalPortrait(id=member.id).absolute_url()" />
-                </div>
-
-                <div id="member-info" class="span13">
-                    <!-- <span tal:replace="memberinfo/username" /> <br/> -->
-                    <span class="text georgia11c000000" tal:replace="memberinfo/description" /> <br/>
-                    <span class="text georgia11c000000" tal:replace="memberinfo/location" />
-                    (<a href="#" class="arial12c666666" tal:attributes="href memberinfo/home_page"><span tal:replace="memberinfo/home_page" /></a>) <br/>
-                </div>            
+            <div id="usuari">
+            <span class="arial11c339933upp" i18n:translate="">Usuari ></span> 
+            <span class="arial11c339933upp" tal:content="name" />
             </div>
 
-            <div id="content-core" class="div_dotted_line">
-                <div id="dashboard">                
-                    <div class="visualClear"><!-- --></div>
-                    <div id="dashboard-portlets1" 
-                      tal:content="structure provider:plone.dashboard1" />
-                    <div id="dashboard-portlets2" 
-                      tal:content="structure provider:plone.dashboard2" />
-                    <div id="dashboard-portlets3" 
-                      tal:content="structure provider:plone.dashboard3" />
-                    <div id="dashboard-portlets4" 
-                      tal:content="structure provider:plone.dashboard4" />
+        </div>
+
+        <div id="content" class="row">
+
+            <div id="dades-personals" class="span5">
+
+                <div id="name" style="margin: 1em 0em;">
+                    <span class="georgia20c333333Ital" tal:content="name" /><br/>
+                    <div id="member-info" class="arial11c666666">
+                        <span tal:condition="memberinfo/location" tal:replace="memberinfo/location" />
+                        <a href="#" target="_blank" tal:condition="memberinfo/home_page" tal:attributes="href memberinfo/home_page">
+                            (<span tal:replace="memberinfo/home_page" />)
+                        </a>
+                    </div>
                 </div>
-                <div class="visualClear"><!-- --></div>
+
+                <div id="dashboard-menu" style="margin-bottom: 1em; display: inline-block;">
+                    <div id="dash-menu" class="menuButtonsSelected">
+                        <a href=""
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard">
+                            <img src="++resource++fatac.content/images/dashboard_icon.gif" /> 
+                            <span i18n:translate="label_dashboard">Dashboard</span>
+                        </a>
+                    </div>
+                        
+                    <div id="grups-menu" class="menuButtons">
+                        <a href=""
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
+                           i18n:translate="">
+                            <img src="++resource++fatac.content/images/groups_icon.gif" />
+                            <span i18n:translate="">Grups</span>
+                            [<span tal:content="python: view.retornaCountGrups(member.getId())"/>]
+                        </a>
+                    </div>
+
+                    <div id="playlists-menu" class="menuButtons">
+                        <a href=""
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists"
+                           i18n:translate="">
+                            <img src="++resource++fatac.content/images/playlist_icon.gif" />
+                            <span i18n:translate="">Playlists</span>
+                            [<span tal:content="python: view.retornaCountPlaylists(member.getId())"/>]
+                        </a>
+                    </div>
+                      
+                    <div id="activitat-menu" class="menuButtons">
+                        <a href=""
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity"
+                           i18n:translate="">
+                            <img src="++resource++fatac.content/images/activitat_icon.gif" />
+                            <span i18n:translate="">Activitat</span>
+                            [<span tal:content="python: view.retornaCountActivitat(member.getId())"/>]
+                        </a>
+                    </div>
+                </div>
+
+                <div id="member-info" style="margin-bottom: 1em;">
+                    <p class="georgia11c000000" tal:replace="memberinfo/description" />
+                </div>
+
             </div>
+
+            <div id="content-core" class="span10">
+                <div class="div_dotted_line_left">            
+                    <div id="dashboard-header" class="arial16c339933bold" 
+                          i18n:translate="" style="margin-bottom: 1em;">
+                        <img src="++resource++fatac.content/images/dashboard24.gif" />
+                        <span i18n:translate="label_dashboard">Dashboard</span>
+                    </div>
+                    
+                    <div id="my-files">
+                        <div id="my-files-header" class="div_dotted_line_bottom georgia13c333333Ital">
+                            <span i18n:translate="">Els meus fitxers</span>
+                        </div>
+
+                        <div id="my-files-content" style="diplay: inline-block;clear: both;" 
+                             tal:define="search python:context.portal_catalog.searchResults(
+                                                                                    portal_type='File',
+                                                                                    creator=member.getId(), 
+                                                                                    sort_on='modified',
+                                                                                    sort_order='reverse',
+                                                                                    sort_limit=20)[:20]">
+
+                            <tal:re tal:repeat="obj search" tal:define="plone_view context/@@plone;
+                                                                     getIcon nocall:plone_view/getIcon;
+                                                                     normalizeString nocall:plone_view/normalizeString;
+                                                                     toLocalizedTime nocall:plone_view/toLocalizedTime;">
+                                <div class="genericview_my_dades" tal:define="item_icon python:getIcon(obj);
+                                                                               item_wf_state obj/review_state;
+                                                                               item_wf_state_class python:'state-' + normalizeString(item_wf_state);">
+
+                                     <img tal:replace="structure item_icon/html_tag" />
+                                     <a href="" tal:attributes="href obj/getURL; class string:$item_wf_state_class">
+                                         <span tal:content="obj/Title" />
+                                     </a>
+                                     <span class="activityDiscreet" i18n:translate="text_creator_date">
+                                         by
+                                         <span tal:define="creator obj/Creator;"
+                                               tal:content="python:memberinfo and memberinfo['fullname'] or creator"
+                                               tal:omit-tag=""
+                                               i18n:name="creator">creator</span>,
+                                         last updated:
+                                         <span tal:content="python:toLocalizedTime(obj.ModificationDate, long_format=1)"
+                                               tal:omit-tag=""
+                                               i18n:name="date">date</span>
+                                     </span>
+
+                                     <p tal:condition="obj/Description">
+                                         <span tal:content="python: obj.Description[:180] + '...'" />
+                                     </p>
+
+                                </div>
+                            </tal:re>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </tal:main-macro>
