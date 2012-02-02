@@ -6,7 +6,7 @@
     <property name="title" i18n:translate="">Dummy</property>
     <property name="description" i18n:translate="">A description of Dummy</property>
     <property name="content_icon">++resource++fatac.content/images/playlist_icon.gif</property>
-    <property name="allow_discussion">False</property>
+    <property name="allow_discussion">True</property>
     <property name="global_allow">True</property>
     <property name="filter_content_types">False</property>
     <property name="schema">fatac.content.dummy.IDummy</property>
