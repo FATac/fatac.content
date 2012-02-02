@@ -113,6 +113,14 @@
       />
 
   <browser:page
+      name="group-playlists"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.groupPlaylists"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      template="browser/group-playlists.pt"
+      />
+
+  <browser:page
       name="deleteUserGroup"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".dashboard.deleteUserGroup"
