@@ -70,6 +70,7 @@
                            i18n:translate="">
                             <img src="++resource++fatac.content/images/groups_icon.gif" />
                             <span i18n:translate="">Members</span>
+                            [<span tal:content="python: view.retornaCountGroupMembers(groupname)"/>]
                         </a>
                     </div>
 
@@ -79,6 +80,7 @@
                            i18n:translate="">
                             <img src="++resource++fatac.content/images/playlist_icon.gif" />
                             <span i18n:translate="">Playlists</span>
+                            [<span tal:content="python: view.retornaCountGroupPlaylists(groupname)"/>]
                         </a>
                     </div>
                       
@@ -88,6 +90,7 @@
                            i18n:translate="">
                             <img src="++resource++fatac.content/images/activitat_icon.gif" />
                             <span i18n:translate="">Activitat</span>
+                            [<span tal:content="python: view.retornaCountGroupActivity(groupname)"/>]
                         </a>
                     </div>
                 </div>
