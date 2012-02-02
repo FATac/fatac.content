@@ -9,15 +9,15 @@
                 id="++resource++fatac.content/js/groupSelectWidget.js" />
 
     <javascript cacheable="True" compression="none" cookable="True" enabled="True" 
-                expression="python:context.portal_type == 'fatac.ghost'" 
-                id="++resource++fatac.content/js/ghost.js" />
+                expression="python:context.portal_type == 'fatac.dummy'" 
+                id="++resource++fatac.content/js/dummy.js" />
 
     <javascript cacheable="True" compression="none" cookable="True" enabled="True" 
-                expression="python:context.portal_type == 'fatac.ghost'"
+                expression="python:context.portal_type == 'fatac.dummy'"
                 id="++resource++fatac.content/js/jquery.contextmenu.js" />
 
     <javascript cacheable="True" compression="none" cookable="True" enabled="True" 
-                expression="python:context.portal_type == 'fatac.ghost'"
+                expression="python:context.portal_type == 'fatac.dummy'"
                 id="++resource++fatac.content/js/phototagger.jquery.js" />
 
      <javascript cacheable="True" compression="none" cookable="True" enabled="True" 
