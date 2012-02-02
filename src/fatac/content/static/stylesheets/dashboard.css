@@ -37,16 +37,51 @@
 
 
 /* ---------------------------------------------------------------------------- Butons Dashboard (Accions) */
+
+.menuButtons { 
+    width: 110px;
+    margin: 0.2em 0.2em; 
+    border-radius:0.3em; 
+    -webkit-radius:0.3em; 
+    -moz-border-radius:0.3em;
+    background-color:#D3E3C3;
+    float: left;
+    padding: 0.5em;
+    vertical-align: middle;
+}
+
+.menuButtons a {
+    font-family:Arial; font-size:11px; color:#339933 !important;
+}
+
+.menuButtonsSelected {
+    width: 110px;
+    margin: 0.2em 0.2em; 
+    border-radius:0.3em; 
+    -webkit-radius:0.3em; 
+    -moz-border-radius:0.3em;
+    background-color:#B3D396;
+    float: left;
+    padding: 0.5em;
+    vertical-align: middle;
+}
+.menuButtonsSelected a {
+    font-family:Arial; font-size:11px; color:#339933 !important;
+}
+
+
+
 .actionButtons {
     float:right; 
     margin-right: 3px; 
     padding-right:20px; 
     padding-left: 5px;  
-    background:url('++resource++fatac.theme.images/ico_ampliar.png')  no-repeat right center #ececec;
+    background:url('++resource++fatac.theme.images/ico_ampliar.png')  no-repeat right center #D3E3C3;
     border-radius: 0.2em;
     border-width: 1px !important;
     -webkit-border-radius: 0.2em;
     -moz-border-radius: 0.2em;
+    color:#339933 !important;
 }
 .actionButtonsSimple {
     float:right; 
@@ -57,6 +92,8 @@
     border-width: 1px !important;
     -webkit-border-radius: 0.2em;
     -moz-border-radius: 0.2em;
+    color:#339933 !important;
+    background-color:#D3E3C3;
 }
 
 
@@ -163,4 +200,26 @@ table.dashboardListing a {
     font-family:Arial; 
     font-size:11px; 
     color:#339933 !important;
+}
+
+
+/* ---------------------------------------------------------------------------- Fonts */
+.arial11c339933upp { 
+    font-family:Arial; 
+    font-size:13px; 
+    color:#339933 !important; 
+    font-weight:bold; 
+    text-transform: uppercase; 
+}
+
+.georgia20c333333Ital { font-family:georgia; font-size:20px; color:#000000 !important; font-style:italic; }
+.georgia13c333333Ital { font-family:georgia; font-size:13px; color:#333333 !important; font-style:italic;}
+
+.div_dotted_line_left { 
+    float:left; 
+    width:100%; 
+    clear:both; 
+    border-left:1px dotted #888888; 
+    padding-left:8px; 
+    margin-left:8px; 
 }
