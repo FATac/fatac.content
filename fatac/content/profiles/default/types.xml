@@ -1,0 +1,5 @@
+<object name="portal_types">
+    <object name="fatac.playlist" meta_type="Dexterity FTI" />
+    <object name="fatac.dummy" meta_type="Dexterity FTI" />
+    <object name="fatac.ghost" meta_type="Dexterity FTI" />
+</object>

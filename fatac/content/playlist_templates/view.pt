@@ -1,0 +1,78 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<head>
+    <metal:block fill-slot="top_slot"
+                 tal:define="disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+</head>
+
+<body>
+
+<metal:main fill-slot="content">
+    <tal:main-macro metal:define-macro="main">
+
+        <div id="edit-bar">
+            <h5 class="hiddenStructure">Views</h5>
+
+            <ul id="content-views" class="contentViews">
+                <li class="selected">
+                <a href=""
+                   tal:attributes="href string:${context/absolute_url}/view"
+                   i18n:translate="View">View</a>
+                </li>
+                <li>
+                <a href=""
+                   tal:attributes="href string:${context/absolute_url}/edit"
+                   i18n:translate="edit">Edit</a>
+                </li>
+                <li>
+                <a href=""
+                   tal:attributes="href string:${context/absolute_url}/sortingView"
+                   i18n:translate="">Ordena Playlist</a>
+                </li>
+            </ul>
+
+            <div class="contentActions">
+              &nbsp;
+            </div>
+        </div>
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <div class="div_dotted_line_doble_negre">
+            <h1 class="arial13c000000upp" i18n:translate="" tal:content="context/title" />
+        </div>
+        
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+        <div class="row">
+            <div class="span16">
+                <div id="descImage" style="float: left; padding: 0.5em;">
+                    <img tal:condition="context/descImage" 
+                         tal:replace="structure context/@@images/descImage/thumb" />
+                </div>
+                <div id="info">
+                    <p class="arial15c999999" style="padding: 0.5em;" tal:content="context/description" />
+                </div>
+            </div>
+        </div>
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <div id="zona_resultats">
+            <!-- -->
+        </div>
+        
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>

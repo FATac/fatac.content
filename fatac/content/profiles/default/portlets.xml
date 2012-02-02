@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<portlets
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="fatac.content">
+
+    <portlet 
+        addview="fatac.portlets.PortletPlaylists"
+        title="Portlet Playlists"
+        description="List of playlists from user."
+        i18n:attributes="title title_playlist_portlet; 
+                         description description_playlist_portlet">
+
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+
+    <portlet 
+        addview="fatac.portlets.PortletMyGroups"
+        title="Portlet MyGroups"
+        description="List of My Groups from user."
+        i18n:attributes="title title_mygroups_portlet; 
+                         description description_mygroups_portlet">
+
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+
+    <portlet 
+        addview="fatac.portlets.PortletMyFiles"
+        title="Portlet MyFiles"
+        description="List of My Files from user."
+        i18n:attributes="title title_myfiles_portlet; 
+                         description description_myfiles_portlet">
+
+        <for interface="plone.app.portlets.interfaces.IColumn" />
+        <for interface="plone.app.portlets.interfaces.IDashboard" />
+    </portlet>
+
+</portlets>
