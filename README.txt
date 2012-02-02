@@ -1,6 +1,6 @@
-.. contents::
-
 Introduction
 ============
 
-Producte fatac.content
+
+
+This product may contain traces of nuts..

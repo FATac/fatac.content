@@ -1,9 +1,0 @@
-setuptools
-Products.CMFPlone
-plone.app.dexterity [grok]
-plone.app.relationfield
-plone.namedfile [blobs]
-five.grok
-
-[test]
-plone.app.testing

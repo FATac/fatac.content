@@ -1,5 +1,0 @@
-<tal:def tal:define="html_resultats view/retDades">
-    <div tal:condition="html_resultats" tal:attributes="class string:resultats pagina pagina${view/retNumPagina}; id string:sortable">
-        <tal:repl tal:replace="structure html_resultats" />
-    </div>
-</tal:def>
