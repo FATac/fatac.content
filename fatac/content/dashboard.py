@@ -84,9 +84,30 @@ class FatacDashBoard(DashboardView):
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File'], creator = memberid )
+        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File', 'plone.Comment'], creator = memberid )
         return len(activitat)
 
+    def retornaCountGroupMembers(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        return len(members)
+
+    def retornaCountGroupPlaylists(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        return len(playlists)
+
+    def retornaCountGroupActivity(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        return len(activitat)
 
 
 
@@ -112,6 +133,28 @@ class groupActivity(DashboardView):
 
         return elementsList
 
+    def retornaCountGroupMembers(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        return len(members)
+
+    def retornaCountGroupPlaylists(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        return len(playlists)
+
+    def retornaCountGroupActivity(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        return len(activitat)
+
 
 
 
@@ -136,6 +179,28 @@ class groupPlaylists(DashboardView):
                 elementsList.append(item)
 
         return elementsList
+
+    def retornaCountGroupMembers(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        return len(members)
+
+    def retornaCountGroupPlaylists(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        return len(playlists)
+
+    def retornaCountGroupActivity(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        return len(activitat)
 
 
 
@@ -513,6 +578,28 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
         activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File'], creator = memberid )
+        return len(activitat)
+
+    def retornaCountGroupMembers(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        return len(members)
+
+    def retornaCountGroupPlaylists(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        return len(playlists)
+
+    def retornaCountGroupActivity(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        catalog = getToolByName(self.context, 'portal_catalog')
+        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
         return len(activitat)
 
 
