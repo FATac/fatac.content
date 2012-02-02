@@ -1,7 +1,7 @@
-<dl class="portlet portletFatac"
+<dl class="portletFatac"
     i18n:domain="fatac.content">
 
-    <dt class="portletHeader arial11c339933">
+    <dt>
         <span class="portletTopLeft"></span>
         <a href="#"
            class="tile"
