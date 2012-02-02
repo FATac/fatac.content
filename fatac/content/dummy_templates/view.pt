@@ -1,46 +1,129 @@
+<!-- TODO: afegir el codi que calgui pels comentaris flickr
+    <div class="cmenu ">
+        <div class="photo-column">
+            <div class="photo-container">
+                <img tal:condition="context/descImage"tal:replace="structure context/@@images/descImage" id="photo1" />
+            </div>
+            <a href="#" class="enable-create">Enable Create</a>
+            &nbsp;|&nbsp;
+            <a href="#" class="disable-create">Disable Create</a>
+        </div>
+        <span tal:content="context/idObjecte" />
+        <p id="description" class="documentDescription" tal:content="context/description" />
+    </div>
+ -->
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       lang="en"
-      metal:use-macro="context/main_template/macros/master"
-      i18n:domain="fatac.content">
-<body>
+      metal:use-macro="here/main_template/macros/master">
+    <body>
+        <metal:content-title fill-slot="content-title"></metal:content-title>
+        <metal:content-description fill-slot="content-description"></metal:content-description>
+        <metal:content-core fill-slot="content-core">
+            <metal:main-macro define-macro="content">
+                <!-- la classe cmenu serveix per que es pugui afegir l'objecte a la playlist -->
+                <div id="content" i18n:domain="fatac.theme" class="cmenu">
 
-<metal:main fill-slot="main">
-    <tal:main-macro metal:define-macro="main"
-        tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('input.nom_dada').each(function () {
+                                var nom = $(this).attr('value');
+                                var llista_ids = ($('#llista_ids_' + nom).attr('value')).split(',');
+                                var parametres_visualitzacio = {llista_ids: llista_ids, visualitzacio: 'fitxa_home', pagina_actual: 1, resultats_per_pagina: 999999};
+                                $('#visual-portal-wrapper').get(0).parametres_visualitzacio = parametres_visualitzacio;
+                                var parametres_visualitzacio_json = JSON.stringify(parametres_visualitzacio);
+                                $.post('displayResultatsPaginaView', {parametres_visualitzacio: parametres_visualitzacio_json}, function(data){
+                                    $('.items_' + nom).replaceWith(data);
 
-        <div tal:replace="structure provider:plone.abovecontenttitle" />
+                                    //envolcallem cada 3 elements en un div, xq funcioni l'scrollable
+                                    var fila_actual = 1;
+                                    var nova_fila = 1;
+                                    $('.scrollable_' + nom + ' .genericview_fitxa_home').each(function(i) {
+                                        nova_fila = (parseInt(i/3) + 1);
+                                        if (nova_fila !== fila_actual) {
+                                            $('.scrollable_' + nom + ' .fila' + fila_actual).wrapAll( '<div class="fila fila' + fila_actual + '" />' );
+                                            fila_actual = nova_fila;
+                                        }
+                                        $(this).addClass('fila' + nova_fila);
+                                    });
+                                    $('.scrollable_' + nom + ' .fila' + fila_actual).wrapAll( '<div class="fila fila' + fila_actual + '" />' );
+                                    if (fila_actual === 1) {
+                                        $('#scrollable_' + nom + ' .arrow_up').addClass("hidden");
+                                        $('#scrollable_' + nom + ' .arrow_down').addClass("hidden");
+                                    }
 
-        <h1 class="documentFirstHeading" tal:content="context/title" />
-        
-        <div tal:replace="structure provider:plone.belowcontenttitle" />
+                                    $('.scrollable_' + nom).scrollable({api:true, vertical: true, mousewheel: true});
+                                });
 
-        <div class="cmenu ">
-            <div class="photo-column">
-                <div class="photo-container">
-                    <img tal:condition="context/descImage" 
-                         tal:replace="structure context/@@images/descImage"
-                         id="photo1"
-                    />
+                            });
+                        });
+                    </script>
+
+
+
+                    <!-- TODO: he carregat el js a jsregistry.xml de forma global, potser cal afegir ocndicions xq no carreguin sempre ¿? -->
+                    <!-- TODO: fer la crida on toqui! -->
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            crea_scrolls_verticals();
+                            inicialitza_arrows();
+                        });
+                    </script>
+
+                    <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
+
+                        <!-- TODO: la línia de path hauria d'anar amb la typo nova -->
+                        <div class="div_dotted_line_doble_negre">
+                            <span class="arial13c000000upp" i18n:translate="" tal:content="dades_objecte/classe" />
+                            <span class="arial13c000000upp">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
+                            <span class="arial13c999999upp" i18n:translate="" tal:content="dades_objecte/titol" />
+                        </div>
+
+                        <div class="div_dotted_line_bottom">
+                            <!-- arrow_desplegable: cal que tingui la classe arrow_desplegable que indica que plega o desplega un div, arrow_top o arrow_bottom que indica si plega o desplega, i una tercera classe que indica l'id dle div que plega o desplega, també indicat a rel -->
+                            <img tal:attributes="rel dades_objecte/id; class string:arrow_top ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_up.png" />
+                            <img tal:attributes="rel dades_objecte/id; class string:arrow_bottom hidden ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_down.png" />
+                            <span class="arial13c000000" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
+                        </div>
+
+                        <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
+
+                            <tal:def tal:define="seccions dades_objecte/dades_seccions">
+                                <tal:rep tal:repeat="seccio seccions">
+                                    <tal:def tal:define="slider_vertical python: dades_objecte['te_subcerca'] == 'amb_subcerca' and (seccio['nom'] == 'header' or seccio['nom'] == 'body');
+                                                        start repeat/seccio/start; end repeat/seccio/end; es_div_content python: seccio['nom'] == 'content';
+                                                        hi_ha_content dades_objecte/hi_ha_seccio_content">
+
+                                        <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
+                                        <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
+                                        <!-- estructura: si no és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
+                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content)" tal:replace="structure string:</div>" />
+
+                                        <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades' or 'seccio_dades'" tal:condition="seccio/dades">
+                                            <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; l'obrim -->
+                                            <tal:repl tal:condition="slider_vertical" tal:replace="structure string:<div class='div_interior'>" />
+
+                                            <tal:rep tal:repeat="dada seccio/dades">
+                                                <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
+                                            </tal:rep>
+
+                                            <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; el tanquem -->
+                                            <tal:repl tal:condition="slider_vertical" tal:replace="structure string:</div>" />
+                                        </div>
+
+                                    </tal:def>
+                                </tal:rep>
+                            </tal:def>
+
+                        </div>
+
+                    </tal:rep>
+
                 </div>
-                <a href="#" class="enable-create">Enable Create</a>
-                &nbsp;|&nbsp;
-                <a href="#" class="disable-create">Disable Create</a>
-            </div>
-
-            <span tal:content="context/idObjecte" />
-
-            <p id="description" class="documentDescription" tal:content="context/description" />
-        </div>
-
-        <div tal:replace="structure provider:plone.abovecontentbody" />
-
-        <div tal:replace="structure provider:plone.belowcontentbody" />
-
-    </tal:main-macro>
-</metal:main>
-
-</body>
+            </metal:main-macro>
+        </metal:content-core>
+    </body>
 </html>

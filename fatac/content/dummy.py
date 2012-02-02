@@ -1,44 +1,18 @@
 from zope import schema
-from z3c.form import widget
 from plone.directives import form
-from zope.interface import Invalid
-from plone.app.textfield import RichText
-from z3c.relationfield.schema import RelationList, RelationChoice
-from plone.formwidget.contenttree import ObjPathSourceBinder
 from five import grok
-from zope.component import getMultiAdapter
 from plone.memoize.instance import memoize
 from fatac.content import PlaylistMessageFactory as _
 from plone.namedfile.interfaces import IImageScaleTraversable
-from plone.namedfile.field import NamedBlobImage
-
-from plone.app.relationfield.widget import RelationListDataManager
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
-from z3c.relationfield.relation import RelationValue
-
-from zope.app.container.interfaces import IObjectAddedEvent
 from Products.CMFCore.utils import getToolByName
-
 import json
-from plone.app.layout.viewlets.interfaces import IHtmlHead
-import urllib2
-
-
-
-
+from fatac.theme.browser.genericView import genericView
 
 
 class IDummy(form.Schema, IImageScaleTraversable):
     """
     Dummy Schema
     """
-
-    descImage = NamedBlobImage(
-        title = _(u"Playlist Image"),
-        description = _(u"Add a Playlist Image that represents your playlist"),
-        required = False,
-        )
 
     tagList = schema.List(
         title = _(u"Tag List"),
@@ -55,7 +29,7 @@ class IDummy(form.Schema, IImageScaleTraversable):
         )
 
 
-class View(grok.View):
+class View(grok.View, genericView):
     """
     Main View
     """
@@ -85,7 +59,7 @@ class returnPlaylists(grok.View):
         json_snippet = json.dumps(settings)
 
         request.response.setHeader("content-type", "application/json")
-        return json_snippet 
+        return json_snippet
 
     @memoize
     def llistaPlaylists(self, request, context):
@@ -98,7 +72,7 @@ class returnPlaylists(grok.View):
         #Search all the Playlist
         catalog = getToolByName(context, 'portal_catalog')
         search = catalog.searchResults({'portal_type': 'fatac.playlist', 'Creator': member.getId()})
-        
+
         llistaIds = []
         llistaTitols = []
         for brain in search:
@@ -122,7 +96,7 @@ class updatePlaylist(grok.View):
 
     def update(self):
         self.updatePlaylistObject(self.context)
-        
+
     def render(self):
         print 'Playlist Updated.'
 
@@ -171,7 +145,7 @@ class loadTags(grok.View):
         if (context.tagList != None):
             if (len(context.tagList) > 0):
                 tags = []
-    
+
                 for tag in context.tagList:
                     subTag = tag.split(",")
                     tags.append({'id': subTag[0], 'x': subTag[1], 'y': subTag[2], 'width': subTag[3], 'height': subTag[4], 'message': subTag[5], 'photoID': subTag[6]})
@@ -204,7 +178,7 @@ class saveTag(grok.View):
     def saveCurrentTag(self):
         context = self.context
         request = self.request
-        
+
         newTag = request.get('tag')
         print newTag
 
@@ -216,7 +190,7 @@ class saveTag(grok.View):
 
         currentTagList.append(newTag)
 
-        context.tagList = currentTagList 
+        context.tagList = currentTagList
 
         print "Save Tag!"
 
