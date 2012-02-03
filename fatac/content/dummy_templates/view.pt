@@ -77,9 +77,9 @@
 
                         <!-- TODO: la línia de path hauria d'anar amb la typo nova -->
                         <div class="div_dotted_line_doble_negre">
-                            <span class="arial13c000000upp" i18n:translate="" tal:content="dades_objecte/classe" />
-                            <span class="arial13c000000upp">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
-                            <span class="arial13c999999upp" i18n:translate="" tal:content="dades_objecte/titol" />
+                            <span class="TerminalDosis600" style="text-transform:uppercase;" i18n:translate="" tal:content="dades_objecte/classe" />
+                            <span class="TerminalDosis600" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
+                            <span class="TerminalDosis200" i18n:translate="" tal:content="dades_objecte/titol" />
                         </div>
 
                         <div class="div_dotted_line_bottom">
