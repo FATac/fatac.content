@@ -47,8 +47,13 @@
             Portal status message
         </div>
 
-        <div class="div_dotted_line_doble_negre">
-            <h1 class="arial13c000000upp" i18n:translate="" tal:content="context/title" />
+        <div id="playlist-header" class="arial16c339933bold" i18n:translate="" style="margin-bottom: 1em;">
+            <img src="++resource++fatac.content/images/playlist24.gif" />
+            <span i18n:translate="">playlist</span>
+        </div>
+
+        <div id="my-files-header" class="div_dotted_line_bottom georgia13c333333Ital">
+            <span tal:content="context/title" />
         </div>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
