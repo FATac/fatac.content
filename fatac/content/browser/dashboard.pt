@@ -140,7 +140,8 @@
                                                                                     sort_order='reverse',
                                                                                     sort_limit=20)[:20]">
 
-                            <tal:re tal:repeat="obj search" tal:define="plone_view context/@@plone;
+                            <tal:re tal:repeat="obj search" tal:condition="search"
+                                                            tal:define="plone_view context/@@plone;
                                                                      getIcon nocall:plone_view/getIcon;
                                                                      normalizeString nocall:plone_view/normalizeString;
                                                                      toLocalizedTime nocall:plone_view/toLocalizedTime;">
@@ -170,6 +171,10 @@
 
                                 </div>
                             </tal:re>
+
+                            <tal:nosearch tal:condition="not:search">
+                                <span i18n:translate="">Ara mateix no tens fitxers. Pots afegir nous fitxers des de el botó "Afegeix nou Fitxer"</span>
+                            </tal:nosearch>
 
                         </div>
                     </div>
