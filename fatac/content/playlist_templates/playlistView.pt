@@ -67,10 +67,10 @@
             <div id="resultats_cerca" class="div_dotted_line_bottom">
                 <div id="resultats">
                     <a class="arrow_left_resultats prev browse left">
-                        <img src="++resource++fatac.theme.images/ico_left.png" i18n:attributes="title esquerra" i18n:translate=""/>
+                        <img src="++resource++fatac.theme.images/ico_left.gif" i18n:attributes="title esquerra" i18n:translate=""/>
                     </a>
                     <a class="arrow_right_resultats next browse right">
-                        <img src="++resource++fatac.theme.images/ico_right.png" i18n:attributes="title dreta" i18n:translate=""/>
+                        <img src="++resource++fatac.theme.images/ico_right.gif" i18n:attributes="title dreta" i18n:translate=""/>
                     </a>
                     <div id="wrapper_resultats" class="scrollable">
                         <div class="pagines_resultats">
