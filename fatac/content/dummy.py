@@ -117,11 +117,11 @@ class updatePlaylist(grok.View):
             if (playlist.orderedList != None):
                 for item in playlist.orderedList:
                     newOrderedList.append(item)
-                    if (item[1] == context.idObjecte):
+                    if (item[1] == context.getId()):
                         objectIsInOrderedList = True
 
             if (objectIsInOrderedList == False):
-                newOrderedList.append([len(newOrderedList),context.idObjecte])
+                newOrderedList.append([len(newOrderedList),context.getId()])
                 playlist.orderedList = newOrderedList
 
 
