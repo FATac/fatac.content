@@ -69,7 +69,7 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
         )
 
     #Amaguem els camps a l'edicio
-    form.omitted('orderedList')
+    #form.omitted('orderedList')
 
 
 
@@ -231,29 +231,30 @@ class genericPlaylistview(grok.View, genericView):
             for objecte in dades_json:
                 id_objecte = self.idobjectes[i]
                 i += 1
-                titol_objecte = self.getTitolObjecte(objecte['sections'])
+                if objecte and 'sections' in objecte:
+                    titol_objecte = self.getTitolObjecte(objecte['sections'])
 
-                dades = []
-                for seccio in objecte['sections']:
-                    if seccio['name'] == 'header':
-                        for dada in seccio['data']:
-                            dades.append(self.llegirDada(dada))
+                    dades = []
+                    for seccio in objecte['sections']:
+                        if seccio['name'] == 'header':
+                            for dada in seccio['data']:
+                                dades.append(self.llegirDada(dada))
 
-                # Treiem l'ordre que te cada element
-                order = 0
-                for obj in orderedList:
-                    if id_objecte == obj[1]:
-                        order = obj[0]
+                    # Treiem l'ordre que te cada element
+                    order = 0
+                    for obj in orderedList:
+                        if id_objecte == obj[1]:
+                            order = obj[0]
 
-
-                dades_objecte = {'id': id_objecte,
-                                 'titol': titol_objecte,
-                                 'classe': objecte['className'],
-                                 'thumbnail_classe': self.getThumbnailClasse(objecte['className']),
-                                 'thumbnail_objecte': self.getThumbnailObjecte(id_objecte),
-                                 'dades_header': dades,
-                                 'order': order}
-                resultat.append(dades_objecte)
+                    dades_objecte = {'id': id_objecte,
+                                     'titol': titol_objecte,
+                                     'classe': objecte['className'],
+                                     'thumbnail_classe': self.getThumbnailClasse(objecte['className']),
+                                     'thumbnail_objecte': self.getThumbnailObjecte(id_objecte),
+                                     'dades_header': dades,
+                                     'order': order}
+                    resultat.append(dades_objecte)
+        return resultat
 
         if resultat != []:
             # Ordenem els resultats segons l'ordre que s'ha fet des de la pantalla d'ordenacio
