@@ -3,13 +3,12 @@ from plone.directives import form
 from five import grok
 from plone.memoize.instance import memoize
 from fatac.content import PlaylistMessageFactory as _
-from plone.namedfile.interfaces import IImageScaleTraversable
 from Products.CMFCore.utils import getToolByName
 import json
 from fatac.theme.browser.genericView import genericView
 
 
-class IDummy(form.Schema, IImageScaleTraversable):
+class IDummy(form.Schema):
     """
     Dummy Schema
     """
