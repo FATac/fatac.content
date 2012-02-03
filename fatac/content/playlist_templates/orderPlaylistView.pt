@@ -9,7 +9,7 @@
             });
         </script>
 
-        <div id="resultats_cerca" class="div_dotted_line">
+        <div id="resultats_cerca">
             <div id="resultats">
 
                 <div id="wrapper_resultats" class="scrollable">
