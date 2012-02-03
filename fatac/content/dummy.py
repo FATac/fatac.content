@@ -21,12 +21,6 @@ class IDummy(form.Schema):
         required = False,
         )
 
-    idObjecte = schema.TextLine(
-        title = _(u"Object Id"),
-        description = _(u"This is the ID of the database object"),
-        required = False,
-        )
-
 
 class View(grok.View, genericView):
     """
