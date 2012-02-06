@@ -16,6 +16,7 @@
    <property name="available_expr"></property>
    <property name="permissions">
     <element value="fatac.AddPlaylist" />
+    <element value="Playlist: Add Playlist" />
    </property>
    <property name="visible">True</property>
   </object>
