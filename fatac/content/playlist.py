@@ -69,7 +69,7 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
         )
 
     #Amaguem els camps a l'edicio
-    #form.omitted('orderedList')
+    form.omitted('orderedList')
 
 
 
