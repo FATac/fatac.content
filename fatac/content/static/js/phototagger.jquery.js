@@ -1165,13 +1165,13 @@
 		css: {
 			"a.tag": {
 				"background-image": "url( '++resource++fatac.content/images/transparent.gif' )",
-				"border": "1px solid #FFFFFF",
+				"border": "1px dotted #FFFFFF !important",
 				"display": "block",
 				"height": "1px",
 				"position": "absolute",
 				"width": "1px",
 				"z-index": "100",
-				"zoom": "1"
+				"zoom": "1",
 			},
 			
 			"a.selected-tag": {
@@ -1180,17 +1180,20 @@
 			},
 			
 			"div.message": {
-				"background-color": "#212121",
-				"border": "1px solid #000000",
-				"color": "#F0F0F0",
+				"background-color": "#D3E3C3",
+				"border": "1px solid #339933",
+				"color": "#000000",
 				"display": "none",
-				"font-family": "verdana",
+				"font-family": "georgia",
 				"font-size": "12px",
-				"margin-top": "4px",
+				"margin-top": "10px",
 				"padding": "5px 10px 5px 10px",
 				"position": "absolute",
 				"white-space": "nowrap",
-				"z-index": "200"
+				"z-index": "200",
+				"border-radius": "0.3em",
+			    "-webkit-radius": "0.3em",
+			    "-moz-border-radius": "0.3em"
 			}
 		}
 		
