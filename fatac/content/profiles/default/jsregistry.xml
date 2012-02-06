@@ -21,6 +21,6 @@
                 id="++resource++fatac.content/js/phototagger.jquery.js" />
 
      <javascript cacheable="True" compression="none" cookable="True" enabled="True" 
-                expression="python: context.portal_membership.isAnonymousUser == False"
+                expression=""
                 id="++resource++fatac.content/js/dashboard.js" />
 </object>
