@@ -2,6 +2,7 @@
 <object name="portal_css">
     <stylesheet id="++resource++fatac.content/stylesheets/playlist.css" />
     <stylesheet id="++resource++fatac.content/stylesheets/jquery.contextmenu.css" />
-    <stylesheet id="++resource++fatac.content/stylesheets/dummy.css" />
+    <stylesheet id="++resource++fatac.content/stylesheets/dummy.css"
+                expression="python:context.portal_type == 'fatac.dummy'" />
     <stylesheet id="++resource++fatac.content/stylesheets/dashboard.css" />
 </object>
