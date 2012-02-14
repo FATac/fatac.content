@@ -1,35 +1,60 @@
 /* Classic Windows Theme (default) */
 /* =============================== */
 .context-menu-theme-default {
-	border:2px outset white;
-	background-color:#D4D0C8;
+	/* border:2px outset white; */
+	padding: 0.2em;
+	border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+	background-color:#d3e3c3;
 }
 .context-menu-theme-default .context-menu-item {
 	text-align:left;
 	cursor:pointer;
 	padding:4px 28px 4px 16px;
-	color:black;
-	font-family:Tahoma,Arial;
-	font-size:11px;
+	color: #339933;
+	font-family:georgia,Arial;
+	font-size:13px;
+	margin: 0.5em;
 }
 .context-menu-theme-default .context-menu-separator {
-	margin:4px 2px;
 	font-size:0px;
-	border-top:1px solid #808080;
-	border-bottom:1px solid white;
+	border-top:1px solid #339933;
+	/* border-bottom:1px solid white; */
 }
-.context-menu-theme-default .context-menu-item-disabled {
-	color:#808080;
+.context-menu-theme-default {
+	color:#ececec;
 }
+
+.context-menu-item-disabled {
+	color:#339933;
+	background-color: #B3D396;
+	border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    cursor: default;
+}
+
 .context-menu-theme-default .context-menu-item .context-menu-item-inner {
 	background:none no-repeat fixed 999px 999px; /* Make sure icons don't appear */
 }
+
 .context-menu-theme-default .context-menu-item-hover {
-	background-color:#0A246A;
+	background-color:#339933;
 	color:white;
+	margin: 0.5em;
+	border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
 }
+
 .context-menu-theme-default .context-menu-item-disabled-hover {
-	background-color:#0A246A;
+	background-color:#B3D396;
+	color:339933;
+	border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    cursor: default;
 }
 
 /* Windows XP Theme */
