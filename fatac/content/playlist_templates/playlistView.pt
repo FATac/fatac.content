@@ -10,8 +10,8 @@
 
         <div id="ordre_y_tipus_cerca" class="div_dotted_line_bottom">
             <!-- arrow_desplegable: cal que tingui la classe arrow_desplegable que indica que plega o desplega un div, arrow_top o arrow_bottom que indica si plega o desplega, i una tercera classe que indica l'id dle div que plega o desplega, també indicat a rel -->
-            <img rel="zona_resultast" class="arrow_top zona_resultast" src="++resource++fatac.theme.images/ico_arrow_up.png" />
-            <img rel="zona_resultast" class="arrow_bottom zona_resultast hidden" src="++resource++fatac.theme.images/ico_arrow_down.png" />
+            <img rel="zona_resultats_inner" class="arrow_top zona_resultats_inner" src="++resource++fatac.theme.images/ico_arrow_up.png" alt="Tanca" title="Tanca" i18n:attributes="title; alt"/>
+            <img rel="zona_resultats_inner" class="arrow_bottom zona_resultats_inner hidden" src="++resource++fatac.theme.images/ico_arrow_down.png" alt="Obre" title="Obre" i18n:attributes="title;alt"/>
 
             <span id="visualitzacio_cerca" class="arial13c999999" i18n:translate="Visualització de búsqueda">Visualització de búsqueda</span>
 
@@ -62,7 +62,7 @@
 
         <div class="visualClear"><!--  --></div>
 
-        <div id="zona_resultast">
+        <div id="zona_resultats_inner">
 
             <div id="resultats_cerca" class="div_dotted_line_bottom">
                 <div id="resultats">
@@ -103,14 +103,12 @@
                     <div id="zoom_resultats" tal:attributes="class python: visualitzacio == 'imatge' and 'link_visualitzacio selected' or 'link_visualitzacio hidden'" rel="imatge">
                         <a href="#" id="zoom_menys"><img src="++resource++fatac.theme.images/small.png" i18n:attributes="title small" i18n:translate=""/></a>
                         <div tal:attributes="rel zoom" id="slider-wrap-zoom" class="slider-wrap-zoom"></div>
-                        <a href="#" id="zoom_mes"><img id="zoom_mes" src="++resource++fatac.theme.images/large.png" i18n:attributes="title large" i18n:translate=""/></a>
+                        <a href="#" id="zoom_mes"><img src="++resource++fatac.theme.images/large.png" i18n:attributes="title large" i18n:translate=""/></a>
                     </div>
                     <a rel="imatge" href="#" tal:attributes="class python: visualitzacio == 'imatge' and 'link_visualitzacio link_visualitzacio1 hidden' or 'link_visualitzacio link_visualitzacio1'"><img src="++resource++fatac.theme.images/ico_1.png" i18n:attributes="title visualitzacio1" i18n:translate=""/></a>
                     <a rel="fitxa_cerca" href="#" tal:attributes="class python: visualitzacio == 'fitxa_cerca' and 'link_visualitzacio selected' or 'link_visualitzacio'"><img src="++resource++fatac.theme.images/ico_2.png" i18n:attributes="title visualitzacio2" i18n:translate=""/></a>
                     <a rel="fitxa_ampliada_cerca" href="#" tal:attributes="class python: visualitzacio == 'fitxa_ampliada_cerca' and 'link_visualitzacio selected' or 'link_visualitzacio'"><img src="++resource++fatac.theme.images/ico_3.png" i18n:attributes="title visualitzacio3" i18n:translate="" /></a>
-                    <!-- TODO: la visualització a pantalla completa queda pendent per falta de temps
                     <a rel="fitxa_ampliada_cerca_overlay" href="#" tal:attributes="class python: visualitzacio == 'fitxa_ampliada_cerca_overlay' and 'link_visualitzacio selected' or 'link_visualitzacio'"><img src="++resource++fatac.theme.images/ico_4.png" i18n:attributes="title visualitzacio4" i18n:translate="" /></a>
-                    -->
                 </div>
 
             </div>

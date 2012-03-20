@@ -12,7 +12,6 @@
         <p id="description" class="documentDescription" tal:content="context/description" />
     </div>
  -->
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
