@@ -85,7 +85,7 @@
                             <!-- arrow_desplegable: cal que tingui la classe arrow_desplegable que indica que plega o desplega un div, arrow_top o arrow_bottom que indica si plega o desplega, i una tercera classe que indica l'id dle div que plega o desplega, també indicat a rel -->
                             <img tal:attributes="rel dades_objecte/id; class string:arrow_top ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_up.png" />
                             <img tal:attributes="rel dades_objecte/id; class string:arrow_bottom hidden ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_down.png" />
-                            <span class="arial13c000000" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
+                            <span class="arial13c999999" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
                         </div>
 
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
@@ -101,7 +101,7 @@
                                         <!-- estructura: si no és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
                                         <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content)" tal:replace="structure string:</div>" />
 
-                                        <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades' or 'seccio_dades'" tal:condition="seccio/dades">
+                                        <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades georgia13c333333' or 'seccio_dades georgia13c333333'" tal:condition="seccio/dades">
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; l'obrim -->
                                             <tal:repl tal:condition="slider_vertical" tal:replace="structure string:<div class='div_interior'>" />
 
