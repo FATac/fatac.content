@@ -13,7 +13,7 @@
             <img rel="zona_resultats_inner" class="arrow_top zona_resultats_inner" src="++resource++fatac.theme.images/ico_arrow_up.png" alt="Tanca" title="Tanca" i18n:attributes="title; alt"/>
             <img rel="zona_resultats_inner" class="arrow_bottom zona_resultats_inner hidden" src="++resource++fatac.theme.images/ico_arrow_down.png" alt="Obre" title="Obre" i18n:attributes="title;alt"/>
 
-            <span id="visualitzacio_cerca" class="arial13c999999" i18n:translate="Visualització de búsqueda">Visualització de búsqueda</span>
+            <span id="visualitzacio_cerca" class="georgia13c999999" i18n:translate="Visualització de búsqueda">Visualització de búsqueda</span>
 
             <!--
             TODO: volen que el filtre class en comptes de que estigui amb la resta de filtres, estigui aquí al desplegable.

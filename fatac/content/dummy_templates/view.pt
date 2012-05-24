@@ -74,20 +74,19 @@
 
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
-                        <!-- TODO: la línia de path hauria d'anar amb la typo nova -->
-                        <div class="div_dotted_line_doble_negre">
+                        <div class="ac_breadcrump div_dotted_line_bottom">
                             <span class="TerminalDosis600" style="text-transform:uppercase;" i18n:translate="" tal:content="dades_objecte/classe" />
                             <span class="TerminalDosis600" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
                             <span class="TerminalDosis200" i18n:translate="" tal:content="dades_objecte/titol" />
                         </div>
-
-                        <div class="div_dotted_line_bottom">
-                            <!-- arrow_desplegable: cal que tingui la classe arrow_desplegable que indica que plega o desplega un div, arrow_top o arrow_bottom que indica si plega o desplega, i una tercera classe que indica l'id dle div que plega o desplega, també indicat a rel -->
-                            <img tal:attributes="rel dades_objecte/id; class string:arrow_top ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_up.png" />
-                            <img tal:attributes="rel dades_objecte/id; class string:arrow_bottom hidden ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_down.png" />
-                            <span class="arial13c999999" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
-                        </div>
-
+                        <tal:comment tal:replace="nothing">
+                            <!-- TODO: esborrar, per petició del diseñador aquest bloc no ha d'exisitir -->
+                            <div class="div_dotted_line_bottom">
+                                <img tal:attributes="rel dades_objecte/id; class string:arrow_top ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_up.png" />
+                                <img tal:attributes="rel dades_objecte/id; class string:arrow_bottom hidden ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_down.png" />
+                                <span class="georgia13c999999" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
+                            </div>
+                        </tal:comment>
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
                             <tal:def tal:define="seccions dades_objecte/dades_seccions">
