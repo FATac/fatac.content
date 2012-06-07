@@ -11,6 +11,13 @@
 
        <permission name="Add Groups" acquire="True">
            <role name="Member" />
-       </permission>       
+       </permission>
+
+       <permission name="Review portal content" acquire="True">
+           <role name="Manager" />
+           <role name="Site Administrator" />
+           <role name="Owner" />
+       </permission>
+
     </permissions>
 </rolemap>
