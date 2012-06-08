@@ -9,7 +9,7 @@
  <object name="user" meta_type="CMF Action Category">
 
   <object name="Add Playlist" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Afegeix Nova Playlist</property>
+   <property name="title" i18n:translate="">Afegeix Playlist</property>
    <property name="description" i18n:translate=""></property>
    <property name="url_expr">string:$portal_url/Members/${member/id}/++add++fatac.playlist</property>
    <property name="icon_expr">string:++resource++fatac.theme.images/ico_ampliar.png</property>
@@ -22,7 +22,7 @@
   </object>
 
   <object name="Add File" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Afegeix Nou Fitxer</property>
+   <property name="title" i18n:translate="">Afegeix Fitxer</property>
    <property name="description" i18n:translate=""></property>
    <property name="url_expr">string:$portal_url/Members/${member/id}/createObject?type_name=File</property>
    <property name="icon_expr">string:++resource++fatac.theme.images/ico_ampliar.png</property>
@@ -34,7 +34,7 @@
   </object>
 
   <object name="Add Group" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Afegeix Nou Grup</property>
+   <property name="title" i18n:translate="">Afegeix Grup</property>
    <property name="description" i18n:translate=""></property>
    <property name="url_expr">string:$portal_url/@@usergroup-groupdetails</property>
    <property name="icon_expr">string:++resource++fatac.theme.images/ico_ampliar.png</property>
