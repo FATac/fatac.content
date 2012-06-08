@@ -20,6 +20,8 @@
       metal:use-macro="here/main_template/macros/master">
     <body>
         <metal:content-title fill-slot="content-title"></metal:content-title>
+        <metal:block fill-slot="top_slot" tal:define="dummy python:request.set('disable_border',1)">
+        </metal:block>
         <metal:content-description fill-slot="content-description"></metal:content-description>
         <metal:content-core fill-slot="content-core">
             <metal:main-macro define-macro="content">
