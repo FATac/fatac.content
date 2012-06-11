@@ -24,6 +24,9 @@ from five import grok
 from Products.CMFPlone.utils import normalizeString
 from Products.statusmessages.interfaces import IStatusMessage
 
+from fatac.content import portletPlaylists, portletMyFiles, portletMyGroups
+
+
 class FatacPortalDefaultDashboard(DefaultDashboard):
     """ A new custom default dashboard for users. """
     implements(IDefaultDashboard)
@@ -34,15 +37,15 @@ class FatacPortalDefaultDashboard(DefaultDashboard):
         recent = portlets.recent.Assignment()
         calendar = portlets.calendar.Assignment()
         search = portlets.search.Assignment()
-        playlists = portlets.portletPlaylists.Assignment()
-        mygroups = portlets.portletMyGroups.Assignment()
-        myfiles = portlets.portletMyFiles.Assigment()
+        playlists = portletPlaylists.Assignment()
+        mygroups = portletMyGroups.Assignment()
+        myfiles = portletMyFiles.Assignment()
 
         return {
-            'plone.dashboard1' : (playlists,),
-            'plone.dashboard2' : (recent,),
-            'plone.dashboard3' : (mygroups,),
-            'plone.dashboard4' : (calendar, myfiles),
+            'plone.dashboard1': (playlists,),
+            'plone.dashboard2': (recent,),
+            'plone.dashboard3': (mygroups,),
+            'plone.dashboard4': (calendar, myfiles),
         }
 
 
@@ -112,15 +115,15 @@ class FatacDashBoard(DashboardView):
 
 
 class groupActivity(DashboardView):
-    """ 
+    """
         Returns The group activity content
     """
     def searchActivityResults(self, groupmembers, groupname):
         context = self.context
         elementsList = []
         search = context.portal_catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'],
-                                                      creator=groupmembers, 
-                                                      sort_on='modified', 
+                                                      creator=groupmembers,
+                                                      sort_on='modified',
                                                       sort_order='reverse',
                                                       sort_limit=20)[:20]
 
@@ -159,15 +162,15 @@ class groupActivity(DashboardView):
 
 
 class groupPlaylists(DashboardView):
-    """ 
+    """
         Returns the list of playlists of the group
     """
     def searchPlaylistsResults(self, groupmembers, groupname):
         context = self.context
         elementsList = []
         search = context.portal_catalog.searchResults(portal_type='fatac.playlist',
-                                                      creator=groupmembers, 
-                                                      sort_on='modified', 
+                                                      creator=groupmembers,
+                                                      sort_on='modified',
                                                       sort_order='reverse',
                                                       sort_limit=20)[:20]
 
@@ -234,7 +237,7 @@ class deleteUserGroup(grok.View):
                     print 'User ' + username + ' deleted from Group: ' + groupId
         else:
             print 'No group ID'
-            
+
 
     def render(self):
         #Get the current member
@@ -310,7 +313,7 @@ class UsersGroupsControlPanelView(ControlPanelView):
         return getSecurityManager().checkPermission(ManagePortal, self.context)
 
     # The next two class methods implement the following truth table:
-    # 
+    #
     # MANY USERS/GROUPS SEARCHING       CAN LIST USERS/GROUPS   RESULT
     # False             False           False                   Lists unavailable
     # False             False           True                    Show all
@@ -487,7 +490,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
             self.searchString = ''
             self.newSearch = False
 
-            
+
 
             if form.get('form.submitted', False):
                 if findMembers:
