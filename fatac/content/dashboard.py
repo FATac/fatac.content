@@ -480,7 +480,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         self.gtool = getToolByName(self, 'portal_groups')
         self.mtool = getToolByName(self, 'portal_membership')
 
-        if not self.mtool.isAnonymousUser(): # the user has not logged in
+        if not self.mtool.isAnonymousUser():  # the user has not logged in
             self.member = self.mtool.getAuthenticatedMember()
             self.userid = self.member.getId()
 
@@ -490,8 +490,6 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
             self.searchResults = []
             self.searchString = ''
             self.newSearch = False
-
-
 
             if form.get('form.submitted', False):
                 if findMembers:
