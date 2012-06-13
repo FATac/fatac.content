@@ -1,50 +1,29 @@
 from zope import schema
-from z3c.form import widget
 from plone.directives import form
-from zope.interface import Invalid
-from plone.app.textfield import RichText
-from z3c.relationfield.schema import RelationList, RelationChoice
-from plone.formwidget.contenttree import ObjPathSourceBinder
 from five import grok
-from zope.component import getMultiAdapter
 from plone.memoize.instance import memoize
 from fatac.content import PlaylistMessageFactory as _
 from plone.namedfile.interfaces import IImageScaleTraversable
 from plone.namedfile.field import NamedBlobImage
-
-from plone.app.relationfield.widget import RelationListDataManager
-from zope.component import getUtility
-from zope.intid.interfaces import IIntIds
-from z3c.relationfield.relation import RelationValue
-
 from zope.app.container.interfaces import IObjectAddedEvent
 from Products.CMFCore.utils import getToolByName
-from plone.dexterity.browser.add import DefaultAddForm, DefaultAddView
-from plone.directives import dexterity
-from z3c.form import button, field
 from groupSelectWidget import GroupsSelectionWidgetFactory
 from plone.indexer import indexer
-
 from fatac.theme.browser.funcionsCerca import funcionsCerca
 from fatac.theme.browser.genericView import genericView
 from fatac.theme.browser.vistesCerca import resultatsView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 import json
-from plone.app.layout.viewlets.interfaces import IHtmlHead
-import urllib2
-import math
 
 
 class IPlaylist(form.Schema, IImageScaleTraversable):
-    """
-        Playlist Schema
+    """ Playlist Schema
     """
 
     # Imatge de la Playlist
     descImage = NamedBlobImage(
-        title = _(u"Playlist Image"),
-        description = _(u"Add a Playlist Image that represents your playlist"),
-        required = False,
+        title=_(u"Playlist Image"),
+        description=_(u"Add a Playlist Image that represents your playlist"),
+        required=False,
         )
 
    # form.write_permission(track="fatac.ModRelField")
@@ -52,31 +31,29 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
 
     # Llista d'objectes de la playlist que serveix per ordenar
     orderedList = schema.List(
-        title = _(u"Ordered List To Play"),
-        description = _(u"This is a list that has the order of the DB objects"),
-        default = [],
+        title=_(u"Ordered List To Play"),
+        description=_(u"This is a list that has the order of the DB objects"),
+        default=[],
         value_type=schema.TextLine(),
-        required = False,
+        required=False,
         )
 
     # Llista del grups en els que es pot llistar aquesta Playlist
-    form.widget(visibleInGroupsList = GroupsSelectionWidgetFactory)
+    form.widget(visibleInGroupsList=GroupsSelectionWidgetFactory)
     visibleInGroupsList = schema.List(
-        title = _(u"List of Groups that has this Playlist"),
-        description = _(u"This is a list of the Groups that can show this playlist"),
-        required = False,
-        value_type  = schema.TextLine(title=u"Visible in Groups"),
+        title=_(u"List of Groups that has this Playlist"),
+        description=_(u"This is a list of the Groups that can show this playlist"),
+        required=False,
+        value_type=schema.TextLine(title=u"Visible in Groups"),
         )
 
     #Amaguem els camps a l'edicio
     form.omitted('orderedList')
 
 
-
 @indexer(IPlaylist)
 def vigListIndexer(playlist):
-    """
-        Index en el Cataleg del camp 'visibleInGroupsList'
+    """ Index en el Cataleg del camp 'visibleInGroupsList'
     """
     if playlist.visibleInGroupsList != None:
         return playlist.visibleInGroupsList
@@ -85,23 +62,17 @@ def vigListIndexer(playlist):
 grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
 
-
 @grok.subscribe(IPlaylist, IObjectAddedEvent)
 def autoPublishPlaylist(playlist, event):
-    """
-        Publica la Playlist un cop s'ha creat.
+    """ Publica la Playlist un cop s'ha creat.
     """
     wtool = getToolByName(playlist, 'portal_workflow')
     wtool.doActionFor(playlist, "publish")
 
 
-
-
 class returnOrderedList(grok.View):
-    """
-       Async View
-
-       Retorna la llista d'objectes que te la playlist per poder ordenar
+    """ Async View
+        Retorna la llista d'objectes que te la playlist per poder ordenar
     """
 
     grok.context(IPlaylist)
@@ -109,8 +80,7 @@ class returnOrderedList(grok.View):
     grok.name('returnOrderedList')
 
     def render(self):
-        """
-            Render the settings as inline Javascript object in HTML <head>
+        """ Render the settings as inline Javascript object in HTML <head>
         """
 
         request = self.request
@@ -120,12 +90,11 @@ class returnOrderedList(grok.View):
         json_snippet = json.dumps(settings)
 
         request.response.setHeader("content-type", "application/json")
-        return json_snippet 
+        return json_snippet
 
     @memoize
     def llistaObjectes(self, request, context):
-        """
-            Retorna la llista d'objectes del camp orderedList
+        """ Retorna la llista d'objectes del camp orderedList
         """
 
         llista_ids = []
@@ -134,15 +103,12 @@ class returnOrderedList(grok.View):
                 llista_ids.append(element[1])
 
         return {
-            "Ids" : llista_ids
+            "Ids": llista_ids
         }
 
 
-
-
 class View(grok.View, funcionsCerca):
-    """
-        Main View
+    """ Main View
     """
 
     grok.context(IPlaylist)
@@ -150,11 +116,8 @@ class View(grok.View, funcionsCerca):
     grok.name('view')
 
 
-
-
 class playlistView(grok.View, resultatsView):
-    """ 
-        Pinta els resultats i les dades referents a la paginacio i les opcions
+    """ Pinta els resultats i les dades referents a la paginacio i les opcions
         de visualitzacio.
     """
 
@@ -164,13 +127,11 @@ class playlistView(grok.View, resultatsView):
     grok.template('playlistView')
 
     def retDadesResultats(self):
-        """ 
-            Crida la vista displayResultatsPaginaView i retorna l'html generat
+        """ Crida la vista displayResultatsPaginaView i retorna l'html generat
         """
 
         request = self.request
-        request.set('sorting','False')
-
+        request.set('sorting', 'False')
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
@@ -178,11 +139,9 @@ class playlistView(grok.View, resultatsView):
         return html
 
 
-
-
 class displayResultsPlaylistView(grok.View, funcionsCerca):
     """ pinta l'html corresponent als resultats de la pagina actual (sense
-    controls de visualitzacio)
+        controls de visualitzacio)
     """
 
     grok.context(IPlaylist)
@@ -209,8 +168,6 @@ class displayResultsPlaylistView(grok.View, funcionsCerca):
         return html
 
 
-
-
 class genericPlaylistview(grok.View, genericView):
 
     grok.context(IPlaylist)
@@ -219,8 +176,7 @@ class genericPlaylistview(grok.View, genericView):
     grok.template('genericPlaylistview')
 
     def dades_genericview_header(self):
-        """
-            funcions que retornen les dades necessaries per pintar cada vista
+        """ funcions que retornen les dades necessaries per pintar cada vista
         """
         orderedList = self.context.orderedList
 
@@ -264,11 +220,8 @@ class genericPlaylistview(grok.View, genericView):
             return resultat
 
 
-
-
 class sortingView(grok.View, funcionsCerca):
-    """
-        Sorting View
+    """ Sorting View
     """
 
     grok.context(IPlaylist)
@@ -277,11 +230,8 @@ class sortingView(grok.View, funcionsCerca):
     grok.template('sortingView')
 
 
-
-
 class orderPlaylistView(grok.View, resultatsView):
-    """
-        View for sorting Playlist elements
+    """ View for sorting Playlist elements
     """
 
     grok.context(IPlaylist)
@@ -289,27 +239,21 @@ class orderPlaylistView(grok.View, resultatsView):
     grok.name('orderPlaylistView')
     grok.template("orderPlaylistView")
 
-
     def retDadesResultats(self):
-        """ 
-            Crida la vista displayResultatsPaginaView i retorna l'html generat
+        """ Crida la vista displayResultatsPaginaView i retorna l'html generat
         """
 
         request = self.request
-        request.set('sorting','True')
-        
+        request.set('sorting', 'True')
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
         html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
-    
-
 
 
 class updateList(grok.View):
-    """
-       View for the updateList Method
+    """ View for the updateList Method
     """
 
     grok.context(IPlaylist)
@@ -330,16 +274,13 @@ class updateList(grok.View):
 
         if newList != []:
             context.orderedList = newList
- 
+
     def render(self):
         print 'orderedList field Updated.'
 
 
-
-
 class deleteObjectId(grok.View):
-    """
-       View for removing an ID from the orderedList
+    """ View for removing an ID from the orderedList
     """
 
     grok.context(IPlaylist)
@@ -359,6 +300,6 @@ class deleteObjectId(grok.View):
 
         if newList != []:
             context.orderedList = newList
- 
+
     def render(self):
         print 'ID removed successfully'
