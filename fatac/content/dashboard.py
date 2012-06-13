@@ -24,6 +24,10 @@ from five import grok
 from Products.CMFPlone.utils import normalizeString
 from Products.statusmessages.interfaces import IStatusMessage
 
+from fatac.content import portletPlaylists, portletMyFiles, portletMyGroups
+from fatac.core.utils import crearObjecte
+
+
 class FatacPortalDefaultDashboard(DefaultDashboard):
     """ A new custom default dashboard for users. """
     implements(IDefaultDashboard)
@@ -34,15 +38,15 @@ class FatacPortalDefaultDashboard(DefaultDashboard):
         recent = portlets.recent.Assignment()
         calendar = portlets.calendar.Assignment()
         search = portlets.search.Assignment()
-        playlists = portlets.portletPlaylists.Assignment()
-        mygroups = portlets.portletMyGroups.Assignment()
-        myfiles = portlets.portletMyFiles.Assigment()
+        playlists = portletPlaylists.Assignment()
+        mygroups = portletMyGroups.Assignment()
+        myfiles = portletMyFiles.Assignment()
 
         return {
-            'plone.dashboard1' : (playlists,),
-            'plone.dashboard2' : (recent,),
-            'plone.dashboard3' : (mygroups,),
-            'plone.dashboard4' : (calendar, myfiles),
+            'plone.dashboard1': (playlists,),
+            'plone.dashboard2': (recent,),
+            'plone.dashboard3': (mygroups,),
+            'plone.dashboard4': (calendar, myfiles),
         }
 
 
@@ -112,15 +116,15 @@ class FatacDashBoard(DashboardView):
 
 
 class groupActivity(DashboardView):
-    """ 
+    """
         Returns The group activity content
     """
     def searchActivityResults(self, groupmembers, groupname):
         context = self.context
         elementsList = []
         search = context.portal_catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'],
-                                                      creator=groupmembers, 
-                                                      sort_on='modified', 
+                                                      creator=groupmembers,
+                                                      sort_on='modified',
                                                       sort_order='reverse',
                                                       sort_limit=20)[:20]
 
@@ -159,15 +163,15 @@ class groupActivity(DashboardView):
 
 
 class groupPlaylists(DashboardView):
-    """ 
+    """
         Returns the list of playlists of the group
     """
     def searchPlaylistsResults(self, groupmembers, groupname):
         context = self.context
         elementsList = []
         search = context.portal_catalog.searchResults(portal_type='fatac.playlist',
-                                                      creator=groupmembers, 
-                                                      sort_on='modified', 
+                                                      creator=groupmembers,
+                                                      sort_on='modified',
                                                       sort_order='reverse',
                                                       sort_limit=20)[:20]
 
@@ -234,7 +238,7 @@ class deleteUserGroup(grok.View):
                     print 'User ' + username + ' deleted from Group: ' + groupId
         else:
             print 'No group ID'
-            
+
 
     def render(self):
         #Get the current member
@@ -310,7 +314,7 @@ class UsersGroupsControlPanelView(ControlPanelView):
         return getSecurityManager().checkPermission(ManagePortal, self.context)
 
     # The next two class methods implement the following truth table:
-    # 
+    #
     # MANY USERS/GROUPS SEARCHING       CAN LIST USERS/GROUPS   RESULT
     # False             False           False                   Lists unavailable
     # False             False           True                    Show all
@@ -476,7 +480,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         self.gtool = getToolByName(self, 'portal_groups')
         self.mtool = getToolByName(self, 'portal_membership')
 
-        if not self.mtool.isAnonymousUser(): # the user has not logged in
+        if not self.mtool.isAnonymousUser():  # the user has not logged in
             self.member = self.mtool.getAuthenticatedMember()
             self.userid = self.member.getId()
 
@@ -486,8 +490,6 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
             self.searchResults = []
             self.searchString = ''
             self.newSearch = False
-
-            
 
             if form.get('form.submitted', False):
                 if findMembers:
@@ -603,8 +605,6 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         return len(activitat)
 
 
-
-
 class GroupDetailsControlPanel(UsersGroupsControlPanelView):
 
     #index = ViewPageTemplateFile('browser/usergroups_groupdetails.pt')
@@ -649,21 +649,21 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
                                               REQUEST=self.request)
                 if not success:
                     msg = _(u'Could not add group ${name}, perhaps a user or group with '
-                            u'this name already exists.', mapping={u'name' : addname})
+                            u'this name already exists.', mapping={u'name': addname})
                     IStatusMessage(self.request).add(msg, 'error')
                     return self.index()
                 else:
-                    portal = context
+                    portal = getToolByName(self, 'portal_url').getPortalObject()
                     # Si no existeix la carpeta de grup la creem
                     if addname not in portal.Groups.objectIds():
-                        portal.Groups.invokeFactory(id=addname, type_name="Folder")
+                        crearObjecte(portal, addname, 'Folder', title, description)
 
                     # Afegim el creador a la llista de managers del grup
                     flagAdded = True
 
                 self.group = self.gtool.getGroupById(addname)
                 msg = _(u'Group ${name} has been added.',
-                        mapping={u'name' : addname})
+                        mapping={u'name': addname})
 
             elif self.groupname:
                 self.gtool.editGroup(self.groupname, roles=None, groups=None,
