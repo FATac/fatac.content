@@ -10,6 +10,7 @@
 from Products.CMFCore.utils import getToolByName
 from plone.app.controlpanel.security import ISecuritySchema
 from plone.registry.interfaces import IRegistry
+from fatac.core.utils import crearObjecte
 import logging
 
 
@@ -33,7 +34,7 @@ def setupSiteSecurity(portal):
 
     # Si no esta creada la carpeta de grups la creem
     if "Groups" not in portal.objectIds():
-        portal.invokeFactory(id="Groups", type_name="Folder")
+        crearObjecte(portal, "Groups", "Folder", 'Groups', 'Carpeta contenidora de les carpetes de grup')
         logger.info("fatac.content >> Groups folder added")
 
     gtool = getToolByName(portal, 'portal_groups')
