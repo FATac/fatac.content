@@ -36,7 +36,7 @@ function afageixPlaylistsMenu(element) {
     //var pathname = "http://localhost:8084/fatac/";
     var pathname = "";
     var menu = [
-                {"Tria la llista a la que vols afegir aquest element":{onclick:function(){},disabled:true}},
+                {"Escull playlist":{onclick:function(){},disabled:true}},
                 $.contextMenu.separator,
     ];
 
