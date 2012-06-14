@@ -24,19 +24,12 @@
       />
 
 
-  <!-- 
+  <!--
       Alerta!! Plone conte un bug a l'hora de declarar importSteps!!
       Es pot comprovar l'error aqui: https://dev.plone.org/ticket/8350
       No afecta al correcte funcionament del producte ni del Plone, simplement
       dona un "Warning" en el Log. (GenericSetup There are unresolved or circular dependencies.)
   -->
-  <genericsetup:importStep
-      name="setupVarious"
-      handler=".setuphandlers.setupVarious"
-      title="Setup Security Settings"
-      description="Setup Security Settings enabling user folder creation">
-      <depends name="fatac.content"/> 
-  </genericsetup:importStep>
 
   <class class="Products.PluggableAuthService.PropertiedUser.PropertiedUser">
      <implements interface=".interfaces.IPortalUser" />
@@ -139,7 +132,7 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".retornaUserRoles.retornaUserRoles"
       permission="zope2.View"
-      />  
+      />
 
 
 
@@ -181,7 +174,7 @@
         editview=".portletMyFiles.EditForm"
         />
 
-  
+
 
 <!-- Vista customitzada que no s'utilitza
   <adapter

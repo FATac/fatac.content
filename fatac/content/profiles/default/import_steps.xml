@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="setupVarious"
+               version="20120614-01"
+               handler="fatac.content.setuphandlers.setupVarious"
+               title="Setup Security Settings">
+    <dependency step="fatac.content" />
+    Setup Security Settings enabling user folder creation
+ </import-step>
+</import-steps>
