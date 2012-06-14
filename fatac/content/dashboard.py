@@ -75,20 +75,19 @@ class FatacDashBoard(DashboardView):
     def dashboard_props(self):
         return getattr(self.context.portal_properties, 'fatac.dashboard', None)
 
-
     def retornaCountGrups(self, memberid):
         gtool = getToolByName(self.context, 'portal_groups')
         mgroups = gtool.getGroupsByUserId(memberid)
-        return len(mgroups)
+        return len(mgroups) - 1  # Per treure el grup virtual "Authenticated Users"
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults( portal_type = 'fatac.playlist', creator = memberid )
+        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=memberid)
         return len(playlists)
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File', 'plone.Comment'], creator = memberid )
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File', 'plone.Comment'], creator=memberid)
         return len(activitat)
 
     def retornaCountGroupMembers(self, groupname):
@@ -110,7 +109,7 @@ class FatacDashBoard(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
         return len(activitat)
 
 

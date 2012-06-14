@@ -11,7 +11,7 @@
   <object name="Add Playlist" meta_type="CMF Action" i18n:domain="plone">
    <property name="title" i18n:translate="">Afegeix Playlist</property>
    <property name="description" i18n:translate=""></property>
-   <property name="url_expr">string:$portal_url/Members/${member/id}/++add++fatac.playlist</property>
+   <property name="url_expr">string:${portal/portal_membership/getHomeUrl}/++add++fatac.playlist</property>
    <property name="icon_expr">string:++resource++fatac.theme.images/ico_ampliar.png</property>
    <property name="available_expr"></property>
    <property name="permissions">
@@ -30,7 +30,7 @@
    <property name="permissions">
     <element value="Add portal content"/>
    </property>
-   <property name="visible">True</property>
+   <property name="visible">False</property>
   </object>
 
   <object name="Add Group" meta_type="CMF Action" i18n:domain="plone">
