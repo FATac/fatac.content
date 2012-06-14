@@ -108,6 +108,11 @@
 
                                             <tal:rep tal:repeat="dada seccio/dades">
                                                 <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
+
+                                                <tal:co tal:define="isanon context/@@plone_portal_state/anonymous; start repeat/dada/start"
+                                                        tal:condition="python: not isanon and seccio['nom'] == 'header' and start">
+                                                    <img class="addPlaylist" tal:attributes="rel dades_objecte/id" src="++resource++fatac.content/images/add_playlist.png" />
+                                                </tal:co>
                                             </tal:rep>
 
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; el tanquem -->

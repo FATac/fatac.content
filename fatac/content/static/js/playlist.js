@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     // Assign handlers immediately after making the request,
     // and remember the jqxhr object for this request
-    if ((window.location.pathname.indexOf("edit") == -1) && 
+    if ((window.location.pathname.indexOf("edit") == -1) &&
         (window.location.pathname.indexOf("@@edit") == -1))
     {
         var resultatsPerPagina = 66;
@@ -17,7 +17,7 @@ $(document).ready(function() {
             resultatsPerPagina = 400;
         }
 
-        $.getJSON(pathname + "returnOrderedList", function() { 
+        $.getJSON(pathname + "returnOrderedList", function() {
         })
         .error(function() { alert("No s'ha pogut carregar la llista d'objectes"); })
         .complete(function( data ) {
@@ -44,18 +44,18 @@ $(document).ready(function() {
 
             $.post(pathname + currentView, {parametres_visualitzacio: parametres_visualitzacio_json}, function(data){
                 $('div#zona_resultats').replaceWith(data);
-            })        
+            })
             .complete(function( data ){
                 // The sortable list of objects
                 if (currentView == 'orderPlaylistView')
                 {
                     $('#sortable').sortable({
-                        update: function() {        
+                        update: function() {
                             pathname = getPath();
                             order = getOrder();
 
                             updateList(pathname.split('sortingView')[0], order);
-                        }                                         
+                        }
                     });
                 }
             });
@@ -65,18 +65,18 @@ $(document).ready(function() {
 /*
     // The sortable list of objects
     $('#sortable').sortable({
-        update: function() {        
+        update: function() {
             pathname = getPath();
             order = getOrder();
 
             updateList(pathname, order);
-        }                                         
+        }
     });
 */
     // Check and Uncheck all the selection
-    $("#forRemove_all").click(function() 
+    $("#forRemove_all").click(function()
     {
-        $("input[id$=forRemove]").each(function() 
+        $("input[id$=forRemove]").each(function()
         {
             if (this.checked == false)
             {
@@ -86,13 +86,13 @@ $(document).ready(function() {
             {
                 this.checked = false;
             }
-        }); 
+        });
     });
 
     // Delete all the selection
-    $("#deleteAll").click(function() 
+    $("#deleteAll").click(function()
     {
-        $("#sortable").children().each(function() 
+        $("#sortable").children().each(function()
         {
             var inputChecked = jQuery(this).find("input")[0].checked;
             if (inputChecked == true)
@@ -100,10 +100,10 @@ $(document).ready(function() {
                 jQuery(this).remove();
             }
         });
-        
+
         pathname = getPath();
-        order = getOrder();  
-        updateList(pathname, order); 
+        order = getOrder();
+        updateList(pathname, order);
     });
 });
 
@@ -181,5 +181,5 @@ function removeSelectedObject(objectId, tagObjectId)
                                     $(tagObjectId).remove();
                                 },
           });
-    
+
 }
