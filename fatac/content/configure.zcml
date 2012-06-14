@@ -30,13 +30,6 @@
       No afecta al correcte funcionament del producte ni del Plone, simplement
       dona un "Warning" en el Log. (GenericSetup There are unresolved or circular dependencies.)
   -->
-  <genericsetup:importStep
-      name="setupVarious"
-      handler=".setuphandlers.setupVarious"
-      title="Setup Security Settings"
-      description="Setup Security Settings enabling user folder creation">
-      <depends name="fatac.content"/>
-  </genericsetup:importStep>
 
   <class class="Products.PluggableAuthService.PropertiedUser.PropertiedUser">
      <implements interface=".interfaces.IPortalUser" />
