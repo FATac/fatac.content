@@ -38,11 +38,11 @@
 
 /* ---------------------------------------------------------------------------- Butons Dashboard (Accions) */
 
-.menuButtons { 
+.menuButtons {
     width: 110px;
-    margin: 0.2em 0.2em; 
-    border-radius:0.3em; 
-    -webkit-radius:0.3em; 
+    margin: 0.2em 0.2em;
+    border-radius:0.3em;
+    -webkit-radius:0.3em;
     -moz-border-radius:0.3em;
     background-color:#D3E3C3;
     float: left;
@@ -56,9 +56,9 @@
 
 .menuButtonsSelected {
     width: 110px;
-    margin: 0.2em 0.2em; 
-    border-radius:0.3em; 
-    -webkit-radius:0.3em; 
+    margin: 0.2em 0.2em;
+    border-radius:0.3em;
+    -webkit-radius:0.3em;
     -moz-border-radius:0.3em;
     background-color:#B3D396;
     float: left;
@@ -71,23 +71,23 @@
 
 
 
-.actionButtons {
-    float:right; 
-    margin-right: 3px; 
-    padding-right:20px; 
-    padding-left: 5px;  
+.template-my-playlists .actionButtons,
+.template-manage-groups .actionButtons,
+.template-my-activity .actionButtons {
+    float:right;
+    margin-right: 3px;
+    padding-right:20px;
+    padding-left: 5px;
     background:url('++resource++fatac.theme.images/ico_ampliar.png')  no-repeat right center #D3E3C3;
     border-radius: 0.2em;
     border-width: 1px !important;
-    -webkit-border-radius: 0.2em;
-    -moz-border-radius: 0.2em;
     color:#339933 !important;
 }
 .actionButtonsSimple {
-    float:right; 
-    margin-right: 3px; 
-    padding: 0px 5px; 
-    padding-left: 5px;  
+    float:right;
+    margin-right: 3px;
+    padding: 0px 5px;
+    padding-left: 5px;
     border-radius: 0.2em;
     border-width: 1px !important;
     -webkit-border-radius: 0.2em;
@@ -99,53 +99,53 @@
 
 /* ---------------------------------------------------------------------------- Portlets */
 dl.portletFatac { margin-bottom:0; margin-left:15px; }
-dl.portletFatac dt { 
-    margin:0 !important; 
-    min-width: 100%; 
-    width: auto; 
-    border-radius:0.3em; 
-    -webkit-radius:0.3em; 
-    -moz-border-radius:0.3em; 
+dl.portletFatac dt {
+    margin:0 !important;
+    min-width: 100%;
+    width: auto;
+    border-radius:0.3em;
+    -webkit-radius:0.3em;
+    -moz-border-radius:0.3em;
     padding:5px;
     background-color:#D3E3C3;
 }
-dl.portletFatac dt a { 
+dl.portletFatac dt a {
     font-family:Arial; font-size:11px; color:#339933 !important;
 }
-dl.portletFatac dd { 
-    right:-2px; 
-    margin:0 !important; 
-    border-radius:0 0 0.3em 0.3em; 
-    -webkit-radius:0 0 0.3em 0.3em; 
-    -moz-border-radius:0 0 0.3em 0.3em; 
-    padding:0; 
-    border-top:0; 
+dl.portletFatac dd {
+    right:-2px;
+    margin:0 !important;
+    border-radius:0 0 0.3em 0.3em;
+    -webkit-radius:0 0 0.3em 0.3em;
+    -moz-border-radius:0 0 0.3em 0.3em;
+    padding:0;
+    border-top:0;
 }
 
 
 dl.portletRecent { margin-bottom:0; margin-left:15px; }
-dl.portletRecent dt { 
-    margin:0 !important; 
-    min-width: 100%; 
-    width: auto; 
-    border-radius:0.3em; 
-    -webkit-radius:0.3em; 
-    -moz-border-radius:0.3em; 
+dl.portletRecent dt {
+    margin:0 !important;
+    min-width: 100%;
+    width: auto;
+    border-radius:0.3em;
+    -webkit-radius:0.3em;
+    -moz-border-radius:0.3em;
     padding:5px;
     background-color:#D3E3C3;
     font-family:Arial; font-size:11px; color:#339933 !important;
 }
-dl.portletRecent dt a { 
+dl.portletRecent dt a {
     font-family:Arial; font-size:11px; color:#339933 !important;
 }
-dl.portletRecent dd { 
-    right:-2px; 
-    margin:0 !important; 
-    border-radius:0 0 0.3em 0.3em; 
-    -webkit-radius:0 0 0.3em 0.3em; 
-    -moz-border-radius:0 0 0.3em 0.3em; 
-    padding:0; 
-    border-top:0; 
+dl.portletRecent dd {
+    right:-2px;
+    margin:0 !important;
+    border-radius:0 0 0.3em 0.3em;
+    -webkit-radius:0 0 0.3em 0.3em;
+    -moz-border-radius:0 0 0.3em 0.3em;
+    padding:0;
+    border-top:0;
     font-size: 80%;
 }
 
@@ -155,19 +155,28 @@ dd.portletFooter {
 
 
 /* ---------------------------------------------------------------------------- Generic View */
-.genericview_my_dades { 
+.genericview_my_dades {
     padding: 0.5em;
-    margin:1%; 
-    background-color:#D3E3C3; 
-    border-radius: 0.4em; 
-    -webkit-radius: 0.4em; 
-    -moz-border-radius: 0.4em; 
+    margin:1%;
+    background-color:#D3E3C3;
+    border: 2px #D3E3C3 solid;
+    border-radius: 0.4em;
 }
-.genericview_my_dades a { 
-    font-family:Arial; 
-    font-weight:bold !important; 
-    color:#399B37 !important; 
-    font-style:italic; 
+.genericview_my_dades:hover {
+    border: 2px #339933 solid;
+}
+
+a .genericview_my_dades .playlistTitle {
+    font-family:Arial;
+    font-weight:bold !important;
+    color:#399B37 !important;
+    font-style:italic;
+}
+
+a .genericview_my_dades {
+    font-family:Arial;
+    font-weight:normal; !important;
+    color: black !important;
 }
 
 .activityDiscreet {
@@ -179,9 +188,9 @@ dd.portletFooter {
 
 /* ---------------------------------------------------------------------------- Generic View */
 table.dashboardListing {
-    font-family:Arial; 
-    font-size:13px; 
-    color:#339933 !important; 
+    font-family:Arial;
+    font-size:13px;
+    color:#339933 !important;
 }
 
 table.dashboardListing th {
@@ -197,29 +206,29 @@ table.dashboardListing td {
 }
 
 table.dashboardListing a {
-    font-family:Arial; 
-    font-size:11px; 
+    font-family:Arial;
+    font-size:11px;
     color:#339933 !important;
 }
 
 
 /* ---------------------------------------------------------------------------- Fonts */
-.arial11c339933upp { 
-    font-family:Arial; 
-    font-size:13px; 
-    color:#339933 !important; 
-    font-weight:bold; 
-    text-transform: uppercase; 
+.arial11c339933upp {
+    font-family:Arial;
+    font-size:13px;
+    color:#339933 !important;
+    font-weight:bold;
+    text-transform: uppercase;
 }
 
 .georgia20c333333Ital { font-family:georgia; font-size:20px; color:#000000 !important; font-style:italic; }
 .georgia13c333333Ital { font-family:georgia; font-size:13px; color:#333333 !important; font-style:italic;}
 
-.div_dotted_line_left { 
-    float:left; 
-    width:100%; 
-    clear:both; 
-    border-left:1px dotted #888888; 
-    padding-left:8px; 
-    margin-left:8px; 
+.div_dotted_line_left {
+    float:left;
+    width:100%;
+    clear:both;
+    border-left:1px dotted #888888;
+    padding-left:8px;
+    margin-left:8px;
 }

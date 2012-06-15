@@ -78,7 +78,10 @@ class FatacDashBoard(DashboardView):
     def retornaCountGrups(self, memberid):
         gtool = getToolByName(self.context, 'portal_groups')
         mgroups = gtool.getGroupsByUserId(memberid)
-        return len(mgroups) - 1  # Per treure el grup virtual "Authenticated Users"
+        if len(mgroups) > 0:
+            return len(mgroups) - 1  # For not to count the built-in "Authenticated Users"
+        else:
+            return len(mgroups)  # I'm Zope admin and I have no built-in groups
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
@@ -569,7 +572,10 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
     def retornaCountGrups(self, memberid):
         gtool = getToolByName(self.context, 'portal_groups')
         mgroups = gtool.getGroupsByUserId(memberid)
-        return len(mgroups)
+        if len(mgroups) > 0:
+            return len(mgroups) - 1  # For not to count the built-in "Authenticated Users"
+        else:
+            return len(mgroups)  # I'm Zope admin and I have no built-in groups
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')

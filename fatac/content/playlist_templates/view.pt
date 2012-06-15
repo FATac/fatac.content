@@ -17,10 +17,20 @@
 <metal:content-core fill-slot="content-core">
     <metal:content-core define-macro="content-core">
 
+        <a href=""
+           class="link-parent"
+           style="float:right"
+           tal:attributes="href string:$portal_url/@@my-playlists"
+           i18n:translate="label_torna_a_la_llista_de_les_teves_playlists">
+           Torna a la llista de les teves playlists
+        </a>
+
         <div id="dashboard-header" class="arial16c339933bold" i18n:translate="" style="margin-bottom: 1em;">
             <img src="++resource++fatac.content/images/playlist24.gif" />
             <span i18n:translate="">playlist</span>
         </div>
+
+
 
         <div id="my-files-header" class="div_dotted_line_bottom georgia13c333333Ital">
             <span tal:content="context/title" />
