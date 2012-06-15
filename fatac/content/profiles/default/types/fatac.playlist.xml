@@ -36,5 +36,9 @@
         url_expr="string:${object_url}/edit" visible="True">
       <permission value="Modify portal content"/>
      </action>
+     <action title="Reordena Playlist" action_id="reordenaelements" category="object" condition_expr=""
+        url_expr="string:${object_url}/sortingView" visible="True">
+      <permission value="Modify portal content"/>
+     </action>
      <!-- Eliminada per CSS l'accio de sharing -->
 </object>
