@@ -39,17 +39,18 @@ class retornaPlaylists(grok.View):
         if not mt.isAnonymousUser():
             member = mt.getAuthenticatedMember()
 
-        # Search all the Playlist
-        catalog = getToolByName(context, 'portal_catalog')
-        search = catalog.searchResults({'portal_type': 'fatac.playlist', 'Creator': member.getId()})
+            # Search all the Playlist
+            catalog = getToolByName(context, 'portal_catalog')
+            search = catalog.searchResults({'portal_type': 'fatac.playlist', 'Creator': member.getId()})
 
-        llistaIds = []
-        llistaTitols = []
-        for brain in search:
-            llistaIds.append(brain.id)
-            llistaTitols.append(brain.Title)
+            llistaIds = []
+            llistaTitols = []
+            for brain in search:
+                llistaIds.append(brain.id)
+                llistaTitols.append(brain.Title)
 
-        return {"ids": llistaIds, "titols": llistaTitols}
+            return {"ids": llistaIds, "titols": llistaTitols}
+        return None
 
 
 class actualitzaPlaylist(grok.View):
@@ -74,8 +75,8 @@ class actualitzaPlaylist(grok.View):
 
     @memoize
     def updatePlaylistObject(self, context):
-        """ Afegeix l'id idObjecte rebut per request a la playlist idPlaylist
-        rebuda per request.
+        """ Afegeix l'id 'idObjecte' rebut per request a la playlist 'idPlaylist'
+        rebuda per request, si l'objecte no existeix ja a la playlist.
         """
 
         idPlaylist = self.request.get('idPlaylist')

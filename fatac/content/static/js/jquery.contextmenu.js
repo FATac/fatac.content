@@ -262,9 +262,11 @@
 			$(this).bind('contextmenu',function(e){cmenu.show(this,e);return false;});
 
 			// Pels elements amb classe addPlaylist, faig aparèixer el menú també per left click
-			if($(this).attr('class') == 'addPlaylist') {
+			if($(this).hasClass('addPlaylist')) {
 				$(this).bind('click',function(e){cmenu.show(this,e);return false;});
 			}
+
+
 
 		});
 	};

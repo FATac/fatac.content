@@ -132,3 +132,7 @@
         </metal:content-core>
     </body>
 </html>
+
+<script type="text/javascript">
+    addPlaylistMenu();
+</script>
