@@ -69,7 +69,16 @@ function afageixPlaylistsMenu(element) {
                     // variable global (index - 2 xq hi ha el títol i el separador)
                     var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 2]
                     var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_aux + "&idObjecte=" + idObjecte;;
-                    $.ajax({url: url_actualitzar, type: "post", error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");}
+                    $.ajax({url: url_actualitzar, type: "post",
+                            error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
+                            complete: function(){
+                                text = 'element afegit correctament'
+                                $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
+                                    fadeInSpeed: 200,
+                                    fadeOutSpeed: 200,
+                                    removeTimer: 2000,
+                                });
+                            }
                 });};
                 menu.push(menuDict);
             }

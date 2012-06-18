@@ -27,4 +27,8 @@
     <javascript cacheable="True" compression="none" cookable="True" enabled="True"
                 expression="python: context.portal_membership.isAnonymousUser() == False"
                 id="++resource++fatac.content/js/playlistaddcontent.js" />
+
+    <javascript cacheable="True" compression="none" cookable="True" enabled="True"
+                expression=""
+                id="++resource++fatac.content/js/jquery.purr.js" />
 </object>
