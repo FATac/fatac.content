@@ -28,15 +28,15 @@
                                 member context/@@plone_portal_state/member;
                                 name python:memberinfo['fullname'] or member.getId() or member.getId();
                                 portal_url context/portal_url">
-        
+
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
 
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
-            <div id="actions">
-                <form action=""
+             <div id="actions">
+                <!--<form action=""
                       name="file_add"
                       method="post"
                       tal:attributes="action string:$portal_url/Members/${member/id}/createObject?type_name=File">
@@ -49,11 +49,11 @@
                     />
 
 
-                </form> 
+                </form>  -->
             </div>
 
             <div id="usuari">
-            <span class="arial11c339933upp" i18n:translate="">Usuari ></span> 
+            <span class="arial11c339933upp" i18n:translate="">Usuari ></span>
             <span class="arial11c339933upp" tal:content="name" />
             </div>
 
@@ -77,11 +77,11 @@
                     <div id="dash-menu" class="menuButtonsSelected">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" /> 
+                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
-                        
+
                     <div id="grups-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -101,7 +101,7 @@
                             [<span tal:content="python: view.retornaCountPlaylists(member.getId())"/>]
                         </a>
                     </div>
-                      
+
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity"
@@ -120,22 +120,27 @@
             </div>
 
             <div id="content-core" class="span10">
-                <div class="div_dotted_line_left">            
-                    <div id="dashboard-header" class="arial16c339933bold" 
+                <div class="div_dotted_line_left">
+                    <div id="dashboard-header" class="arial16c339933bold"
                           i18n:translate="" style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/dashboard24.gif" />
                         <span i18n:translate="label_dashboard">Dashboard</span>
                     </div>
-                    
-                    <div id="my-files">
+
+
+                    <div id="escriptoriDisclaimer">
+                        Aquí el disclaimer/informació sobre l'escriptori dels usuaris.
+                    </div>
+
+<!--                     <div id="my-files">
                         <div id="my-files-header" class="div_dotted_line_bottom georgia13c333333Ital">
                             <span i18n:translate="">Els meus fitxers</span>
                         </div>
 
-                        <div id="my-files-content" style="diplay: inline-block;clear: both;" 
+                        <div id="my-files-content" style="diplay: inline-block;clear: both;"
                              tal:define="search python:context.portal_catalog.searchResults(
                                                                                     portal_type='File',
-                                                                                    creator=member.getId(), 
+                                                                                    creator=member.getId(),
                                                                                     sort_on='modified',
                                                                                     sort_order='reverse',
                                                                                     sort_limit=20)[:20]">
@@ -177,7 +182,7 @@
                             </tal:nosearch>
 
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

@@ -23,6 +23,12 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <browser:page
+      for="*"
+      name="fatacUtils"
+      class=".utils.fatacUtils"
+      permission="zope2.View"
+      />
 
   <!--
       Alerta!! Plone conte un bug a l'hora de declarar importSteps!!

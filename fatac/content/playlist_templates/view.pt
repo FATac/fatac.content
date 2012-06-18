@@ -14,58 +14,38 @@
 
 <body>
 
-<metal:main fill-slot="content">
-    <tal:main-macro metal:define-macro="main">
+<metal:content-core fill-slot="content-core">
+    <metal:content-core define-macro="content-core">
 
-        <div id="edit-bar">
-            <h5 class="hiddenStructure">Views</h5>
-
-            <ul id="content-views" class="contentViews">
-                <li class="selected">
-                <a href=""
-                   tal:attributes="href string:${context/absolute_url}/view"
-                   i18n:translate="View">View</a>
-                </li>
-                <li>
-                <a href=""
-                   tal:attributes="href string:${context/absolute_url}/edit"
-                   i18n:translate="edit">Edit</a>
-                </li>
-                <li>
-                <a href=""
-                   tal:attributes="href string:${context/absolute_url}/sortingView"
-                   i18n:translate="">Ordena Playlist</a>
-                </li>
-            </ul>
-
-            <div class="contentActions">
-              &nbsp;
-            </div>
-        </div>
-
-        <div metal:use-macro="context/global_statusmessage/macros/portal_message">
-            Portal status message
-        </div>
+        <a href=""
+           class="link-parent"
+           style="float:right"
+           tal:attributes="href string:$portal_url/@@my-playlists"
+           i18n:translate="label_torna_a_la_llista_de_les_teves_playlists">
+           Torna a la llista de les teves playlists
+        </a>
 
         <div id="dashboard-header" class="arial16c339933bold" i18n:translate="" style="margin-bottom: 1em;">
             <img src="++resource++fatac.content/images/playlist24.gif" />
             <span i18n:translate="">playlist</span>
         </div>
 
+
+
         <div id="my-files-header" class="div_dotted_line_bottom georgia13c333333Ital">
             <span tal:content="context/title" />
         </div>
-        
+
         <div tal:replace="structure provider:plone.belowcontenttitle" />
 
         <div class="row">
             <div class="span16 div_dotted_line_bottom">
                 <div id="descImage" style="float: left; padding: 0.5em;">
-                    <img tal:condition="context/descImage" 
+                    <img tal:condition="context/descImage"
                          tal:replace="structure context/@@images/descImage/thumb" />
                 </div>
                 <div id="info">
-                    <p class="arial15c999999" style="padding: 0.5em;" 
+                    <p class="arial15c999999" style="padding: 0.5em;"
                         tal:condition="context/description"
                         tal:content="context/description" />
                 </div>
@@ -76,8 +56,8 @@
             <!-- -->
         </div>
 
-    </tal:main-macro>
-</metal:main>
+    </metal:content-core>
+</metal:content-core>
 
 </body>
 </html>

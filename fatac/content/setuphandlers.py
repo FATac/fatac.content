@@ -26,6 +26,16 @@ def setupSiteSecurity(portal):
         secSchema.set_enable_user_folders(True)
         logger.info("fatac.content >> enabled user folder creation")
 
+    # Activa el registre automatic d'usuaris al site
+    if secSchema.get_enable_self_reg() == False:
+        secSchema.set_enable_self_reg(True)
+        logger.info("fatac.content >> enabled user registration")
+
+    # Set the username to email login
+    if secSchema.get_use_email_as_login() == False:
+        secSchema.set_use_email_as_login(True)
+        logger.info("fatac.content >> enabled username as email login")
+
     # Afegim propietat en els grups per controlar qui es el creador / Administradors
     gd_tool = getToolByName(portal, 'portal_groupdata')
     if not hasattr(gd_tool, 'delegated_group_member_managers'):

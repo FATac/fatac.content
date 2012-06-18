@@ -78,8 +78,8 @@
 
                         <div class="ac_breadcrump div_dotted_line_bottom">
                             <span class="TerminalDosis600" style="text-transform:uppercase;" i18n:translate="" tal:content="dades_objecte/classe" />
-                            <span class="TerminalDosis600" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
-                            <span class="TerminalDosis200" i18n:translate="" tal:content="dades_objecte/titol" />
+                            <span class="BreadCrumbSecondary" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
+                            <span class="BreadCrumbSecondary" i18n:translate="" tal:content="dades_objecte/titol" />
                         </div>
                         <tal:comment tal:replace="nothing">
                             <!-- TODO: esborrar, per petició del diseñador aquest bloc no ha d'exisitir -->
