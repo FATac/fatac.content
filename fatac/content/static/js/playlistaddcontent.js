@@ -13,6 +13,9 @@
 * Si es vol que la imatge estigui amagada i es mostri quan fem hover cal:
 *     - afegir la classe addPlaylistParent a la caixa en la que volem fer hover, i
 *       afegir la classe hidden a la imatge
+*
+* TODO: lpmayos (traduïr comentaris!)
+*
 */
 
 function addPlaylistMenu() {
@@ -20,19 +23,38 @@ function addPlaylistMenu() {
     // classe addPlaylist i activa la funcionalitat per mostrar i amagar botó quan
     // fem hover.
 
-    $('.addPlaylist').each(function (i, element) {
-        afageixPlaylistsMenu(element);
-    });
+    initPlaylistMenu();
 
     mostra_amaga_addPlaylistImage();
 }
 
-function afageixPlaylistsMenu(element) {
-    // Afegeix a l'element donat el menú per afegir a playlist
+function initPlaylistMenu() {
+    // crida la vista retornaPlaylists per obtenir un llistat de les
+    // playlists disponibles, i afegeix el menú per cada element amb
+    // classe addPlaylist
+
+    var llistaPlaylists;
+    var pathname = "";
+
+    $.getJSON(pathname + "retornaPlaylists", function() {})
+        .error(function() { alert("No s'ha pogut carregar el menu contextual"); })
+        .complete(function( data ) {
+            llistaPlaylists = jQuery.parseJSON( data.responseText );
+
+            $('.addPlaylist').each(function (i, element) {
+                afageixPlaylistsMenu(element, llistaPlaylists);
+            });
+
+
+        });
+}
+
+function afageixPlaylistsMenu(element, llistaPlaylists) {
+    // Afegeix a l'element donat el menú per afegir a playlist, generat
+    // a partir de llistaPlaylist
 
     var titol;
     var idPlaylist;
-    var llistaPlaylists;
     var idObjecte;
     var pathname = "";
     var menu = [
@@ -40,57 +62,50 @@ function afageixPlaylistsMenu(element) {
         $.contextMenu.separator,
     ];
 
-    // Assign handlers immediately after making the request,
-    // and remember the jqxhr object for this request
-    $.getJSON(pathname + "retornaPlaylists", function() {})
-        .error(function() { alert("No s'ha pogut carregar el menu contextual"); })
-        .complete(function( data ) {
-            llistaPlaylists = jQuery.parseJSON( data.responseText );
+    idObjecte = $(element).attr('rel');
 
-            idObjecte = $(element).attr('rel');
+    // variable global on guardarem un array amb els ids de les playlist en l'ordre
+    // en que es pinten al desplegable, per construïr url_actualitzar en funció del
+    // que guardem aquí i tenir-ho disponible en el moment que es cridi la funció
+    if (!window._FATAC) {window._FATAC = {}; }
+    _FATAC['playlists'] = []
 
-            // variable global on guardarem un array amb els ids de les playlist en l'ordre
-            // en que es pinten al desplegable, per construïr url_actualitzar en funció del
-            // que guardem aquí i tenir-ho disponible en el moment que es cridi la funció
-            if (!window._FATAC) {window._FATAC = {}; }
-            _FATAC['playlists'] = []
+    for (i=0; i<llistaPlaylists['titols'].length; i++) {
+        var menuDict = new Object();
+        titol = llistaPlaylists['titols'][i];
+        idPlaylist = llistaPlaylists['ids'][i];
 
-            for (i=0; i<llistaPlaylists['titols'].length; i++) {
-                var menuDict = new Object();
-                titol = llistaPlaylists['titols'][i];
-                idPlaylist = llistaPlaylists['ids'][i];
+        // acualitzem variable global per poder consultar l'id quan cridem la funció
+        _FATAC['playlists'].push(idPlaylist)
 
-                // acualitzem variable global per poder consultar l'id quan cridem la funció
-                _FATAC['playlists'].push(idPlaylist)
+        menuDict[titol] = function(menuItem,menu) {
+            // quan cliquem la opció del menú, idPlaylist tindrà l'últim valor assignat,
+            // i la crida es farà malament. Per solucionar-ho, busquem idPlayist a
+            // variable global (index - 2 xq hi ha el títol i el separador)
+            var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 2]
+            var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_aux + "&idObjecte=" + idObjecte;;
+            $.ajax({url: url_actualitzar, type: "post",
+                    error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
+                    complete: function(){
+                        text = 'element afegit correctament'
+                        $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
+                            fadeInSpeed: 200,
+                            fadeOutSpeed: 200,
+                            removeTimer: 2000,
+                        });
+                    }
+        });};
+        menu.push(menuDict);
+    }
 
-                menuDict[titol] = function(menuItem,menu) {
-                    // quan cliquem la opció del menú, idPlaylist tindrà l'últim valor assignat,
-                    // i la crida es farà malament. Per solucionar-ho, busquem idPlayist a
-                    // variable global (index - 2 xq hi ha el títol i el separador)
-                    var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 2]
-                    var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_aux + "&idObjecte=" + idObjecte;;
-                    $.ajax({url: url_actualitzar, type: "post",
-                            error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
-                            complete: function(){
-                                text = 'element afegit correctament'
-                                $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
-                                    fadeInSpeed: 200,
-                                    fadeOutSpeed: 200,
-                                    removeTimer: 2000,
-                                });
-                            }
-                });};
-                menu.push(menuDict);
-            }
+    // TODO: lpmayos (afegir opció per afegir nova playlist)
+    // menu.push({'Nova playlist': '<a href="http://localhost:8084/fatac/login" rel="#pb_1" class="link-overlay" style="cursor: pointer; ">Accés usuari</a>'})
 
-            if (llistaPlaylists['titols'].length == 0) {
-                menuDict['No hi ha playlist disponibles'] = {onclick:function(){},disabled:true};
-            }
+    if (llistaPlaylists['titols'].length == 0) {
+        menuDict['No hi ha playlist disponibles'] = {onclick:function(){},disabled:true};
+    }
 
-            $(element).contextMenu(menu, {theme:'default'});
-
-        });
-
+    $(element).contextMenu(menu, {theme:'default'});
 }
 
 function mostra_amaga_addPlaylistImage() {
