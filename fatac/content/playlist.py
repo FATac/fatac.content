@@ -179,6 +179,7 @@ class genericPlaylistview(grok.View, genericView):
         super(grok.View, self).__init__(context, request)
         super(genericView, self).__init__(context, request)
 
+
     def dades_genericview_header(self):
         """ funcions que retornen les dades necessaries per pintar cada vista
         """
@@ -214,7 +215,6 @@ class genericPlaylistview(grok.View, genericView):
                                      'dades_header': dades,
                                      'order': order}
                     resultat.append(dades_objecte)
-        return resultat
 
         if resultat != []:
             # Ordenem els resultats segons l'ordre que s'ha fet des de la pantalla d'ordenacio
@@ -265,6 +265,7 @@ class updateList(grok.View):
     grok.name('updateList')
 
     def update(self):
+
         context = self.context
         newOrder = self.request.get('order')
         oldList = context.orderedList
