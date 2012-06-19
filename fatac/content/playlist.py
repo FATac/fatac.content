@@ -175,6 +175,10 @@ class genericPlaylistview(grok.View, genericView):
     grok.name('genericPlaylistview')
     grok.template('genericPlaylistview')
 
+    def __init__(self, context, request):
+        super(grok.View, self).__init__(context, request)
+        super(genericView, self).__init__(context, request)
+
     def dades_genericview_header(self):
         """ funcions que retornen les dades necessaries per pintar cada vista
         """
