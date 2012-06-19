@@ -27,6 +27,10 @@ class View(grok.View, genericView):
     grok.name('view')
     #grok.template("dummy_view")
 
+    def __init__(self, context, request):
+        super(grok.View, self).__init__(context, request)
+        super(genericView, self).__init__(context, request)
+
 
 class loadTags(grok.View):
     """ Metode que retorna els tags

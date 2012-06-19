@@ -30,10 +30,12 @@
 
                     <script type="text/javascript">
                         $(document).ready(function() {
+
                             $('input.nom_dada').each(function () {
                                 var nom = $(this).attr('value');
                                 var llista_ids = ($('#llista_ids_' + nom).attr('value')).split(',');
-                                var parametres_visualitzacio = {llista_ids: llista_ids, visualitzacio: 'fitxa_home', pagina_actual: 1, resultats_per_pagina: 999999};
+                                var parametres_visualitzacio = {llista_ids: llista_ids, visualitzacio: 'fitxa_home', pagina_actual: 1, resultats_per_pagina: 999999, querystring:{}};
+                                parametres_visualitzacio['querystring']['categories'] = 'categories=class,Year,Country,Translation,License,Role,Person,Organisation,Events,Publications,ArtWork,Collection,Category';
                                 $('#visual-portal-wrapper').get(0).parametres_visualitzacio = parametres_visualitzacio;
                                 var parametres_visualitzacio_json = JSON.stringify(parametres_visualitzacio);
                                 $.post('displayResultatsPaginaView', {parametres_visualitzacio: parametres_visualitzacio_json}, function(data){
