@@ -10,6 +10,6 @@ class fatacUtils(BrowserView):
     """Helper view for fatac"""
 
     def shouldRenderContentViews(self):
-        import ipdb;ipdb.set_trace()
+
         if not getSecurityManager().checkPermission(permissions.ModifyPortalContent, object):
             pass

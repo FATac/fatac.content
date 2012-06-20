@@ -29,7 +29,7 @@
                 <li>
                 <a href=""
                    tal:attributes="href string:${context/absolute_url}/edit"
-                   i18n:translate="edit">Edit</a>
+                   i18n:translate="Edit">Edit</a>
                 </li>
                 <li class="selected">
                 <a href=""
@@ -42,7 +42,7 @@
               &nbsp;
             </div>
         </div>
-        
+
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
@@ -57,7 +57,7 @@
         </div>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-
+        <span tal:content="context/orderedList">asd</span>
         <div id="zona_resultats">
             <!-- -->
         </div>

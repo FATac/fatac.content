@@ -2,7 +2,7 @@ div.photo-column {
     float: left ;
     margin-right: 10px ;
 }
- 
+
 div.photo-container {
     display: inline;
     clear: both;
@@ -11,14 +11,12 @@ div.photo-container {
 
 
 
-#viewlet-below-content {
+/*#viewlet-below-content {
     clear: both;
 	background-color: #d3e3c3;
 	padding: 1em;
 	border-radius: 0.3em;
-    -webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-}
+}*/
 
 
 
@@ -36,7 +34,7 @@ div.photo-container {
 .discussion,
 #commenting {
     /* Clear "float: left" from "manage portlets" div above the
-       comment viewlet. This will get fixed in the next Plone 4 
+       comment viewlet. This will get fixed in the next Plone 4
        release. */
     clear: both;
 }
@@ -70,8 +68,8 @@ div.photo-container {
 .commentBody {
     clear: both;
     overflow: auto;
-    font-family:georgia; 
-    font-size:13px; 
+    font-family:georgia;
+    font-size:13px;
     color: black !important;
     border-radius:0em;
     box-shadow: 0 0 0 0 #000000;
@@ -96,9 +94,9 @@ div.photo-container {
     text-align: right;
 }
 .commentActions input {
-    margin-right: 3px; 
-    padding: 0px 5px; 
-    padding-left: 5px;  
+    margin-right: 3px;
+    padding: 0px 5px;
+    padding-left: 5px;
     border-radius: 0.2em;
     border-width: 1px !important;
     -webkit-border-radius: 0.2em;
@@ -109,7 +107,7 @@ div.photo-container {
 
 .discussion .discreet {
     color: #666666;
-    font-size: 85%;    
+    font-size: 85%;
 }
 
 /* Reply Form
@@ -123,7 +121,7 @@ div.photo-container {
 
 .reply .text-widget {
     /* Make sure the input fields are always below the label. This sometimes
-     * break when the reply form is copied from the main comment form. 
+     * break when the reply form is copied from the main comment form.
      */
     display: block;
 }
@@ -132,10 +130,10 @@ div.photo-container {
    /* Hide the reply-to-comment button and show it only if Javascript
     * is enabled. Since the reply functions rely on jQuery.
     */
-    display: none; 
-    margin-right: 3px; 
-    padding: 0px 5px; 
-    padding-left: 5px;  
+    display: none;
+    margin-right: 3px;
+    padding: 0px 5px;
+    padding-left: 5px;
     border-radius: 0.2em;
     border-width: 1px !important;
     -webkit-border-radius: 0.2em;
@@ -192,7 +190,7 @@ div.photo-container {
 /* Plone 4 Styles
    -------------------------------------------------------------------------- */
 
-/* These styles are only applied for Plone 4, since Plone 3.x does 
+/* These styles are only applied for Plone 4, since Plone 3.x does
     not have a .row class for portal-column-content. */
 
 .row #dobulkaction {
@@ -208,9 +206,9 @@ div.photo-container {
 }
 
 .row #commenting .formControls input {
-    margin-right: 3px; 
-    padding: 0px 5px; 
-    padding-left: 5px;  
+    margin-right: 3px;
+    padding: 0px 5px;
+    padding-left: 5px;
     border-radius: 0.2em;
     border-width: 1px !important;
     -webkit-border-radius: 0.2em;
