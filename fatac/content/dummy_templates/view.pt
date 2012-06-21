@@ -115,6 +115,7 @@
                                                         tal:condition="python: not isanon and seccio['nom'] == 'header' and start">
                                                     <img class="addPlaylist" tal:attributes="rel dades_objecte/id" src="++resource++fatac.content/images/add_playlist.png" />
                                                 </tal:co>
+                                                <br/>
                                             </tal:rep>
 
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; el tanquem -->
