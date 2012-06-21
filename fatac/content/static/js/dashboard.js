@@ -1,8 +1,8 @@
 /******
     Set up standard Plone popups
-    
+
     Provides globals: common_content_filter
-    
+
     Extends jQuery.tools.overlay.conf to set up common Plone effects and
     visuals.
 ******/
@@ -10,7 +10,7 @@
 
 var common_content_filter = '#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info';
 
-jQuery.extend(jQuery.tools.overlay.conf, 
+jQuery.extend(jQuery.tools.overlay.conf,
     {
         fixed:false,
         speed:'fast',
@@ -19,10 +19,10 @@ jQuery.extend(jQuery.tools.overlay.conf,
 
 
 (function($) {
-		
+
 	// static constructs
 	$.plonepopups = $.plonepopups || {};
-    
+
     $.extend($.plonepopups,
         {
             // method to show error message in a noform
@@ -45,7 +45,7 @@ jQuery.extend(jQuery.tools.overlay.conf,
                 }
                 return location;
             }
-        })
+        });
 })(jQuery);
 
 jQuery(function($){
@@ -113,9 +113,9 @@ function removeSelectedGroup(idTagGroup)
             type: "post",
             error: function() { alert("No s'ha eliminar el grup de l'usuari"); },
             success: function() { window.location.href = pathname + "@@manage-groups";
- },
+ }
           });
-    
+
 }
 
 
