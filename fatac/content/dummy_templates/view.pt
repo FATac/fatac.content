@@ -135,6 +135,9 @@
     </body>
 </html>
 
-<script type="text/javascript">
-    addPlaylistMenu();
-</script>
+<tal:co tal:define="isanon context/@@plone_portal_state/anonymous"
+        tal:condition="not: isanon">
+    <script type="text/javascript">
+        addPlaylistMenu();
+    </script>
+</tal:co>
