@@ -15,6 +15,7 @@
 *       afegir la classe hidden a la imatge
 *
 * TODO: lpmayos (traduïr comentaris!)
+* TODO: lpmayos (quan no estàs identificat, peta xq intentem cridar una funció que no existeix des dels pt)
 *
 */
 
@@ -28,6 +29,24 @@ function addPlaylistMenu() {
     mostra_amaga_addPlaylistImage();
 }
 
+function recarregaPlaylistsMenu() {
+    // esborra els menús per afegir a playlists i els torna a calcular
+
+    esborrarPlaylistMenu();
+    initPlaylistMenu();
+}
+
+function esborrarPlaylistMenu() {
+    // esborrar tots els menús per afegir a playlists
+
+    $('.context-menu-shadow').remove();
+    $('table').each(function (i, element) {
+        if($(element).find('.context-menu').length > 0) {
+            $(element).remove();
+        }
+    });
+}
+
 function initPlaylistMenu() {
     // crida la vista retornaPlaylists per obtenir un llistat de les
     // playlists disponibles, i afegeix el menú per cada element amb
@@ -37,16 +56,38 @@ function initPlaylistMenu() {
     var pathname = "";
 
     $.getJSON(pathname + "retornaPlaylists", function() {})
-        .error(function() { alert("No s'ha pogut carregar el menu contextual"); })
-        .complete(function( data ) {
-            llistaPlaylists = jQuery.parseJSON( data.responseText );
+    .error(function() { alert("No s'ha pogut carregar el menu contextual"); })
+    .complete(function( data ) {
+        llistaPlaylists = jQuery.parseJSON( data.responseText );
 
-            $('.addPlaylist').each(function (i, element) {
-                afageixPlaylistsMenu(element, llistaPlaylists);
-            });
-
-
+        $('.addPlaylist').each(function (i, element) {
+            afageixPlaylistsMenu(element, llistaPlaylists);
         });
+
+        //afegeixSlidersMenus();
+
+    });
+}
+
+// TODO: lpmayos (arreglar funció, xq no funciona, i cridar des de initPlaylistMenu)
+function afegeixSlidersMenus() {
+    // afegeix slider vertical a les opcions del menú desplegable
+    // per afegir els elements a les playlist
+
+    $('.context-menu').each(function(i, element) {
+        if($(element).find('.slider_vertical').length == 0) {
+            var identificador = 'menu_playlist_' + (i);
+            $(element).find('.context-menu-item').wrapAll('<div class="div_interior" />');
+            $(element).find('.div_interior').wrap('<div class="laura" id="' + identificador + '" />');
+            $(element).find('.laura').wrap('<div class="slider_vertical" style="height:150px;" />');
+        }
+    });
+
+    $('.laura').each(function(i, element) {
+        var identificador = $(element).attr('id');
+        crea_scroll_vertical(identificador);
+    });
+
 }
 
 function afageixPlaylistsMenu(element, llistaPlaylists) {
@@ -70,6 +111,7 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
     if (!window._FATAC) {window._FATAC = {}; }
     _FATAC['playlists'] = []
 
+    // afegim al menú el llistat de playlist
     for (i=0; i<llistaPlaylists['titols'].length; i++) {
         var menuDict = new Object();
         titol = llistaPlaylists['titols'][i];
@@ -85,25 +127,80 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
             var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 2]
             var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_aux + "&idObjecte=" + idObjecte;;
             $.ajax({url: url_actualitzar, type: "post",
-                    error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
-                    complete: function(){
-                        text = 'element afegit correctament'
-                        $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
-                            fadeInSpeed: 200,
-                            fadeOutSpeed: 200,
-                            removeTimer: 2000,
-                        });
-                    }
+            error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
+            complete: function(){
+                text = 'element afegit correctament'
+                $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
+                    fadeInSpeed: 200,
+                    fadeOutSpeed: 200,
+                    removeTimer: 2000,
+                });
+            }
         });};
         menu.push(menuDict);
     }
 
-    // TODO: lpmayos (afegir opció per afegir nova playlist)
-    // menu.push({'Nova playlist': '<a href="http://localhost:8084/fatac/login" rel="#pb_1" class="link-overlay" style="cursor: pointer; ">Accés usuari</a>'})
 
-    if (llistaPlaylists['titols'].length == 0) {
-        menuDict['No hi ha playlist disponibles'] = {onclick:function(){},disabled:true};
-    }
+    // afegim al menú opció per afegir a una nova playlist)
+    var menuDict2 = new Object();
+    menuDict2['crear nova playlist'] = function(menuItem,menu) {
+
+        // quan cliquem la opció del menú, idPlaylist tindrà l'últim valor assignat,
+        // i la crida es farà malament. Per solucionar-ho, busquem idPlayist a
+        // variable global (index - 2 xq hi ha el títol i el separador)
+        var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 2]
+
+        // creem link per executar l'overlay (el cridarem programaticament)
+        var id_link = 'link_' + idObjecte;
+        if($('.' + id_link).length == 0) {
+            $('body').append('<a class="' + id_link + ' link-overlay hidden" href="/fatac/Members/admin/++add++fatac.playlist">add</a>')
+        }
+
+        // fem que l'overlay carregui el formulari per crear nova playlist,
+        // sense redirigir a la pàgina de 'playlist creat correctament' quan
+        // enviem el form; un cop creada la nova playlist afegim l'element a
+        // la nova playlist, tanquem overlay, mostrem avís i actualitzem
+        // llistats playlist
+        $('.' + id_link).prepOverlay({
+            subtype: 'ajax',
+            filter: common_content_filter,
+            formselector: 'form#form',
+            closeselector: '#form-buttons-cancel',
+            redirect: function () {
+                var href = location.href;
+                return href;
+            },
+            noform: function (el) {
+                $.getJSON(pathname + "retornaIdUltimaPlaylist", function() {})
+                .error(function() { alert("No s'ha pogut recuperar l'id de la nova playlist"); })
+                .complete(function( data ) {
+                    var idPlaylist_nova = jQuery.parseJSON( data.responseText );
+                    //var idPlaylist_nova = 'playlist4';
+                    var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_nova + "&idObjecte=" + idObjecte;;
+                    $.ajax({url: url_actualitzar, type: "post",
+                        error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
+                        complete: function(){
+
+                            recarregaPlaylistsMenu();
+
+                            $('.close a').click();
+
+                            text = 'element afegit correctament'
+                            $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
+                                fadeInSpeed: 200,
+                                fadeOutSpeed: 200,
+                                removeTimer: 2000,
+                            });
+                        }
+                    });
+                });
+            }
+        });
+
+        $('.' + id_link).click();
+    };
+    menu.push($.contextMenu.separator);
+    menu.push(menuDict2);
 
     $(element).contextMenu(menu, {theme:'default'});
 }

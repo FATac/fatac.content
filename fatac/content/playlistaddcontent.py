@@ -7,6 +7,44 @@ from zope.interface import Interface
 import json
 
 
+class retornaIdUltimaPlaylist(grok.View):
+    """ View for the retornaIdUltimaPlaylist Method
+    """
+
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('retornaIdUltimaPlaylist')
+
+    def render(self):
+        """ Render the settings as inline Javascript object in HTML <head>
+        """
+
+        request = self.request
+        context = self.context
+
+        settings = self.retornaIdUltimaPlaylist(request, context)
+        json_snippet = json.dumps(settings)
+
+        request.response.setHeader("content-type", "application/json")
+        return json_snippet
+
+    def retornaIdUltimaPlaylist(self, request, context):
+        """ Retorna l'id de la darrera playlist creda per l'usuari autenticat.
+        """
+
+        # Get the current member
+        mt = getToolByName(context, 'portal_membership')
+        if not mt.isAnonymousUser():
+            member = mt.getAuthenticatedMember()
+
+            # Search all the Playlist
+            catalog = getToolByName(context, 'portal_catalog')
+            search = catalog.searchResults({'portal_type': 'fatac.playlist', 'Creator': member.getId(), 'sort_on': 'created', 'sort_order': 'reverse'})[:1]
+            for brain in search:
+                return brain.id
+        return None
+
+
 class retornaPlaylists(grok.View):
     """ View for the llistaPlaylists Method
     """
