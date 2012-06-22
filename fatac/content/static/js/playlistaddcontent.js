@@ -153,7 +153,8 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
         // creem link per executar l'overlay (el cridarem programaticament)
         var id_link = 'link_' + idObjecte;
         if($('.' + id_link).length == 0) {
-            $('body').append('<a class="' + id_link + ' link-overlay hidden" href="/fatac/Members/admin/++add++fatac.playlist">add</a>')
+            //$('body').append('<a class="' + id_link + ' link-overlay hidden" href="/fatac/Members/admin/++add++fatac.playlist">add</a>')
+            $('body').append('<a class="' + id_link + ' link-overlay hidden" href="afegirPlaylist">add</a>')
         }
 
         // fem que l'overlay carregui el formulari per crear nova playlist,

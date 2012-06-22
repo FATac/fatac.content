@@ -7,6 +7,28 @@ from zope.interface import Interface
 import json
 
 
+class afegirPlaylist(grok.View):
+    """ View for the afegirPlaylist Method
+    """
+
+    grok.context(Interface)
+    grok.require('zope2.View')
+    grok.name('afegirPlaylist')
+
+    def render(self):
+        """ redirect to ++add++fatac.playlist with the current user dashboard as
+        context.
+        """
+
+        request = self.request
+
+        # Get the current member
+        mt = getToolByName(self, 'portal_membership')
+        if not mt.isAnonymousUser():
+            request.response.redirect(mt.getHomeUrl() + "/++add++fatac.playlist")
+        return
+
+
 class retornaIdUltimaPlaylist(grok.View):
     """ View for the retornaIdUltimaPlaylist Method
     """
