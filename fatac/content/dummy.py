@@ -4,6 +4,7 @@ from five import grok
 from fatac.content import PlaylistMessageFactory as _
 import json
 from fatac.theme.browser.genericView import genericView
+from Products.CMFCore.utils import getToolByName
 
 
 class IDummy(form.Schema):
@@ -46,22 +47,16 @@ class loadTags(grok.View):
         request = self.request
         context = self.context
 
-        if (context.tagList != None):
-            if (len(context.tagList) > 0):
-                tags = []
+        request.response.setHeader("content-type", "application/json")
 
-                for tag in context.tagList:
-                    subTag = tag.split(",")
-                    tags.append({'id': subTag[0], 'x': subTag[1], 'y': subTag[2], 'width': subTag[3], 'height': subTag[4], 'message': subTag[5], 'photoID': subTag[6]})
+        if (len(context.tagList) > 0):
+            tags = []
+            for tag in context.tagList:
+                tags.append(json.loads(tag))
 
-                json_data = json.dumps(tags)
-
-                print "Load Tags!"
-                request.response.setHeader("content-type", "application/json")
-                return json_data
-            else:
-                print "No hi han Tags per carregar"
-                return []
+            return json.dumps(tags)
+        else:
+            return json.dumps({"info": "No tags to load."})
 
 
 class saveTag(grok.View):
@@ -72,33 +67,19 @@ class saveTag(grok.View):
     grok.require('zope2.View')
     grok.name('saveTag')
 
-    def update(self):
-        self.saveCurrentTag()
-
     def render(self):
-        return """ """
-
-    def saveCurrentTag(self):
         context = self.context
         request = self.request
+        request.response.setHeader("content-type", "application/json")
 
-        newTag = request.get('tag')
-        print newTag
+        pm = getToolByName(context, "portal_membership")
+        member = pm.getAuthenticatedMember().getId()
+        tag = request.form
+        tag['id'] = member
 
-        currentTagList = []
-        if (context.tagList != None):
-            if (len(context.tagList) > 0):
-                for tag in context.tagList:
-                    currentTagList.append(tag)
+        context.tagList.append(json.dumps(tag))
 
-        currentTagList.append(newTag)
-
-        context.tagList = currentTagList
-
-        print "Save Tag!"
-
-        #currentTagList.append([len(currentTagList), tag.x, tag.y, tag.width, tag.height, tag.message, tag.photoID])
-        #url.id, url.x, url.y, url.width, url.height, url.message, url.photoID
+        return json.dumps({"info": "Tag saved successfully"})
 
 
 class deleteTag(grok.View):
