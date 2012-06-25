@@ -78,6 +78,7 @@ function imageTagger(pathname)
 
             // Default to turned on.
             isTagCreationEnabled: true,
+            isTagDeletionEnabled: true,
         });
 
 

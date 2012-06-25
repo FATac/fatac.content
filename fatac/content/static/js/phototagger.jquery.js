@@ -206,7 +206,7 @@
 
 
 		// I add a tag to the
-		addTag: function( id, x, y, width, height, message ){
+		addTag: function( id, x, y, width, height, message, user, date ){
 			var self = this;
 
 			// Create the physical tag.
@@ -215,6 +215,8 @@
 			// Associate the appropriate data with the tag.
 			tag.data( "id", id );
 			tag.data( "message", message );
+			tag.data( "user", user );
+			tag.data( "date", date);
 
 			// Bind the mouse over event on this tag (will show
 			// the associated message).
@@ -389,11 +391,9 @@
 
 			// Delete the record using the API.
 			$.ajax({
-				method: this.settings.deleteMethod,
+				type: "post",
 				url: this.settings.deleteURL,
-				data: {
-					id: id
-				},
+				data: {"id": id},
 				dataType: "json",
 				cache: false,
 				success: function( response ){
@@ -434,7 +434,7 @@
 			var tagPosition = tag.position();
 
 			// Set the tag message.
-			this.message.text( tag.data("id") + ":" + tag.data( "message" ) );
+			this.message.html( "<b>" + tag.data("user") + " " + tag.data("date") + ": " + "</b>" + tag.data( "message" ) );
 
 			// Position and show the message.
 			this.message
@@ -625,7 +625,9 @@
 								tagData.y,
 								tagData.width,
 								tagData.height,
-								tagData.message
+								tagData.message,
+								tagData.user,
+								tagData.date
 							);
 
 						}
@@ -715,8 +717,10 @@
 
 				// If the AJAX response comes back successfully,
 				// associate the given ID.
-				function( id ){
-					tag.data( "id", id );
+				function( response ){
+					tag.data( "user", response["user"]);
+					tag.data( "date", response["date"]);
+					tag.data( "id", response["id"]);
 				}
 			);
 		},

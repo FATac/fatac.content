@@ -5,6 +5,8 @@ from fatac.content import PlaylistMessageFactory as _
 import json
 from fatac.theme.browser.genericView import genericView
 from Products.CMFCore.utils import getToolByName
+import time
+import random
 
 
 class IDummy(form.Schema):
@@ -40,9 +42,6 @@ class loadTags(grok.View):
     grok.require('zope2.View')
     grok.name('loadTags')
 
-    #Tag Data: id, x, y, width, height, message, photoID
-    #tags = [{'id': '0', 'x': '0', 'y': '0', 'width': '300', 'height': '300', 'message': 'Hola caracola', 'photoID': 'photo1'}]
-
     def render(self):
         request = self.request
         context = self.context
@@ -75,11 +74,14 @@ class saveTag(grok.View):
         pm = getToolByName(context, "portal_membership")
         member = pm.getAuthenticatedMember().getId()
         tag = request.form
-        tag['id'] = member
+        tag['user'] = member
+        tag['date'] = time.strftime("(%d/%m/%Y)", time.localtime())
+        tag['id'] = str(time.time())
 
         context.tagList.append(json.dumps(tag))
+        context._p_changed = 1
 
-        return json.dumps({"info": "Tag saved successfully"})
+        return json.dumps({"user": tag['user'], "date": tag['date'], "id": tag['id']})
 
 
 class deleteTag(grok.View):
@@ -91,5 +93,14 @@ class deleteTag(grok.View):
     grok.name('deleteTag')
 
     def render(self):
-        print "Delete Tag!"
-        return """ """
+        context = self.context
+        request = self.request
+        request.response.setHeader("content-type", "application/json")
+
+        tag_to_delete = request.form.get("id")
+
+        for tag in context.tagList:
+            if str(json.loads(tag).get("id")) == tag_to_delete:
+                context.tagList.remove(tag)
+                context._p_changed = 1
+                return json.dumps({"info": "Tag %s deleted" % tag_to_delete})

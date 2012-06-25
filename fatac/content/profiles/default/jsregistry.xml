@@ -31,4 +31,6 @@
     <javascript cacheable="True" compression="none" cookable="True" enabled="True"
                 expression=""
                 id="++resource++fatac.content/js/jquery.purr.js" />
+    <javascript cacheable="True" compression="none" cookable="True" enabled="True"
+                expression="" id="fatac_globals.js" />
 </object>
