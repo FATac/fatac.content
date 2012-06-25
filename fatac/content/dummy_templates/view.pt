@@ -75,7 +75,7 @@
                             inicialitza_arrows();
                         });
                     </script>
-                    <span tal:content="context/tagList">asd</span>
+                    <!-- <span tal:content="context/tagList">asd</span> -->
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
                         <div class="ac_breadcrump div_dotted_line_bottom">
