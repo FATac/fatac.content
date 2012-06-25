@@ -858,44 +858,89 @@
 
 				// Now that the user has drawn the tag, let's
 				// prompt them for the message to be associated.
-				var message = prompt( "Message:", "" );
+				// var message = prompt( "Message:", "" );
+                var message = $("#comentari");
+				// $( "#dialog-form" ).dialog( "open" );
+				$( "#dialog-form" ).dialog({
+                    autoOpen: true,
+                    height: 300,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        "Crea el comentari": function() {
+                            var bValid = true;
+                            console.log(message.val());
+                            bValid = bValid && checkLength( message, "comentari", 3, 100 );
+
+                            if ( bValid ) {
+                                // Create a tag based on our pending tag. We
+                                // know everything BUT the ID at this point.
+                                var tag = self.addTag(
+                                    "",
+                                    self.pendingTag.position().left,
+                                    self.pendingTag.position().top,
+                                    self.pendingTag.width(),
+                                    self.pendingTag.height(),
+                                    message.val()
+                                );
+
+                                // Save this tag (to the server).
+                                self.saveTag( tag );
+                                // Remove the pending tag from the container - it has
+                                // no purpose for us anymore (if the user draws again,
+                                // another pending tag will be created).
+                                self.pendingTag.remove();
+                                // Regardless of whether or not the tag was created,
+                                // we no longer need to keep track of it.
+                                self.pendingTag = null;
+                                $( this ).dialog( "close" );
+                            }
+                        },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    },
+                    close: function() {
+
+                    }
+                    });
 
 				// Check to see if the message was returned (if
 				// the user cancelled out, then we are going to
 				// cancel the tag creation).
-				if (message){
+                // if (message){
 
-					// Create a tag based on our pending tag. We
-					// know everything BUT the ID at this point.
-					var tag = this.addTag(
-						"",
-						this.pendingTag.position().left,
-						this.pendingTag.position().top,
-						this.pendingTag.width(),
-						this.pendingTag.height(),
-						message
-					);
+                //     // Create a tag based on our pending tag. We
+                //     // know everything BUT the ID at this point.
+                //     var tag = this.addTag(
+                //         "",
+                //         this.pendingTag.position().left,
+                //         this.pendingTag.position().top,
+                //         this.pendingTag.width(),
+                //         this.pendingTag.height(),
+                //         message
+                //     );
 
-					// Save this tag (to the server).
-					this.saveTag( tag );
+                //     // Save this tag (to the server).
+                //     this.saveTag( tag );
 
-				}
+                // }
 
-			} else {
+			// } else {
 
-				// The pending tag size is too large.
-				alert( "Your tag is too big." );
+			// // The pending tag size is too large.
+			// alert( "Your tag is too big." );
 
 			}
 
 			// Remove the pending tag from the container - it has
 			// no purpose for us anymore (if the user draws again,
 			// another pending tag will be created).
-			this.pendingTag.remove();
+			// this.pendingTag.remove();
 
 			// Regardless of whether or not the tag was created,
 			// we no longer need to keep track of it.
-			this.pendingTag = null;
+			// this.pendingTag = null;
 		},
 
 

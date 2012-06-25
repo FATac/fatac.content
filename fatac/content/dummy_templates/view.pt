@@ -75,7 +75,17 @@
                             inicialitza_arrows();
                         });
                     </script>
-                    <!-- <span tal:content="context/tagList">asd</span> -->
+
+                    <!-- Photo Tagging Message Dialog -->
+                    <div id="dialog-form" title="Comentari del retall">
+                        <form>
+                        <fieldset>
+                            <label for="comentari">Comentari</label>
+                            <input type="text" name="comentari" id="comentari" class="text ui-widget-content ui-corner-all" />
+                        </fieldset>
+                        </form>
+                    </div>
+
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
                         <div class="ac_breadcrump div_dotted_line_bottom">

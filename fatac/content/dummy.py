@@ -77,7 +77,7 @@ class saveTag(grok.View):
         tag['user'] = member
         tag['date'] = time.strftime("(%d/%m/%Y)", time.localtime())
         tag['id'] = str(time.time())
-
+        import ipdb;ipdb.set_trace()
         context.tagList.append(json.dumps(tag))
         context._p_changed = 1
 
