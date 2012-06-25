@@ -1,20 +1,17 @@
 from zope.interface import implements
-from zope.component import adapts
 from interfaces import IPortalUser
 from plone.app.portlets.interfaces import IDefaultDashboard
 from plone.app.portlets.dashboard import DefaultDashboard
 from plone.app.portlets import portlets
-
 from plone.app.layout.dashboard.dashboard import DashboardView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from plone.app.controlpanel.interfaces import IPloneControlPanelView
+from plone.app.controlpanel.security import ISecuritySchema
 from Products.Five.browser import BrowserView
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from ZTUtils import make_query
 from Products.PluggableAuthService.interfaces.plugins import IRolesPlugin
-from zope.component import adapts, getAdapter, getMultiAdapter, getUtility
+from zope.component import adapts, getAdapter, getMultiAdapter
 from itertools import chain
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ManagePortal
@@ -23,21 +20,23 @@ from Products.CMFPlone import PloneMessageFactory as _
 from five import grok
 from Products.CMFPlone.utils import normalizeString
 from Products.statusmessages.interfaces import IStatusMessage
+from zExceptions import Forbidden
 
 from fatac.content import portletPlaylists, portletMyFiles, portletMyGroups
 from fatac.core.utils import crearObjecte
 
 
 class FatacPortalDefaultDashboard(DefaultDashboard):
-    """ A new custom default dashboard for users. """
+    """ A new custom default dashboard for users.
+    """
     implements(IDefaultDashboard)
     adapts(IPortalUser)
 
     def __call__(self):
-        news = portlets.news.Assignment()
+        #news = portlets.news.Assignment()
         recent = portlets.recent.Assignment()
         calendar = portlets.calendar.Assignment()
-        search = portlets.search.Assignment()
+        #search = portlets.search.Assignment()
         playlists = portletPlaylists.Assignment()
         mygroups = portletMyGroups.Assignment()
         myfiles = portletMyFiles.Assignment()
@@ -51,7 +50,8 @@ class FatacPortalDefaultDashboard(DefaultDashboard):
 
 
 class FatacDashBoard(DashboardView):
-    """ Improve the default Plone Dashboard """
+    """ Improve the default Plone Dashboard
+    """
 
     #__call__ = ViewPageTemplateFile('templates/filtresview.pt')
 
@@ -116,15 +116,13 @@ class FatacDashBoard(DashboardView):
         return len(activitat)
 
 
-
 class groupActivity(DashboardView):
-    """
-        Returns The group activity content
+    """ Returns The group activity content
     """
     def searchActivityResults(self, groupmembers, groupname):
         context = self.context
         elementsList = []
-        search = context.portal_catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'],
+        search = context.portal_catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'],
                                                       creator=groupmembers,
                                                       sort_on='modified',
                                                       sort_order='reverse',
@@ -158,15 +156,12 @@ class groupActivity(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
         return len(activitat)
 
 
-
-
 class groupPlaylists(DashboardView):
-    """
-        Returns the list of playlists of the group
+    """ Returns the list of playlists of the group
     """
     def searchPlaylistsResults(self, groupmembers, groupname):
         context = self.context
@@ -205,15 +200,12 @@ class groupPlaylists(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
         return len(activitat)
 
 
-
-
 class deleteUserGroup(grok.View):
-    """
-       View for deleting Group of the User
+    """ View for deleting Group of the User
     """
     grok.context(FatacPortalDefaultDashboard)
     grok.require('zope2.View')
@@ -225,7 +217,7 @@ class deleteUserGroup(grok.View):
         if groupId != None:
             #Get the current member
             mt = getToolByName(self.context, 'portal_membership')
-            if not mt.isAnonymousUser(): # the user has not logged in
+            if not mt.isAnonymousUser():  # the user has not logged in
                 member = mt.getAuthenticatedMember()
                 username = member.getUserName()
 
@@ -241,18 +233,16 @@ class deleteUserGroup(grok.View):
         else:
             print 'No group ID'
 
-
     def render(self):
         #Get the current member
         mt = getToolByName(self.context, 'portal_membership')
-        if mt.isAnonymousUser(): # the user has not logged in
+        if mt.isAnonymousUser():  # the user has not logged in
             print 'User not logged in (deleteUserGroup)'
 
 
-
-
 class ControlPanelView(BrowserView):
-    """A simple view to be used as a basis for control panel screens."""
+    """ A simple view to be used as a basis for control panel screens.
+    """
 
     implements(IPloneControlPanelView)
 
@@ -282,14 +272,13 @@ class UsersGroupsControlPanelView(ControlPanelView):
         return make_query(**kw)
 
     def membershipSearch(self, searchString='', searchUsers=True, searchGroups=True, ignore=[]):
-        """Search for users and/or groups, returning actual member and group items
-           Replaces the now-deprecated prefs_user_groups_search.py script"""
+        """ Search for users and/or groups, returning actual member and group items
+            Replaces the now-deprecated prefs_user_groups_search.py script
+        """
         groupResults = userResults = []
 
         gtool = getToolByName(self, 'portal_groups')
         mtool = getToolByName(self, 'portal_membership')
-        if not mtool.isAnonymousUser(): # the user has not logged in
-            member = mtool.getAuthenticatedMember()
 
         searchView = getMultiAdapter((aq_inner(self.context), self.request), name='pas_search')
 
@@ -350,7 +339,6 @@ class UsersGroupsControlPanelView(ControlPanelView):
         return False
 
 
-
 class ManageGroupsPanel(UsersGroupsControlPanelView):
 
     def __call__(self):
@@ -377,7 +365,8 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
         return self.index()
 
     def doSearch(self, searchString):
-        """ Search for a group by id or title"""
+        """ Search for a group by id or title
+        """
         acl = getToolByName(self, 'acl_users')
         rolemakers = acl.plugins.listPlugins(IRolesPlugin)
 
@@ -423,9 +412,9 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
                 canAssign = group.canAssignRole(role)
                 if role == 'Manager' and not self.is_zope_manager:
                     canAssign = False
-                roleList[role]={'canAssign': canAssign,
+                roleList[role] = {'canAssign': canAssign,
                                 'explicit': role in explicitlyAssignedRoles,
-                                'inherited': role in allInheritedRoles[groupId] }
+                                'inherited': role in allInheritedRoles[groupId]}
 
             canDelete = group.canDelete()
             if roleList['Manager']['explicit'] or roleList['Manager']['inherited']:
@@ -446,14 +435,14 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
         CheckAuthenticator(self.request)
         context = aq_inner(self.context)
 
-        groupstool=context.portal_groups
+        groupstool = context.portal_groups
         utils = getToolByName(context, 'plone_utils')
         groupstool = getToolByName(context, 'portal_groups')
 
         message = _(u'No changes made.')
 
         for group in groups:
-            roles=[r for r in self.request.form['group_' + group] if r]
+            roles = [r for r in self.request.form['group_' + group] if r]
             group_obj = groupstool.getGroupById(group)
             current_roles = group_obj.getRoles()
             if not self.is_zope_manager:
@@ -471,7 +460,7 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
                     raise Forbidden
 
             groupstool.removeGroups(delete)
-            message=_(u'Group(s) deleted.')
+            message = _(u'Group(s) deleted.')
 
         utils.addPortalMessage(message)
 
@@ -546,7 +535,6 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
                     else:
                         self.searchResults = grupsPotencials
 
-
             if search or findAll:
                 self.newSearch = True
 
@@ -579,12 +567,12 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults( portal_type = 'fatac.playlist', creator = memberid )
+        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=memberid)
         return len(playlists)
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File'], creator = memberid )
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File'], creator=memberid)
         return len(activitat)
 
     def retornaCountGroupMembers(self, groupname):
@@ -606,7 +594,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
         return len(activitat)
 
 
