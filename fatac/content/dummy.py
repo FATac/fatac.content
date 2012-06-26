@@ -6,7 +6,6 @@ import json
 from fatac.theme.browser.genericView import genericView
 from Products.CMFCore.utils import getToolByName
 import time
-import random
 
 
 class IDummy(form.Schema):
@@ -77,9 +76,9 @@ class saveTag(grok.View):
         tag['user'] = member
         tag['date'] = time.strftime("(%d/%m/%Y)", time.localtime())
         tag['id'] = str(time.time())
-        import ipdb;ipdb.set_trace()
-        context.tagList.append(json.dumps(tag))
-        context._p_changed = 1
+        tag_list = context.tagList
+        tag_list.append(json.dumps(tag))
+        context.tagList = tag_list
 
         return json.dumps({"user": tag['user'], "date": tag['date'], "id": tag['id']})
 

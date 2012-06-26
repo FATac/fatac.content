@@ -863,8 +863,8 @@
 				// $( "#dialog-form" ).dialog( "open" );
 				$( "#dialog-form" ).dialog({
                     autoOpen: true,
-                    height: 300,
-                    width: 350,
+                    height: 200,
+                    width: 280,
                     modal: true,
                     buttons: {
                         "Crea el comentari": function() {
@@ -896,7 +896,7 @@
                                 $( this ).dialog( "close" );
                             }
                         },
-                        Cancel: function() {
+                        "Cancel·la": function() {
                             $( this ).dialog( "close" );
                         }
                     },

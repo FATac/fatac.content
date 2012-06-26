@@ -75,14 +75,11 @@
                             inicialitza_arrows();
                         });
                     </script>
-
+                    <span tal:content="context/tagList">asd</span>
                     <!-- Photo Tagging Message Dialog -->
                     <div id="dialog-form" title="Comentari del retall">
                         <form>
-                        <fieldset>
-                            <label for="comentari">Comentari</label>
-                            <input type="text" name="comentari" id="comentari" class="text ui-widget-content ui-corner-all" />
-                        </fieldset>
+                            <textarea name="comentari" id="comentari" class="text ui-widget-content ui-corner-all"></textarea>
                         </form>
                     </div>
 
