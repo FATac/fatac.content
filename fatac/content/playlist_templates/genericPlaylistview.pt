@@ -1,27 +1,30 @@
+<!-- Message Dialogs -->
+<div id="dialog-confirm" title="Esborrar l'element?">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>Aquest element serà esborrat de la playlist i no podrà ser recuperat. <br /> Està segur?</p>
+</div>
+<!-- / Message Dialogs -->
 <tal:rep tal:repeat="dades_objecte view/dades_genericview_header" tal:define="sorting python:context.REQUEST.get('sorting')">
-
 	<!-- Si estem ordenant els objectes fiquem un identificador en concret (listItem_(Posicio)) -->
 	<tal:sorting tal:condition="python: sorting == 'True'">
 		<div tal:condition="dades_objecte"
 		     tal:attributes="class string:genericview_imatge zoom_${view/zoom}; id string:listItem_${dades_objecte/order}">
 
-		    <div id="contextOrder" style="float: left; font-size: 80%">
+		    <div class="contextOrder" style="float: left; font-size: 80%">
 		    	<span tal:content="dades_objecte/order" />
 		    </div>
 
-		    <div id="contextDelete" style="float: right; font-size: 80%">
-		    	<a id="delete_object" href="javascript: $(#delete_object).remove();"
-                   tal:attributes="id string: ${dades_objecte/id}; 
-                   				   href string:javascript: if (confirm('Estas segur?')) {removeSelectedObject('${dades_objecte/id}','#listItem_${dades_objecte/order}');;}">
+		    <div class="contextDelete" style="float: right; font-size: 80%">
+		    	<a href="javascript:" class="trashbin"
+                   tal:attributes="data-id string:${dades_objecte/id};
+                   				   data-order string:#listItem_${dades_objecte/order};">
                    X
                 </a>
 		    </div>
-
 		    <div id="imatge" style="cursor: pointer">
-		        <img class="miniatura_objecte" 
+		        <img class="miniatura_objecte"
 			         tal:attributes="src dades_objecte/thumbnail_objecte; alt dades_objecte/titol; id dades_objecte/id" />
 		    </div>
-		    
+
 
 	    </div>
 	</tal:sorting>
@@ -31,10 +34,11 @@
 	    <div tal:condition="dades_objecte"
 		     tal:attributes="class string:genericview_imatge zoom_${view/zoom}; id string:div${dades_objecte/id}">
 
-	        <img class="miniatura_objecte hoverable" 
+	        <img class="miniatura_objecte hoverable"
 		         tal:attributes="src dades_objecte/thumbnail_objecte; alt dades_objecte/titol; id dades_objecte/id" />
-		    
+
 	    </div>
 	</tal:nosorting>
 
 </tal:rep>
+<!-- href string:javascript: if (confirm('Estas segur?')) {removeSelectedObject('${dades_objecte/id}','#listItem_${dades_objecte/order}');;}" -->

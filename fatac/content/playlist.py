@@ -135,7 +135,7 @@ class playlistView(grok.View, resultatsView):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
+        html = portal.unrestrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
 
 
@@ -164,7 +164,7 @@ class displayResultsPlaylistView(grok.View, funcionsCerca):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/genericPlaylistview')()
+        html = portal.unrestrictedTraverse(path + '/genericPlaylistview')()
         return html
 
 
@@ -252,7 +252,7 @@ class orderPlaylistView(grok.View, resultatsView):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
+        html = portal.unrestrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
 
 

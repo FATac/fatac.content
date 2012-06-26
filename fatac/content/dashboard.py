@@ -684,7 +684,7 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
 
             IStatusMessage(self.request).add(msg, type=self.group and 'info' or 'error')
             if self.group and not self.groupname:
-                target_url = '%s/%s' % (self.context.absolute_url(), '@@usergroup-groupprefs')
+                target_url = '%s/%s' % (self.context.absolute_url(), '@@manage-groups')
                 self.request.response.redirect(target_url)
                 return ''
 
