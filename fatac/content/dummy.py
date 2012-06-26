@@ -6,6 +6,8 @@ import json
 from fatac.theme.browser.genericView import genericView
 from Products.CMFCore.utils import getToolByName
 import time
+from AccessControl import getSecurityManager
+from Products.CMFCore import permissions
 
 
 class IDummy(form.Schema):
@@ -76,6 +78,7 @@ class saveTag(grok.View):
         tag['user'] = member
         tag['date'] = time.strftime("(%d/%m/%Y)", time.localtime())
         tag['id'] = str(time.time())
+
         tag_list = context.tagList
         tag_list.append(json.dumps(tag))
         context.tagList = tag_list
@@ -98,8 +101,15 @@ class deleteTag(grok.View):
 
         tag_to_delete = request.form.get("id")
 
+        pm = getToolByName(context, "portal_membership")
+        member = pm.getAuthenticatedMember().getId()
+
+        userIsManager = getSecurityManager().checkPermission(permissions.ManagePortal, context)
+
         for tag in context.tagList:
             if str(json.loads(tag).get("id")) == tag_to_delete:
-                context.tagList.remove(tag)
-                context._p_changed = 1
-                return json.dumps({"info": "Tag %s deleted" % tag_to_delete})
+                # Check if current user is allowed to delete this tag or user is Manager
+                if json.loads(tag).get("user") == member or userIsManager:
+                    context.tagList.remove(tag)
+                    context._p_changed = 1
+                    return json.dumps({"info": "Tag %s deleted" % tag_to_delete})

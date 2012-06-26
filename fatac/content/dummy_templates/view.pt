@@ -75,8 +75,8 @@
                             inicialitza_arrows();
                         });
                     </script>
-                    <span tal:content="context/tagList">asd</span>
-                    <!-- Photo Tagging Message Dialog -->
+
+                    <!-- Photo Tagging Message Dialogs -->
                     <div id="dialog-form" title="Comentari del retall">
                         <form>
                             <textarea name="comentari" id="comentari" class="text ui-widget-content ui-corner-all"></textarea>
@@ -85,6 +85,8 @@
                     <div id="dialog-confirm" title="Esborrar el comentari?">
                         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>Aquest comentari serà esborrat permanentment i no podrà ser recuperat. Està segur?</p>
                     </div>
+                    <!-- / Photo Tagging Message Dialogs -->
+
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
                         <div class="ac_breadcrump div_dotted_line_bottom">
