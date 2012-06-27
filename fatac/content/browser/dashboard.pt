@@ -140,7 +140,7 @@
                         <div id="my-files-content" style="diplay: inline-block;clear: both;"
                              tal:define="search python:context.portal_catalog.searchResults(
                                                                                     portal_type='File',
-                                                                                    creator=member.getId(),
+                                                                                    Creator=member.getId(),
                                                                                     sort_on='modified',
                                                                                     sort_order='reverse',
                                                                                     sort_limit=20)[:20]">
