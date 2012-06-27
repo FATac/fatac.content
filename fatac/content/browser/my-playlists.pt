@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
@@ -126,7 +126,7 @@
 
                 <div class="div_dotted_line_left" tal:define="search python:context.portal_catalog.searchResults(
                                                                                                    portal_type='fatac.playlist',
-                                                                                                   creator=member.getId(),
+                                                                                                   Creator=member.getId(),
                                                                                                    sort_on='modified',
                                                                                                    sort_order='reverse',)">
                     <div id="playlist-header" class="arial16c339933bold">
@@ -156,6 +156,46 @@
                 </div>
 
             </div>
+
+            <!--
+                Tenim dues opcions:
+                    1. intentem fer servir macro_dades (com està aquí sota)
+                    2. intentar fer-ho similar a com es pinta la vista de playlist
+                       He copiat la funció que es fa srevir a playlists_list.js per adaptar-la
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                carrega_elements();
+                                crea_scrolls();
+                            });
+                        </script>
+
+            <div id="my-playlists" class="span10">
+                <div class="div_dotted_line_left" tal:define="playlists view/retornaPlaylists">
+
+                    <div id="playlist-header" class="arial16c339933bold">
+                        <img src="++resource++fatac.content/images/playlist24.gif" />
+                        <span i18n:translate="">playlists</span>
+                    </div>
+
+                    < ! - - scroll objectes:
+                    - per cada scroll que vull crear:
+                        - defineixo la variable dada:
+                            {'nom': playlist.id, 'tipus': 'objects', 'valor': ids}
+                        - crido la macro dadaObjecte
+                    - quan el document ha carregat, crido omple_scrolls_objectes()
+                    - - >
+
+                    <tal:re tal:repeat="playlist playlists">
+                        <tal:def tal:define="dada playlist/dada">
+                            <span metal:use-macro="context/macro_dades/macros/dadaObjecte">x</span>
+                        </tal:def>
+                    </tal:re>
+
+                </div>
+            </div>
+        -->
+
+
         </div>
 
     </tal:main-macro>
