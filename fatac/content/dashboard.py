@@ -152,6 +152,7 @@ class FatacDashBoard(DashboardView):
                                              sort_on='modified',
                                              sort_order='reverse',)
 
+
 class groupActivity(DashboardView):
     """ Returns The group activity content
     """
