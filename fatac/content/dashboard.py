@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from zope.interface import implements
 from interfaces import IPortalUser
 from plone.app.portlets.interfaces import IDefaultDashboard
@@ -85,12 +87,12 @@ class FatacDashBoard(DashboardView):
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=memberid)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=memberid)
         return len(playlists)
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File', 'plone.Comment'], creator=memberid)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File', 'plone.Comment'], Creator=memberid)
         return len(activitat)
 
     def retornaCountGroupMembers(self, groupname):
@@ -104,7 +106,7 @@ class FatacDashBoard(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
         return len(playlists)
 
     def retornaCountGroupActivity(self, groupname):
@@ -112,8 +114,34 @@ class FatacDashBoard(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
         return len(activitat)
+
+    def retornaPlaylists(self):
+        """ retorna una llista de diccionaris amb títol, descripció, url, i
+        llista de ids de totes les playlists creades per l'usuari
+        """
+
+        llistat = []
+        mt = getToolByName(self.context, 'portal_membership')
+        if not mt.isAnonymousUser():  # the user has not logged in
+            member = mt.getAuthenticatedMember()
+        playlists = self.context.portal_catalog.searchResults(portal_type='fatac.playlist',
+                                                              Creator=member.getId(),
+                                                              sort_on='modified',
+                                                              sort_order='reverse')
+        for playlist in playlists:
+            obj = playlist.getObject()
+            # passem de [[0, 'id1'], [1, 'id2'], [2, 'id3'], ...] a 'id1,id2,id3,id4'
+            ids = ','.join([a[1] for a in obj.orderedList])
+            dada = {'nom': playlist.id, 'tipus': 'objects', 'valor': ids}
+            llistat.append({'titol': playlist.Title,
+                            'id': playlist.id,
+                            'descripcio': playlist.Description,
+                            'url': playlist.getURL(),
+                            'dada': dada})
+
+        return llistat
 
 
 class groupActivity(DashboardView):
@@ -123,7 +151,7 @@ class groupActivity(DashboardView):
         context = self.context
         elementsList = []
         search = context.portal_catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'],
-                                                      creator=groupmembers,
+                                                      Creator=groupmembers,
                                                       sort_on='modified',
                                                       sort_order='reverse',
                                                       sort_limit=20)[:20]
@@ -148,7 +176,7 @@ class groupActivity(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
         return len(playlists)
 
     def retornaCountGroupActivity(self, groupname):
@@ -156,7 +184,7 @@ class groupActivity(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
         return len(activitat)
 
 
@@ -167,7 +195,7 @@ class groupPlaylists(DashboardView):
         context = self.context
         elementsList = []
         search = context.portal_catalog.searchResults(portal_type='fatac.playlist',
-                                                      creator=groupmembers,
+                                                      Creator=groupmembers,
                                                       sort_on='modified',
                                                       sort_order='reverse',
                                                       sort_limit=20)[:20]
@@ -192,7 +220,7 @@ class groupPlaylists(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
         return len(playlists)
 
     def retornaCountGroupActivity(self, groupname):
@@ -200,7 +228,7 @@ class groupPlaylists(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
         return len(activitat)
 
 
@@ -567,12 +595,12 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=memberid)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=memberid)
         return len(playlists)
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File'], creator=memberid)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File'], Creator=memberid)
         return len(activitat)
 
     def retornaCountGroupMembers(self, groupname):
@@ -586,7 +614,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
         return len(playlists)
 
     def retornaCountGroupActivity(self, groupname):
@@ -594,7 +622,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
         return len(activitat)
 
 
