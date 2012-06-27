@@ -31,6 +31,7 @@
                     <script type="text/javascript">
                         $(document).ready(function() {
 
+                            // TODO: diria que auqesta crida només funciona si hi ha un únic scrollable, perquè fa la crida post i perd a quin "nom" correspone per fer "$('.items_' + nom).replaceWith(data);"
                             $('input.nom_dada').each(function () {
                                 var nom = $(this).attr('value');
                                 var llista_ids = ($('#llista_ids_' + nom).attr('value')).split(',');
