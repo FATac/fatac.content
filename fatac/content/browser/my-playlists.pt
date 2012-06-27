@@ -1,4 +1,4 @@
-n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
@@ -124,11 +124,7 @@ n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
 
             <div id="my-playlists" class="span10">
 
-                <div class="div_dotted_line_left" tal:define="search python:context.portal_catalog.searchResults(
-                                                                                                   portal_type='fatac.playlist',
-                                                                                                   Creator=member.getId(),
-                                                                                                   sort_on='modified',
-                                                                                                   sort_order='reverse',)">
+                <div class="div_dotted_line_left" tal:define="search view/returnUserPlaylists">
                     <div id="playlist-header" class="arial16c339933bold">
                         <img src="++resource++fatac.content/images/playlist24.gif" />
                         <span i18n:translate="">playlists</span>

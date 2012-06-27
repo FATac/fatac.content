@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     var pathname = '';
     var order = [];
 
@@ -57,7 +58,14 @@ $(document).ready(function() {
                             updateList(pathname.split('sortingView')[0], order);
                         }
                     });
+                // Enable bind to be able to delete elements from the playlist
+                $("#sortable").on("click", ".trashbin", function(event) {
+                    event.preventDefault();
+                    removeSelectedObject($(this).attr("data-id"), $(this).attr("data-order"));
+                });
                 }
+
+
             });
         });
     }
@@ -105,6 +113,8 @@ $(document).ready(function() {
         order = getOrder();
         updateList(pathname, order);
     });
+
+
 });
 
 // Returns the order of the sortable list
@@ -174,12 +184,26 @@ function removeSelectedObject(objectId, tagObjectId)
 
     path = pathname + "deleteObjectId?objectId=" + objectId; //tagObjectId.replace("#","");
 
-    $.ajax({url: path,
-            type: "post",
-            error: function() { alert("No s'ha eliminar l'objecte de la playlist"); },
-            success: function() { //window.location.href = pathname + "sortingView";
-                                    $(tagObjectId).remove();
-                                },
-          });
+    $( "#dialog-confirm" ).dialog({
+        resizable: false,
+        height:200,
+        width:350,
+        modal: true,
+        buttons: {
+            "Esborra aquest element": function() {
+                $.ajax({url: path,
+                    type: "post",
+                    error: function() { alert("No s'ha eliminat l'objecte de la playlist"); },
+                    success: function() { //window.location.href = pathname + "sortingView";
+                                            $(tagObjectId).remove();
+                                        },
+                });
+                $( this ).dialog( "close" );
+            },
+            "Cancel·la": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
 
 }

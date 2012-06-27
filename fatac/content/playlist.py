@@ -62,12 +62,12 @@ def vigListIndexer(playlist):
 grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
 
-@grok.subscribe(IPlaylist, IObjectAddedEvent)
-def autoPublishPlaylist(playlist, event):
-    """ Publica la Playlist un cop s'ha creat.
-    """
-    wtool = getToolByName(playlist, 'portal_workflow')
-    wtool.doActionFor(playlist, "publish")
+# @grok.subscribe(IPlaylist, IObjectAddedEvent)
+# def autoPublishPlaylist(playlist, event):
+#     """ Publica la Playlist un cop s'ha creat.
+#     """
+#     wtool = getToolByName(playlist, 'portal_workflow')
+#     wtool.doActionFor(playlist, "publish")
 
 
 class returnOrderedList(grok.View):
@@ -135,7 +135,7 @@ class playlistView(grok.View, resultatsView):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
+        html = portal.unrestrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
 
 
@@ -164,7 +164,7 @@ class displayResultsPlaylistView(grok.View, funcionsCerca):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/genericPlaylistview')()
+        html = portal.unrestrictedTraverse(path + '/genericPlaylistview')()
         return html
 
 
@@ -229,7 +229,7 @@ class sortingView(grok.View, funcionsCerca):
     """
 
     grok.context(IPlaylist)
-    grok.require('zope2.View')
+    grok.require('fatac.CanReorderPlaylists')
     grok.name('sortingView')
     grok.template('sortingView')
 
@@ -252,7 +252,7 @@ class orderPlaylistView(grok.View, resultatsView):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
+        html = portal.unrestrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
 
 
@@ -289,7 +289,7 @@ class deleteObjectId(grok.View):
     """
 
     grok.context(IPlaylist)
-    grok.require('zope2.View')
+    grok.require('fatac.CanReorderPlaylists')
     grok.name('deleteObjectId')
 
     def update(self):

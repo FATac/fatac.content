@@ -11,9 +11,9 @@
   <five:registerPackage package="." initialize=".initialize" />
 
   <includeDependencies package="." />
-  <grok:grok package="." />
 
   <include file="permissions.zcml" />
+  <grok:grok package="." />
 
   <genericsetup:registerProfile
       name="default"
