@@ -115,6 +115,15 @@ class FatacDashBoard(DashboardView):
         activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
         return len(activitat)
 
+    def returnUserPlaylists(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        member = portal_state.member()
+        return pc.searchResults(portal_type='fatac.playlist',
+                                             Creator=member.getId(),
+                                             sort_on='modified',
+                                             sort_order='reverse',)
+
 
 class groupActivity(DashboardView):
     """ Returns The group activity content

@@ -124,11 +124,7 @@
 
             <div id="my-playlists" class="span10">
 
-                <div class="div_dotted_line_left" tal:define="search python:context.portal_catalog.searchResults(
-                                                                                                   portal_type='fatac.playlist',
-                                                                                                   creator=member.getId(),
-                                                                                                   sort_on='modified',
-                                                                                                   sort_order='reverse',)">
+                <div class="div_dotted_line_left" tal:define="search view/returnUserPlaylists">
                     <div id="playlist-header" class="arial16c339933bold">
                         <img src="++resource++fatac.content/images/playlist24.gif" />
                         <span i18n:translate="">playlists</span>

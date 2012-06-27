@@ -62,12 +62,12 @@ def vigListIndexer(playlist):
 grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
 
-@grok.subscribe(IPlaylist, IObjectAddedEvent)
-def autoPublishPlaylist(playlist, event):
-    """ Publica la Playlist un cop s'ha creat.
-    """
-    wtool = getToolByName(playlist, 'portal_workflow')
-    wtool.doActionFor(playlist, "publish")
+# @grok.subscribe(IPlaylist, IObjectAddedEvent)
+# def autoPublishPlaylist(playlist, event):
+#     """ Publica la Playlist un cop s'ha creat.
+#     """
+#     wtool = getToolByName(playlist, 'portal_workflow')
+#     wtool.doActionFor(playlist, "publish")
 
 
 class returnOrderedList(grok.View):
