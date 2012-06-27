@@ -8,6 +8,10 @@
        <permission name="Playlist: Modify Relation Field" acquire="False">
            <role name="Manager" />
        </permission>
+       <permission name="Playlist: Can reorder Playlists" acquire="False">
+           <role name="Manager" />
+           <role name="Owner" />
+       </permission>
 
        <permission name="Add Groups" acquire="True">
            <role name="Member" />

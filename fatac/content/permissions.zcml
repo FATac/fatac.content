@@ -3,8 +3,10 @@
      xmlns:i18n="http://namespaces.zope.org/i18n"
      i18n_domain="fatac.content">
 
-     <permission id="fatac.AddPlaylist" title="Playlist: Add Playlist" />
-     <permission id="fatac.ModRelField" title="Playlist: Modify Relation Field" />
-     <permission id="fatac.AddGhost" title="Ghost: Add empty object (fake commenter)" />
+    <permission id="fatac.AddPlaylist" title="Playlist: Add Playlist" />
+    <permission id="fatac.ModRelField" title="Playlist: Modify Relation Field" />
+    <permission id="fatac.AddGhost" title="Ghost: Add empty object (fake commenter)" />
+
+    <permission id="fatac.CanReorderPlaylists" title="Playlist: Can reorder Playlists" />
 
 </configure>

@@ -138,6 +138,7 @@ function removeSelectedGroup(idTagGroup)
 
 }
 
+// Binding to the "trash" icon when managing groups
 $(document).ready(function() {
     $(".dashboardListing").on("click", ".trashbin", function(event) {
         event.preventDefault();

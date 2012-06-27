@@ -229,7 +229,7 @@ class sortingView(grok.View, funcionsCerca):
     """
 
     grok.context(IPlaylist)
-    grok.require('zope2.View')
+    grok.require('fatac.CanReorderPlaylists')
     grok.name('sortingView')
     grok.template('sortingView')
 
@@ -289,7 +289,7 @@ class deleteObjectId(grok.View):
     """
 
     grok.context(IPlaylist)
-    grok.require('zope2.View')
+    grok.require('fatac.CanReorderPlaylists')
     grok.name('deleteObjectId')
 
     def update(self):

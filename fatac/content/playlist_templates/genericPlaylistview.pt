@@ -41,4 +41,3 @@
 	</tal:nosorting>
 
 </tal:rep>
-<!-- href string:javascript: if (confirm('Estas segur?')) {removeSelectedObject('${dades_objecte/id}','#listItem_${dades_objecte/order}');;}" -->
