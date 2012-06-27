@@ -57,7 +57,7 @@
                 </metal:title>
 
                 <metal:name metal:fill-slot="name">
-                    <div class="field">
+<!--                     <div class="field">
                         <label for="addname" i18n:translate="label_name">Name</label>
 
                         <span class="fieldRequired" title="Required"
@@ -71,7 +71,7 @@
                         <input type="text" name="addname" value="groupname"
                                id="addname"
                                tal:attributes="value view/groupname | string:"/>
-                    </div>
+                    </div> -->
                 </metal:name>
             </metal:block>
         </div>
@@ -128,7 +128,9 @@
                                                      dummy python:request.set('management_page_charset_tag','UTF-8:');" />
                              </tal:set>
 
-                            <tal:properties repeat="property targetobject/propertyMap">
+                            <!-- Here is where the additional fields are generated. -->
+                            <!-- Changed the following method to access the ones we desire to be shown. -->
+                            <tal:properties repeat="property view/getCreateGroupFields">
                               <tal:cond tal:condition="python: property.get('id','') != 'delegated_group_member_managers'">
                                 <div class="field"
                                      tal:define="id property/id;
@@ -240,7 +242,7 @@
                                        i18n:attributes="value label_save;" />
                             </div>
                         </fieldset>
-                        
+
                         <input tal:replace="structure context/@@authenticator/authenticator" />
                     </form>
                 </div>

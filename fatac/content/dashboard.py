@@ -605,6 +605,7 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
     def __call__(self):
 
         context = aq_inner(self.context)
+        ploneview = getMultiAdapter((self.context, self.request), name=u'plone')
 
         self.gtool = getToolByName(context, 'portal_groups')
         self.gdtool = getToolByName(context, 'portal_groupdata')
@@ -629,7 +630,9 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
 
             title = self.request.form.get('title', None)
             description = self.request.form.get('description', None)
-            addname = self.request.form.get('addname', None)
+
+            #addname = self.request.form.get('addname', None)
+            addname = ploneview.normalizeString(title)
 
             if addname:
                 if not self.regtool.isMemberIdAllowed(addname):
@@ -689,3 +692,10 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
                 return ''
 
         return self.index()
+
+    def getCreateGroupFields(self):
+        """ Rearrange and choose the fields we want to be shown when creating a group"""
+        context = aq_inner(self.context)
+        self.gdtool = getToolByName(context, 'portal_groupdata')
+        fields = [fields for fields in self.gdtool.propertyMap() if fields['id'] != 'email']
+        return tuple(fields)
