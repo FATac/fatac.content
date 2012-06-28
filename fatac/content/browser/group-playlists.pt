@@ -52,13 +52,13 @@
                              i18n:attributes="value label_add_new_playlist;"
                       />
 
-                </form> 
+                </form>
             </div>
 
             <div id="usuari">
-                <span class="arial11c339933upp" i18n:translate="">Grups ></span> 
-                <span class="arial11c339933upp" tal:content="group/getGroupTitleOrName" />
-                <span class="arial11c339933upp" i18n:translate="">> Playlists</span> 
+                <span class="TerminalDosis600c339933upp" i18n:translate="">Grups ></span>
+                <span class="TerminalDosis600c339933upp" tal:content="group/getGroupTitleOrName" />
+                <span class="TerminalDosis600c339933upp" i18n:translate="">> Playlists</span>
             </div>
 
         </div>
@@ -75,11 +75,11 @@
                     <div id="dash-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" /> 
+                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
-                        
+
                     <div id="grups-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
@@ -99,7 +99,7 @@
                             [<span tal:content="python: view.retornaCountGroupPlaylists(groupname)"/>]
                         </a>
                     </div>
-                      
+
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
@@ -117,7 +117,7 @@
 
             </div>
 
-              
+
 
 
             <div id="my-playlists" class="span10">
@@ -132,9 +132,9 @@
                     <tal:re tal:repeat="playlist search">
                         <div class="genericview_my_dades" style="display: inline-block;">
                             <div id="descImage" style="float: left; padding: 0.5em;">
-                                <tal:cond tal:define="objecte playlist/getObject" 
+                                <tal:cond tal:define="objecte playlist/getObject"
                                           tal:condition="python: objecte.Type()=='Playlist'">
-                                    <img tal:condition="objecte/descImage" 
+                                    <img tal:condition="objecte/descImage"
                                          tal:replace="structure objecte/@@images/descImage/thumb" />
                                 </tal:cond>
                             </div>
@@ -157,7 +157,7 @@
                         </a>
                     </p>
                 </div>
-                            
+
             </div>
         </div>
 

@@ -82,9 +82,9 @@
             </div>
 
             <div id="usuari">
-                <span class="arial11c339933upp" i18n:translate="">Usuari ></span>
-                <span class="arial11c339933upp" tal:content="name" />
-                <span class="arial11c339933upp" i18n:translate="">> Grups</span>
+                <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>
+                <span class="TerminalDosis600c339933upp" tal:content="name" />
+                <span class="TerminalDosis600c339933upp" i18n:translate="">> Grups</span>
             </div>
 
         </div>

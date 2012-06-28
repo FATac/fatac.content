@@ -40,16 +40,16 @@
                                 b_start python:0 if 0 &lt;= resultcount else resultcount - resultcount % b_size;
                                 b_start python:b_start if b_start &lt; resultcount else max(b_start - b_size, 0);
                                 ">
-        
+
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
             Portal status message
         </div>
 
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
             <div id="group">
-              <span class="arial11c339933upp" i18n:translate="">Grups ></span> 
-              <span class="arial11c339933upp" tal:content="group/getGroupTitleOrName" />
-              <span class="arial11c339933upp" i18n:translate="">> Membres del Grup</span> 
+              <span class="TerminalDosis600c339933upp" i18n:translate="">Grups ></span>
+              <span class="TerminalDosis600c339933upp" tal:content="group/getGroupTitleOrName" />
+              <span class="TerminalDosis600c339933upp" i18n:translate="">> Membres del Grup</span>
             </div>
         </div>
 
@@ -65,11 +65,11 @@
                     <div id="dash-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" /> 
+                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
-                        
+
                     <div id="grups-menu" class="menuButtonsSelected">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
@@ -89,7 +89,7 @@
                             [<span tal:content="python: view.retornaCountGroupPlaylists(groupname)"/>]
                         </a>
                     </div>
-                      
+
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
@@ -109,23 +109,23 @@
             <div class="span10">
                 <div class="div_dotted_line_left">
 
-                    <div id="groups-header" class="arial16c339933bold" tal:condition="not:groupname | nothing" 
+                    <div id="groups-header" class="arial16c339933bold" tal:condition="not:groupname | nothing"
                           i18n:translate="" style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/groups24.gif" />
                         <span i18n:translate="heading_group_members">Group Members</span>
-                    </div> 
+                    </div>
 
-                    <div id="groups-header" class="arial16c339933bold" tal:condition="groupname | nothing" 
+                    <div id="groups-header" class="arial16c339933bold" tal:condition="groupname | nothing"
                            style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/groups24.gif" />
                         <tal:trans i18n:translate="heading_group_members_of">
                             Members of the <span tal:content="group/getGroupTitleOrName" tal:omit-tag="" i18n:name="groupname">Groupname</span> group
                         </tal:trans>
-                    </div> 
+                    </div>
 
                     <tal:ifnogroups tal:condition="not:groupname | nothing">
                         <div id="content-core">
-                            
+
                             <p i18n:translate="label_no_group_specified">No group was specified.</p>
 
                             <p>
@@ -248,7 +248,7 @@
                                     <table class="dashboardListing" summary="Groups">
                                       <tr>
                                         <th colspan="3">
-                                          <span class="arial11c339933" 
+                                          <span class="arial11c339933"
                                                 tal:omit-tag="" i18n:translate="label_quick_search">Quick search</span>:
                                             <input class="quickSearch"
                                                    type="text"
