@@ -41,24 +41,17 @@
             <div id="actions">
 
                 <tal:cond tal:condition="python: member.getId() in [u.getId() for u in group.getGroupMembers()]">
-                    <form action=""
-                          name="playlist_add"
-                          method="post"
-                          tal:attributes="action string:$portal_url/++add++fatac.playlist">
-
-                        <input class="boto_filtres arial11c666666 actionButtons"
-                               type="submit"
-                               name="form.button.AddPlaylist"
-                               value="Afegeix una nova Playlist"
-                               i18n:attributes="value label_add_new_playlist;"
-                        />
-
-                    </form>
+                    <a id="playlist_add"
+                       class="boto_filtres arial11c666666 actionButtons"
+                       tal:attributes="href string:${context/portal_url}/Groups/${groupname}/++add++fatac.playlist"
+                       i18n:translate="label_add_new_playlist">
+                       Afegeix una nova Playlist
+                    </a>
                 </tal:cond>
             </div>
 
             <div id="group">
-                <span class="arial11c339933upp" i18n:translate="">Grups ></span> 
+                <span class="arial11c339933upp" i18n:translate="">Grups ></span>
                 <span class="arial11c339933upp" tal:content="group/getGroupTitleOrName" />
             </div>
 
@@ -76,11 +69,11 @@
                     <div id="dash-menu" class="menuButtonsSelected">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" /> 
+                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
-                        
+
                     <div id="grups-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
@@ -100,7 +93,7 @@
                             [<span tal:content="python: view.retornaCountGroupPlaylists(groupname)"/>]
                         </a>
                     </div>
-                      
+
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
@@ -117,11 +110,11 @@
             <div class="span10">
                 <div class="div_dotted_line_left">
 
-                    <div id="groups-header" class="arial16c339933bold" 
+                    <div id="groups-header" class="arial16c339933bold"
                           i18n:translate="" style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/groups24.gif" />
                         <span tal:content="group/getGroupTitleOrName" />
-                    </div> 
+                    </div>
 
                     <div id="member-info" style="margin-bottom: 1em;">
                         <p class="georgia11c000000" tal:replace="python:group.getProperty('description')" />

@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <object name="portal_catalog">
 	<index name="visibleInGroupsList" meta_type="KeywordIndex">
-		<indexed_attr velue="visibleInGroupsList" />
+		<indexed_attr value="visibleInGroupsList" />
 	</index>
-
 	<column value="visibleInGroupsList" />
+    <index name="originalGroup" meta_type="FieldIndex">
+        <indexed_attr value="originalGroup" />
+    </index>
+    <column value="originalGroup" />
 </object>

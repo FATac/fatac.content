@@ -8,5 +8,6 @@
     <permission id="fatac.AddGhost" title="Ghost: Add empty object (fake commenter)" />
 
     <permission id="fatac.CanReorderPlaylists" title="Playlist: Can reorder Playlists" />
+    <permission id="fatac.MemberUsersAllowed" title="FATAC: Can view member screens" />
 
 </configure>

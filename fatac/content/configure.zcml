@@ -59,7 +59,7 @@
       name="manage-groups"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".dashboard.UserMembershipControlPanel"
-      permission="zope2.View"
+      permission="fatac.MemberUsersAllowed"
       template="browser/manage-groups.pt"
       />
 
