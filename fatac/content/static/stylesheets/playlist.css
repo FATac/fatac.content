@@ -79,7 +79,10 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
 .fitxa_ampliada_cerca img.addPlaylist { margin:15px 0; }
 .context-menu-theme-default .context-menu-item-hover { background-color:#B3D396 !important; color:white !important; }
 .context-menu-item-disabled { background-color: transparent !important; }
-.context-menu-item { font-family: arial !important; }
+.context-menu-item { font-family: arial !important; font-weight:bold !important; }
+.context-menu-item-disabled .context-menu-item-inner { font-size:80% !important; font-weight:normal !important; }
+
 .context-menu-shadow { display:none !important; }
 
 .genericview_fitxa_cerca.hover { background-color: #ECECEC; }
+

@@ -94,14 +94,33 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
     // Afegeix a l'element donat el menú per afegir a playlist, generat
     // a partir de llistaPlaylist
 
+    // _ és una funció definida a fatac.js que retorna l'entrada del
+    // diccionari corresponent a l'idioma actual.
+    text_afegir_a = _({'ca': 'afegir a:',
+                     'en': 'add to:',
+                     'es': 'añadir a:'});
+    text_error_afegir = _({'ca': "S'ha produït un error. No s'han guardat els canvis",
+                           'en': 'An error occurred. No changes have been saved.',
+                           'es': 'Se ha producido un error. No se han guardado los cambios.'});
+    text_element_afegit = _({'ca': 'element afegit correctament',
+                             'en': 'element added',
+                             'es': 'elemento añadido correctamente'});
+    text_error_playlist = _({'ca': "S'ha produït un error. No s'ha pogut recuperar l'identificador de la nova playlist",
+                             'en': 'An error occurred. Unable to retrieve the new playlist identifier.',
+                             'es': 'Se ha producido un error. No se ha podido recuperar el identificador de la nueva playlist.'});
+    text_nou_album = _({'ca': 'nou àlbum',
+                        'en': 'new playlist',
+                        'es': 'nuevo álbum'});
+
     var titol;
     var idPlaylist;
     var idObjecte;
     var pathname = "";
-    var menu = [
-        {"Escull playlist":{onclick:function(){},disabled:true}},
-        $.contextMenu.separator,
-    ];
+
+    var menu = []
+    var menuDict = new Object();
+    menuDict[text_afegir_a] = {onclick:function(){},disabled:true}
+    menu.push(menuDict);
 
     idObjecte = $(element).attr('rel');
 
@@ -124,13 +143,13 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
             // quan cliquem la opció del menú, idPlaylist tindrà l'últim valor assignat,
             // i la crida es farà malament. Per solucionar-ho, busquem idPlayist a
             // variable global (index - 2 xq hi ha el títol i el separador)
-            var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 2]
+            var idPlaylist_aux = _FATAC['playlists'][$(menuItem).index() - 1]
+            console.error(idPlaylist_aux);
             var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_aux + "&idObjecte=" + idObjecte;;
             $.ajax({url: url_actualitzar, type: "post",
-            error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
+            error: function(){alert(text_error_afegir);},
             complete: function(){
-                text = 'element afegit correctament'
-                $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
+                $('<div class="purr"><div class="info"><span>'+text_element_afegit+'</span></div></div>').purr({
                     fadeInSpeed: 200,
                     fadeOutSpeed: 200,
                     removeTimer: 2000,
@@ -143,7 +162,7 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
 
     // afegim al menú opció per afegir a una nova playlist)
     var menuDict2 = new Object();
-    menuDict2['crear nova playlist'] = function(menuItem,menu) {
+    menuDict2[text_nou_album] = function(menuItem,menu) {
 
         // quan cliquem la opció del menú, idPlaylist tindrà l'últim valor assignat,
         // i la crida es farà malament. Per solucionar-ho, busquem idPlayist a
@@ -173,21 +192,20 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
             },
             noform: function (el) {
                 $.getJSON(pathname + "retornaIdUltimaPlaylist", function() {})
-                .error(function() { alert("No s'ha pogut recuperar l'id de la nova playlist"); })
+                .error(function() { alert(text_error_playlist); })
                 .complete(function( data ) {
                     var idPlaylist_nova = jQuery.parseJSON( data.responseText );
                     //var idPlaylist_nova = 'playlist4';
                     var url_actualitzar = pathname + "actualitzaPlaylist?idPlaylist=" + idPlaylist_nova + "&idObjecte=" + idObjecte;;
                     $.ajax({url: url_actualitzar, type: "post",
-                        error: function(){alert("S'ha produït un error en afegir a la playlist. No s'han guardat els canvis");},
+                        error: function(){alert(text_error_afegir);},
                         complete: function(){
 
                             recarregaPlaylistsMenu();
 
                             $('.close a').click();
 
-                            text = 'element afegit correctament'
-                            $('<div class="purr"><div class="info"><span>'+text+'</span></div></div>').purr({
+                            $('<div class="purr"><div class="info"><span>'+text_element_afegit+'</span></div></div>').purr({
                                 fadeInSpeed: 200,
                                 fadeOutSpeed: 200,
                                 removeTimer: 2000,
