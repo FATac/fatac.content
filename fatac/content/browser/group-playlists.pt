@@ -49,9 +49,9 @@
             </div>
 
             <div id="usuari">
-                <span class="arial11c339933upp" i18n:translate="">Grups ></span>
-                <span class="arial11c339933upp" tal:content="group/getGroupTitleOrName" />
-                <span class="arial11c339933upp" i18n:translate="">> Playlists</span>
+                <span class="TerminalDosis600c339933upp" i18n:translate="">Grups ></span>
+                <span class="TerminalDosis600c339933upp" tal:content="group/getGroupTitleOrName" />
+                <span class="TerminalDosis600c339933upp" i18n:translate="">> Playlists</span>
             </div>
 
         </div>
