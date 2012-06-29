@@ -115,13 +115,6 @@
                                                         isanon context/@@plone_portal_state/anonymous;
                                                         nom_seccio seccio/nom">
 
-
-                                            <!--<tal:repl tal:condition="python: isanon==False" tal:replace="structure string:<img class='addPlaylist' tal:attributes='rel dades_objecte/id' src='++resource++fatac.content/images/add_playlist.png' />" />-->
-
-
-
-
-
                                         <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
                                         <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
 
@@ -136,6 +129,9 @@
 
                                             <tal:rep tal:repeat="dada seccio/dades">
                                                 <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
+                                                <tal:co tal:define="start_dada repeat/dada/start" tal:condition="python: nom_seccio=='header' and start_dada">
+                                                    <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
+                                                </tal:co>
                                                 <br/>
                                             </tal:rep>
 
