@@ -47,20 +47,40 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
         value_type=schema.TextLine(title=u"Visible in Groups"),
         )
 
+    originalGroup = schema.TextLine(
+        title=_(u"Original Group"),
+        description=_(u"This is a list that has the order of the DB objects"),
+        required=False,
+        )
+
     #Amaguem els camps a l'edicio
     form.omitted('orderedList')
+    form.mode(originalGroup="hidden")
+
+
+@form.default_value(field=IPlaylist['originalGroup'])
+def originalGroupDefaultValue(data):
+    return data.context.id
 
 
 @indexer(IPlaylist)
 def vigListIndexer(playlist):
-    """ Index en el Cataleg del camp 'visibleInGroupsList'
-    """
+    """ Index en el Cataleg del camp 'visibleInGroupsList' """
     if playlist.visibleInGroupsList != None:
         return playlist.visibleInGroupsList
     else:
         return []
 grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
+
+@indexer(IPlaylist)
+def originalGroupIndexer(playlist):
+    """ Index en el Cataleg del camp 'originalGroup' """
+    if playlist.originalGroup != None:
+        return playlist.originalGroup
+    else:
+        return ""
+grok.global_adapter(originalGroupIndexer, name="originalGroup")
 
 # @grok.subscribe(IPlaylist, IObjectAddedEvent)
 # def autoPublishPlaylist(playlist, event):

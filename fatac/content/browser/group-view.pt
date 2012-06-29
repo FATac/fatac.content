@@ -41,19 +41,12 @@
             <div id="actions">
 
                 <tal:cond tal:condition="python: member.getId() in [u.getId() for u in group.getGroupMembers()]">
-                    <form action=""
-                          name="playlist_add"
-                          method="post"
-                          tal:attributes="action string:$portal_url/++add++fatac.playlist">
-
-                        <input class="boto_filtres arial11c666666 actionButtons"
-                               type="submit"
-                               name="form.button.AddPlaylist"
-                               value="Afegeix una nova Playlist"
-                               i18n:attributes="value label_add_new_playlist;"
-                        />
-
-                    </form>
+                    <a id="playlist_add"
+                       class="boto_filtres arial11c666666 actionButtons"
+                       tal:attributes="href string:${context/portal_url}/Groups/${groupname}/++add++fatac.playlist"
+                       i18n:translate="label_add_new_playlist">
+                       Afegeix una nova Playlist
+                    </a>
                 </tal:cond>
             </div>
 

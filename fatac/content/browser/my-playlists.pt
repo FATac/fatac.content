@@ -36,19 +36,12 @@
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
             <div id="actions">
-                <form action=""
-                      name="playlist_add"
-                      method="post"
-                      tal:attributes="action string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist">
-
-                      <input class="boto_filtres arial11c666666 actionButtons"
-                             type="submit"
-                             name="form.button.AddPlaylist"
-                             value="Afegeix una nova Playlist"
-                             i18n:attributes="value label_add_new_playlist;"
-                      />
-
-                </form>
+              <a id="playlist_add"
+                 class="boto_filtres arial11c666666 actionButtons"
+                 tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
+                 i18n:translate="label_add_new_playlist">
+                 Afegeix una nova Playlist
+              </a>
             </div>
 
             <div id="usuari">

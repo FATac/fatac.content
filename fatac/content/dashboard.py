@@ -198,25 +198,13 @@ class groupActivity(DashboardView):
 
 
 class groupPlaylists(DashboardView):
-    """ Returns the list of playlists of the group
-    """
+    """ View related group-playlists.pt """
+
     def searchPlaylistsResults(self, groupmembers, groupname):
         context = self.context
-        elementsList = []
-        search = context.portal_catalog.searchResults(portal_type='fatac.playlist',
-                                                      Creator=groupmembers,
-                                                      sort_on='modified',
-                                                      sort_order='reverse',
-                                                      sort_limit=20)[:20]
-
-        for item in search:
-            if (item.visibleInGroupsList != None):
-                if groupname in item.visibleInGroupsList:
-                    elementsList.append(item)
-            else:
-                elementsList.append(item)
-
-        return elementsList
+        pc = getToolByName(context, 'portal_catalog')
+        results = pc.searchResults(portal_type='fatac.playlist', visibleInGroupsList=groupname, originalGroup=groupname, Creator=groupmembers, sort_on='modified', sort_order='reverse',)
+        return results
 
     def retornaCountGroupMembers(self, groupname):
         gtool = getToolByName(self.context, 'portal_groups')
@@ -689,7 +677,7 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
                     portal = getToolByName(self, 'portal_url').getPortalObject()
                     # Si no existeix la carpeta de grup la creem
                     if addname not in portal.Groups.objectIds():
-                        crearObjecte(portal, addname, 'Folder', title, description)
+                        crearObjecte(portal.Groups, addname, 'Folder', title, description)
 
                     # Afegim el creador a la llista de managers del grup
                     flagAdded = True

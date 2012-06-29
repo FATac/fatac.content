@@ -58,6 +58,17 @@ jQuery(function($){
     }
 
     // add new Playlist
+    $('a[id=playlist_add]').prepOverlay(
+        {
+            subtype: 'ajax',
+            filter: common_content_filter,
+            formselector: 'form.kssattr-formname-++add++fatac.playlist',
+            noform: function(el) {return $.plonepopups.noformerrorshow(el, 'redirect');},
+            redirect: function () {return location.href;}
+        }
+    );
+
+    // add new Playlist
     $('form[name=playlist_add]').prepOverlay(
         {
             subtype: 'ajax',

@@ -12,15 +12,14 @@
            <role name="Manager" />
            <role name="Owner" />
        </permission>
+       <permission name="FATAC: Can view member screens" acquire="False">
+           <role name="Manager" />
+           <role name="Member" />
+           <role name="Owner" />
+       </permission>
 
        <permission name="Add Groups" acquire="True">
            <role name="Member" />
-       </permission>
-
-       <permission name="Review portal content" acquire="True">
-           <role name="Manager" />
-           <role name="Site Administrator" />
-           <role name="Owner" />
        </permission>
 
     </permissions>
