@@ -154,5 +154,11 @@ $(document).ready(function() {
     $(".dashboardListing").on("click", ".trashbin", function(event) {
         event.preventDefault();
         removeSelectedGroup($(this).attr("id"));
-    })
+    });
+
+    $("body").on("focus", "#__ac_password", function () {
+        $(this).after('<input type="password" id="__ac_password" value="" name="__ac_password" size="15">');
+        $(this).remove();
+        $("#__ac_password").focus();
+    });
 })
