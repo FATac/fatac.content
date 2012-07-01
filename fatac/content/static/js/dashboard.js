@@ -156,9 +156,19 @@ $(document).ready(function() {
         removeSelectedGroup($(this).attr("id"));
     });
 
-    $("body").on("focus", "#__ac_password", function () {
-        $(this).after('<input type="password" id="__ac_password" value="" name="__ac_password" size="15">');
-        $(this).remove();
+    $("body").on("focus", "#__ac_name", function () {
+        $(this).val("");
+    });
+    $("body").on("blur", "#__ac_name", function () {
+        $(this).val("Correu Electrònic");
+    });
+    $("body").on("focus", "#fake_password", function () {
+        $(this).hide();
+        $("#__ac_password").show();
         $("#__ac_password").focus();
+    });
+    $("body").on("blur", "#__ac_password", function () {
+        $(this).hide();
+        $("#fake_password").show();
     });
 })
