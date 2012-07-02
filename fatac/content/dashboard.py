@@ -51,6 +51,41 @@ class FatacPortalDefaultDashboard(DefaultDashboard):
         }
 
 
+class FatacDashboardCommon(BrowserView):
+
+    def searchPlaylistsResults(self, groupmembers, groupname):
+        context = self.context
+        pc = getToolByName(context, 'portal_catalog')
+        results = pc.searchResults(portal_type='fatac.playlist',
+                                   originalGroup=groupname,
+                                   Creator=groupmembers,
+                                   sort_on='modified',
+                                   sort_order='reverse',)
+        return results
+
+    def searchActivityResults(self, groupmembers, groupname):
+        context = self.context
+        pc = getToolByName(context, 'portal_catalog')
+        results = pc.searchResults(portal_type=['fatac.playlist', 'plone.Comment'],
+                                                      originalGroup=groupname,
+                                                      Creator=groupmembers,
+                                                      sort_on='modified',
+                                                      sort_order='reverse',)
+        return results
+
+    def retornaCountGroupMembers(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        return len(members)
+
+    def retornaCountGroupPlaylists(self, groupmembers, groupname):
+        return len(self.searchPlaylistsResults(groupmembers, groupname))
+
+    def retornaCountGroupActivity(self, groupmembers, groupname):
+        return len(self.searchActivityResults(groupmembers, groupname))
+
+
 class FatacDashBoard(DashboardView):
     """ Improve the default Plone Dashboard
     """
@@ -153,80 +188,13 @@ class FatacDashBoard(DashboardView):
                                              sort_order='reverse',)
 
 
-class groupActivity(DashboardView):
+class groupActivity(FatacDashboardCommon):
     """ Returns The group activity content
     """
-    def searchActivityResults(self, groupmembers, groupname):
-        context = self.context
-        elementsList = []
-        search = context.portal_catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'],
-                                                      Creator=groupmembers,
-                                                      sort_on='modified',
-                                                      sort_order='reverse',
-                                                      sort_limit=20)[:20]
-
-        for item in search:
-            if ((item.visibleInGroupsList != None) and (item.Type == 'Playlist')):
-                if groupname in item.visibleInGroupsList:
-                    elementsList.append(item)
-            else:
-                elementsList.append(item)
-
-        return elementsList
-
-    def retornaCountGroupMembers(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        return len(members)
-
-    def retornaCountGroupPlaylists(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
-        return len(playlists)
-
-    def retornaCountGroupActivity(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
-        return len(activitat)
 
 
-class groupPlaylists(DashboardView):
+class groupPlaylists(FatacDashboardCommon):
     """ View related group-playlists.pt """
-
-    def searchPlaylistsResults(self, groupmembers, groupname):
-        context = self.context
-        pc = getToolByName(context, 'portal_catalog')
-        results = pc.searchResults(portal_type='fatac.playlist', visibleInGroupsList=groupname, originalGroup=groupname, Creator=groupmembers, sort_on='modified', sort_order='reverse',)
-        return results
-
-    def retornaCountGroupMembers(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        return len(members)
-
-    def retornaCountGroupPlaylists(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
-        return len(playlists)
-
-    def retornaCountGroupActivity(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
-        return len(activitat)
 
 
 class deleteUserGroup(grok.View):
@@ -678,7 +646,10 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
                     # Si no existeix la carpeta de grup la creem
                     if addname not in portal.Groups.objectIds():
                         crearObjecte(portal.Groups, addname, 'Folder', title, description)
-                        import ipdb;ipdb.set_trace()
+                        newgroup = portal.Groups[addname]
+                        # Giving the group permissions to the recently created folder
+                        newgroup.manage_setLocalRoles(addname, ['Owner'])
+                        newgroup.indexObject()
 
                     # Afegim el creador a la llista de managers del grup
                     flagAdded = True

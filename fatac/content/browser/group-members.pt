@@ -27,6 +27,7 @@
                     tal:define="memberinfo context/portal_membership/getMemberInfo;
                                 member context/@@plone_portal_state/member;
                                 groupname request/groupname;
+                                groupmembers python: context.portal_groups.getGroupMembers(groupname);
                                 group python:context.portal_groups.getGroupById(groupname);
                                 targetobject context/portal_groupdata;
                                 property targetobject/propertyMap;
@@ -39,6 +40,7 @@
                                 b_size python:resultcount if showAll else 20;
                                 b_start python:0 if 0 &lt;= resultcount else resultcount - resultcount % b_size;
                                 b_start python:b_start if b_start &lt; resultcount else max(b_start - b_size, 0);
+                                dashboard_common context/@@dashboard-common;
                                 ">
 
         <div metal:use-macro="context/global_statusmessage/macros/portal_message">
@@ -76,7 +78,7 @@
                            i18n:translate="">
                             <img src="++resource++fatac.content/images/groups_icon.gif" />
                             <span i18n:translate="">Members</span>
-                            [<span tal:content="python: view.retornaCountGroupMembers(groupname)"/>]
+                            [<span tal:content="python: len(groupmembers)"/>]
                         </a>
                     </div>
 
@@ -86,7 +88,7 @@
                            i18n:translate="">
                             <img src="++resource++fatac.content/images/playlist_icon.gif" />
                             <span i18n:translate="">Playlists</span>
-                            [<span tal:content="python: view.retornaCountGroupPlaylists(groupname)"/>]
+                            [<span tal:content="python: dashboard_common.retornaCountGroupPlaylists(groupmembers, groupname)"/>]
                         </a>
                     </div>
 
@@ -96,7 +98,7 @@
                            i18n:translate="">
                             <img src="++resource++fatac.content/images/activitat_icon.gif" />
                             <span i18n:translate="">Activitat</span>
-                            [<span tal:content="python: view.retornaCountGroupPlaylists(groupname)"/>]
+                            [<span tal:content="python: dashboard_common.retornaCountGroupPlaylists(groupmembers, groupname)"/>]
                         </a>
                     </div>
                 </div>

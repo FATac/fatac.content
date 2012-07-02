@@ -42,10 +42,17 @@
   </class>
 
   <!-- Configuracio adicional de la Playlist -->
-  <adapter name="visibleInGroupsList" factory=".playlist.vigListIndexer" />
+  <!-- <adapter name="visibleInGroupsList" factory=".playlist.vigListIndexer" /> -->
 
   <!-- Configuracio del Dashboard per defecte -->
   <adapter factory=".dashboard.FatacPortalDefaultDashboard"/>
+
+  <browser:page
+      name="dashboard-common"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".dashboard.FatacDashboardCommon"
+      permission="plone.app.portlets.ManageOwnPortlets"
+      />
 
   <browser:page
       for="Products.CMFPlone.interfaces.siteroot.IPloneSiteRoot"
