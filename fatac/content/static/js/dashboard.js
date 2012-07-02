@@ -90,6 +90,27 @@ jQuery(function($){
         }
     );
 
+    // add new Subtitle to audio or video
+    $('#addSubtitles').prepOverlay(
+        {
+            subtype: 'ajax',
+            filter: common_content_filter,
+            formselector: 'form',
+            noform: function(el) {return $.plonepopups.noformerrorshow(el, 'redirect');},
+            redirect: function () {return location.href;}
+        }
+    );
+    // remove Subtitles
+    $('#removeSubtitles').prepOverlay(
+        {
+            subtype: 'ajax',
+            filter: common_content_filter,
+            formselector: 'form',            
+            noform: function(el) {return $.plonepopups.noformerrorshow(el, 'reload');},
+            redirect: function () {return location.href;}
+        }
+    );    
+
 });
 
 function removeSelectedGroup(idTagGroup)
