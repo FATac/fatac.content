@@ -157,10 +157,10 @@ $(document).ready(function() {
     });
 
     $("body").on("focus", "#__ac_name", function () {
-        $(this).val("");
+        if ($(this).val()=="Correu electrònic") {$(this).val("")}
     });
     $("body").on("blur", "#__ac_name", function () {
-        $(this).val("Correu Electrònic");
+        if ($(this).val()=="") {$(this).val("Correu electrònic")}
     });
     $("body").on("focus", "#fake_password", function () {
         $(this).hide();
@@ -168,7 +168,9 @@ $(document).ready(function() {
         $("#__ac_password").focus();
     });
     $("body").on("blur", "#__ac_password", function () {
-        $(this).hide();
-        $("#fake_password").show();
+        if ($(this).val()=="") {
+            $(this).hide();
+            $("#fake_password").show();
+        }
     });
 })

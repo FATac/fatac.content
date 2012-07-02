@@ -56,6 +56,7 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
     #Amaguem els camps a l'edicio
     form.omitted('orderedList')
     form.mode(originalGroup="hidden")
+    form.mode(visibleInGroupsList="hidden")
 
 
 @form.default_value(field=IPlaylist['originalGroup'])

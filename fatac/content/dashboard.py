@@ -678,6 +678,7 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
                     # Si no existeix la carpeta de grup la creem
                     if addname not in portal.Groups.objectIds():
                         crearObjecte(portal.Groups, addname, 'Folder', title, description)
+                        import ipdb;ipdb.set_trace()
 
                     # Afegim el creador a la llista de managers del grup
                     flagAdded = True
