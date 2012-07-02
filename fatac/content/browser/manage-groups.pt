@@ -52,28 +52,32 @@
           Portal status message
         </div>
 
+        <!-- Message Dialogs -->
+        <div id="dialog-form" title="Comentari del retall">
+            <form>
+                <textarea name="comentari" id="comentari" class="text ui-widget-content ui-corner-all"></textarea>
+            </form>
+        </div>
+        <div id="dialog-confirm" title="Esborrar el grup?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>Aquest grup serà esborrat permanentment i no podrà ser recuperat. <br /> Està segur?</p>
+        </div>
+        <!-- / Message Dialogs -->
+
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
             <div id="actions">
-                <form action=""
-                      name="groups_add"
-                      method="post"
-                      tal:attributes="action string:$portal_url/@@usergroup-groupdetails">
-
-                      <input class="boto_filtres arial11c666666 actionButtons"
-                             type="submit"
-                             name="form.button.AddGroup"
-                             value="Add New Group"
-                             i18n:attributes="value label_add_new_group;"
-                      />
-
-                </form>
+              <a id="playlist_add"
+                 class="boto_filtres arial11c666666 actionButtons"
+                 tal:attributes="href string:$portal_url/@@usergroup-groupdetails"
+                 i18n:translate="label_add_new_group">
+                 Add New Group
+              </a>
             </div>
 
             <div id="usuari">
-                <span class="arial11c339933upp" i18n:translate="">Usuari ></span> 
-                <span class="arial11c339933upp" tal:content="name" />
-                <span class="arial11c339933upp" i18n:translate="">> Grups</span> 
+                <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>
+                <span class="TerminalDosis600c339933upp" tal:content="name" />
+                <span class="TerminalDosis600c339933upp" i18n:translate="">> Grups</span>
             </div>
 
         </div>
@@ -96,11 +100,11 @@
                     <div id="dash-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" /> 
+                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
-                        
+
                     <div id="grups-menu" class="menuButtonsSelected">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
@@ -120,7 +124,7 @@
                             [<span tal:content="python: view.retornaCountPlaylists(member.getId())"/>]
                         </a>
                     </div>
-                      
+
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity"
@@ -138,16 +142,16 @@
 
             </div>
 
-            
+
 
             <div id="content-core" class="span10">
                 <div id="contingut" class="div_dotted_line_left">
 
-                    <div id="dashboard-header" class="arial16c339933bold" 
+                    <div id="dashboard-header" class="arial16c339933bold"
                           i18n:translate="" style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/groups24.gif" />
                         <span i18n:translate="">grups</span>
-                    </div> 
+                    </div>
 
 
                           <div id="current-group-membership" class="div_dotted_line_bottom georgia13c333333Ital">
@@ -179,7 +183,7 @@
                                                 name="groups_edit"
                                                 method="post"
                                                 tal:attributes="action string:@@edit-group-details?groupname=${groupId}">
-                                 
+
                                               <input type="image"
                                                      align="middle"
                                                      src="++resource++fatac.content/images/edit_icon.gif"
@@ -193,8 +197,9 @@
 
                                     <td style="text-align: center;">
                                         <a id="delete_group"
-                                           href="javascript: $(#delete_group).remove();"
-                                           tal:attributes="id string: ${groupId}; href string:javascript: if (confirm('Estas segur?')) {removeSelectedGroup('#${groupId}');;}">
+                                           class="trashbin"
+                                           href="#"
+                                           tal:attributes="id string:${groupId}">
                                               <img src="++resource++fatac.content/images/trash_icon.gif" />
                                         </a>
                                     </td>
@@ -209,8 +214,8 @@
                             <span i18n:translate="heading_search_groups">Search for groups</span>
                           </div>
 
-                          <div id="heading-assign-to-groups" 
-                               tal:condition="not:many_groups" 
+                          <div id="heading-assign-to-groups"
+                               tal:condition="not:many_groups"
                                class="div_dotted_line_bottom georgia13c333333Ital">
                             <span i18n:translate="heading_assign_to_groups">Assign to groups</span>
                           </div>
@@ -318,7 +323,7 @@
                                    i18n:attributes="value label_add_user_to_group;" />
                             <input tal:replace="structure context/@@authenticator/authenticator" />
                           </form>
-                  
+
                 </div>
             </div>
         </div>

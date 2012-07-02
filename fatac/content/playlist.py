@@ -39,35 +39,56 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
         )
 
     # Llista del grups en els que es pot llistar aquesta Playlist
-    form.widget(visibleInGroupsList=GroupsSelectionWidgetFactory)
-    visibleInGroupsList = schema.List(
-        title=_(u"List of Groups that has this Playlist"),
-        description=_(u"This is a list of the Groups that can show this playlist"),
+    # form.widget(visibleInGroupsList=GroupsSelectionWidgetFactory)
+    # visibleInGroupsList = schema.List(
+    #     title=_(u"List of Groups that has this Playlist"),
+    #     description=_(u"This is a list of the Groups that can show this playlist"),
+    #     required=False,
+    #     value_type=schema.TextLine(title=u"Visible in Groups"),
+    #     )
+
+    originalGroup = schema.TextLine(
+        title=_(u"Original Group"),
+        description=_(u"This is a list that has the order of the DB objects"),
         required=False,
-        value_type=schema.TextLine(title=u"Visible in Groups"),
         )
 
     #Amaguem els camps a l'edicio
     form.omitted('orderedList')
+    form.mode(originalGroup="hidden")
+    # form.mode(visibleInGroupsList="hidden")
+
+
+@form.default_value(field=IPlaylist['originalGroup'])
+def originalGroupDefaultValue(data):
+    return data.context.id
+
+
+# @indexer(IPlaylist)
+# def vigListIndexer(playlist):
+#     """ Index en el Cataleg del camp 'visibleInGroupsList' """
+#     if playlist.visibleInGroupsList != None:
+#         return playlist.visibleInGroupsList
+#     else:
+#         return []
+# grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
 
 @indexer(IPlaylist)
-def vigListIndexer(playlist):
-    """ Index en el Cataleg del camp 'visibleInGroupsList'
-    """
-    if playlist.visibleInGroupsList != None:
-        return playlist.visibleInGroupsList
+def originalGroupIndexer(playlist):
+    """ Index en el Cataleg del camp 'originalGroup' """
+    if playlist.originalGroup != None:
+        return playlist.originalGroup
     else:
-        return []
-grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
+        return ""
+grok.global_adapter(originalGroupIndexer, name="originalGroup")
 
-
-@grok.subscribe(IPlaylist, IObjectAddedEvent)
-def autoPublishPlaylist(playlist, event):
-    """ Publica la Playlist un cop s'ha creat.
-    """
-    wtool = getToolByName(playlist, 'portal_workflow')
-    wtool.doActionFor(playlist, "publish")
+# @grok.subscribe(IPlaylist, IObjectAddedEvent)
+# def autoPublishPlaylist(playlist, event):
+#     """ Publica la Playlist un cop s'ha creat.
+#     """
+#     wtool = getToolByName(playlist, 'portal_workflow')
+#     wtool.doActionFor(playlist, "publish")
 
 
 class returnOrderedList(grok.View):
@@ -135,7 +156,7 @@ class playlistView(grok.View, resultatsView):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
+        html = portal.unrestrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
 
 
@@ -164,7 +185,7 @@ class displayResultsPlaylistView(grok.View, funcionsCerca):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/genericPlaylistview')()
+        html = portal.unrestrictedTraverse(path + '/genericPlaylistview')()
         return html
 
 
@@ -229,7 +250,7 @@ class sortingView(grok.View, funcionsCerca):
     """
 
     grok.context(IPlaylist)
-    grok.require('zope2.View')
+    grok.require('fatac.CanReorderPlaylists')
     grok.name('sortingView')
     grok.template('sortingView')
 
@@ -252,7 +273,7 @@ class orderPlaylistView(grok.View, resultatsView):
         portal = getToolByName(self, 'portal_url')
         portal = portal.getPortalObject()
         path = '/'.join(self.context.getPhysicalPath())
-        html = portal.restrictedTraverse(path + '/displayResultsPlaylistView')()
+        html = portal.unrestrictedTraverse(path + '/displayResultsPlaylistView')()
         return html
 
 
@@ -289,7 +310,7 @@ class deleteObjectId(grok.View):
     """
 
     grok.context(IPlaylist)
-    grok.require('zope2.View')
+    grok.require('fatac.CanReorderPlaylists')
     grok.name('deleteObjectId')
 
     def update(self):

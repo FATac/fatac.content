@@ -53,8 +53,8 @@
             </div>
 
             <div id="usuari">
-            <span class="arial11c339933upp" i18n:translate="">Usuari ></span>
-            <span class="arial11c339933upp" tal:content="name" />
+                <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>
+                <span class="TerminalDosis600c339933upp" tal:content="name" />
             </div>
 
         </div>
@@ -140,7 +140,7 @@
                         <div id="my-files-content" style="diplay: inline-block;clear: both;"
                              tal:define="search python:context.portal_catalog.searchResults(
                                                                                     portal_type='File',
-                                                                                    creator=member.getId(),
+                                                                                    Creator=member.getId(),
                                                                                     sort_on='modified',
                                                                                     sort_order='reverse',
                                                                                     sort_limit=20)[:20]">

@@ -58,6 +58,17 @@ jQuery(function($){
     }
 
     // add new Playlist
+    $('a[id=playlist_add]').prepOverlay(
+        {
+            subtype: 'ajax',
+            filter: common_content_filter,
+            formselector: 'form.kssattr-formname-++add++fatac.playlist',
+            noform: function(el) {return $.plonepopups.noformerrorshow(el, 'redirect');},
+            redirect: function () {return location.href;}
+        }
+    );
+
+    // add new Playlist
     $('form[name=playlist_add]').prepOverlay(
         {
             subtype: 'ajax',
@@ -128,15 +139,59 @@ function removeSelectedGroup(idTagGroup)
         pathname = pathname + '/';
     }
 
-    path = pathname + "@@deleteUserGroup?groupId=" + idTagGroup.replace("#","");
+    $( "#dialog-confirm" ).dialog({
+        resizable: false,
+        height:200,
+        width:350,
+        modal: true,
+        buttons: {
+            "Esborra aquest grup": function() {
+                path = pathname + "@@deleteUserGroup?groupId=" + idTagGroup.replace("#","");
+                $.ajax({url: path,
+                        type: "post",
+                        error: function() { alert("No s'ha eliminar el grup de l'usuari"); },
+                        success: function() { window.location.href = pathname + "@@manage-groups";}
+                      });
+                $( this ).dialog( "close" );
+            },
+            "Cancel·la": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
 
-    $.ajax({url: path,
-            type: "post",
-            error: function() { alert("No s'ha eliminar el grup de l'usuari"); },
-            success: function() { window.location.href = pathname + "@@manage-groups";
- }
-          });
+    // path = pathname + "@@deleteUserGroup?groupId=" + idTagGroup.replace("#","");
+
+    // $.ajax({url: path,
+    //         type: "post",
+    //         error: function() { alert("No s'ha eliminar el grup de l'usuari"); },
+    //         success: function() { window.location.href = pathname + "@@manage-groups";}
+    //       });
 
 }
 
+// Binding to the "trash" icon when managing groups
+$(document).ready(function() {
+    $(".dashboardListing").on("click", ".trashbin", function(event) {
+        event.preventDefault();
+        removeSelectedGroup($(this).attr("id"));
+    });
 
+    $("body").on("focus", "#__ac_name", function () {
+        if ($(this).val()=="Correu electrònic") {$(this).val("")}
+    });
+    $("body").on("blur", "#__ac_name", function () {
+        if ($(this).val()=="") {$(this).val("Correu electrònic")}
+    });
+    $("body").on("focus", "#fake_password", function () {
+        $(this).hide();
+        $("#__ac_password").show();
+        $("#__ac_password").focus();
+    });
+    $("body").on("blur", "#__ac_password", function () {
+        if ($(this).val()=="") {
+            $(this).hide();
+            $("#fake_password").show();
+        }
+    });
+})

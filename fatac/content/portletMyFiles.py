@@ -51,9 +51,9 @@ class Renderer(base.Renderer):
         portal_state = getMultiAdapter((context, self.request), name=u'plone_portal_state')
         self.anonymous = portal_state.anonymous()  # whether or not the current user is Anonymous
         self.portal_url = portal_state.portal_url()  # the URL of the portal object
-        
+
         # a list of portal types considered "end user" types
-        self.typesToShow = portal_state.friendly_types()  
+        self.typesToShow = portal_state.friendly_types()
 
         plone_tools = getMultiAdapter((context, self.request), name=u'plone_tools')
         self.catalog = plone_tools.catalog()
@@ -83,7 +83,7 @@ class Renderer(base.Renderer):
             username = member.getUserName()
 
         return self.catalog(portal_type='File',
-                            creator=username,
+                            Creator=username,
                             sort_on='modified',
                             sort_order='reverse',
                             sort_limit=limit)[:limit]
@@ -96,4 +96,4 @@ class Renderer(base.Renderer):
                        summary=playlist.Description(),
                        url=brain.getURL())
 
-        
+

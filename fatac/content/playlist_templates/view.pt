@@ -20,6 +20,7 @@
         <a href=""
            class="link-parent"
            style="float:right"
+           tal:condition="not: context/@@plone_portal_state/anonymous"
            tal:attributes="href string:$portal_url/@@my-playlists"
            i18n:translate="label_torna_a_la_llista_de_les_teves_playlists">
            Torna a la llista de les teves playlists

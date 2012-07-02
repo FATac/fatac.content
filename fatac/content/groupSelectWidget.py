@@ -18,7 +18,7 @@ from Products.CMFCore.utils import getToolByName
       el recompte d'objectes que s'han d'afegir al valor del camp. Per tant, tenim
       que hi ha una llista origen "From", una llista de desti "TO" on van els elements
       de la llista original, i tenim una serie d'imputs "hidden" que es generen/eliminen
-      automaticament (des de JavaScript) un cop s'apreta qualsevol boto d'afegir o 
+      automaticament (des de JavaScript) un cop s'apreta qualsevol boto d'afegir o
       treure elments de les llistes "FROM"(>>) i "TO"(<<).
 """
 

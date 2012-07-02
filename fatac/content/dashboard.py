@@ -1,20 +1,19 @@
+# -*- encoding: utf-8 -*-
+
 from zope.interface import implements
-from zope.component import adapts
 from interfaces import IPortalUser
 from plone.app.portlets.interfaces import IDefaultDashboard
 from plone.app.portlets.dashboard import DefaultDashboard
 from plone.app.portlets import portlets
-
 from plone.app.layout.dashboard.dashboard import DashboardView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
 from plone.app.controlpanel.interfaces import IPloneControlPanelView
+from plone.app.controlpanel.security import ISecuritySchema
 from Products.Five.browser import BrowserView
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from ZTUtils import make_query
 from Products.PluggableAuthService.interfaces.plugins import IRolesPlugin
-from zope.component import adapts, getAdapter, getMultiAdapter, getUtility
+from zope.component import adapts, getAdapter, getMultiAdapter
 from itertools import chain
 from AccessControl import getSecurityManager
 from Products.CMFCore.permissions import ManagePortal
@@ -23,21 +22,23 @@ from Products.CMFPlone import PloneMessageFactory as _
 from five import grok
 from Products.CMFPlone.utils import normalizeString
 from Products.statusmessages.interfaces import IStatusMessage
+from zExceptions import Forbidden
 
 from fatac.content import portletPlaylists, portletMyFiles, portletMyGroups
 from fatac.core.utils import crearObjecte
 
 
 class FatacPortalDefaultDashboard(DefaultDashboard):
-    """ A new custom default dashboard for users. """
+    """ A new custom default dashboard for users.
+    """
     implements(IDefaultDashboard)
     adapts(IPortalUser)
 
     def __call__(self):
-        news = portlets.news.Assignment()
+        #news = portlets.news.Assignment()
         recent = portlets.recent.Assignment()
         calendar = portlets.calendar.Assignment()
-        search = portlets.search.Assignment()
+        #search = portlets.search.Assignment()
         playlists = portletPlaylists.Assignment()
         mygroups = portletMyGroups.Assignment()
         myfiles = portletMyFiles.Assignment()
@@ -50,8 +51,44 @@ class FatacPortalDefaultDashboard(DefaultDashboard):
         }
 
 
+class FatacDashboardCommon(BrowserView):
+
+    def searchPlaylistsResults(self, groupmembers, groupname):
+        context = self.context
+        pc = getToolByName(context, 'portal_catalog')
+        results = pc.searchResults(portal_type='fatac.playlist',
+                                   originalGroup=groupname,
+                                   Creator=groupmembers,
+                                   sort_on='modified',
+                                   sort_order='reverse',)
+        return results
+
+    def searchActivityResults(self, groupmembers, groupname):
+        context = self.context
+        pc = getToolByName(context, 'portal_catalog')
+        results = pc.searchResults(portal_type=['fatac.playlist', 'plone.Comment'],
+                                                      originalGroup=groupname,
+                                                      Creator=groupmembers,
+                                                      sort_on='modified',
+                                                      sort_order='reverse',)
+        return results
+
+    def retornaCountGroupMembers(self, groupname):
+        gtool = getToolByName(self.context, 'portal_groups')
+        group = gtool.getGroupById(groupname)
+        members = group.getGroupMembers()
+        return len(members)
+
+    def retornaCountGroupPlaylists(self, groupmembers, groupname):
+        return len(self.searchPlaylistsResults(groupmembers, groupname))
+
+    def retornaCountGroupActivity(self, groupmembers, groupname):
+        return len(self.searchActivityResults(groupmembers, groupname))
+
+
 class FatacDashBoard(DashboardView):
-    """ Improve the default Plone Dashboard """
+    """ Improve the default Plone Dashboard
+    """
 
     #__call__ = ViewPageTemplateFile('templates/filtresview.pt')
 
@@ -85,12 +122,12 @@ class FatacDashBoard(DashboardView):
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=memberid)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=memberid)
         return len(playlists)
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File', 'plone.Comment'], creator=memberid)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File', 'plone.Comment'], Creator=memberid)
         return len(activitat)
 
     def retornaCountGroupMembers(self, groupname):
@@ -104,7 +141,7 @@ class FatacDashBoard(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
         return len(playlists)
 
     def retornaCountGroupActivity(self, groupname):
@@ -112,108 +149,56 @@ class FatacDashBoard(DashboardView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
         return len(activitat)
 
+    def retornaPlaylists(self):
+        """ retorna una llista de diccionaris amb títol, descripció, url, i
+        llista de ids de totes les playlists creades per l'usuari
+        """
+
+        llistat = []
+        mt = getToolByName(self.context, 'portal_membership')
+        if not mt.isAnonymousUser():  # the user has not logged in
+            member = mt.getAuthenticatedMember()
+        playlists = self.context.portal_catalog.searchResults(portal_type='fatac.playlist',
+                                                              Creator=member.getId(),
+                                                              sort_on='modified',
+                                                              sort_order='reverse')
+        for playlist in playlists:
+            obj = playlist.getObject()
+            # passem de [[0, 'id1'], [1, 'id2'], [2, 'id3'], ...] a 'id1,id2,id3,id4'
+            ids = ','.join([a[1] for a in obj.orderedList])
+            dada = {'nom': playlist.id, 'tipus': 'objects', 'valor': ids}
+            llistat.append({'titol': playlist.Title,
+                            'id': playlist.id,
+                            'descripcio': playlist.Description,
+                            'url': playlist.getURL(),
+                            'dada': dada})
+
+        return llistat
+
+    def returnUserPlaylists(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+        portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
+        member = portal_state.member()
+        return pc.searchResults(portal_type='fatac.playlist',
+                                             Creator=member.getId(),
+                                             sort_on='modified',
+                                             sort_order='reverse',)
 
 
-class groupActivity(DashboardView):
+class groupActivity(FatacDashboardCommon):
+    """ Returns The group activity content
     """
-        Returns The group activity content
-    """
-    def searchActivityResults(self, groupmembers, groupname):
-        context = self.context
-        elementsList = []
-        search = context.portal_catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'],
-                                                      creator=groupmembers,
-                                                      sort_on='modified',
-                                                      sort_order='reverse',
-                                                      sort_limit=20)[:20]
-
-        for item in search:
-            if ((item.visibleInGroupsList != None) and (item.Type == 'Playlist')):
-                if groupname in item.visibleInGroupsList:
-                    elementsList.append(item)
-            else:
-                elementsList.append(item)
-
-        return elementsList
-
-    def retornaCountGroupMembers(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        return len(members)
-
-    def retornaCountGroupPlaylists(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
-        return len(playlists)
-
-    def retornaCountGroupActivity(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
-        return len(activitat)
 
 
-
-
-class groupPlaylists(DashboardView):
-    """
-        Returns the list of playlists of the group
-    """
-    def searchPlaylistsResults(self, groupmembers, groupname):
-        context = self.context
-        elementsList = []
-        search = context.portal_catalog.searchResults(portal_type='fatac.playlist',
-                                                      creator=groupmembers,
-                                                      sort_on='modified',
-                                                      sort_order='reverse',
-                                                      sort_limit=20)[:20]
-
-        for item in search:
-            if (item.visibleInGroupsList != None):
-                if groupname in item.visibleInGroupsList:
-                    elementsList.append(item)
-            else:
-                elementsList.append(item)
-
-        return elementsList
-
-    def retornaCountGroupMembers(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        return len(members)
-
-    def retornaCountGroupPlaylists(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
-        return len(playlists)
-
-    def retornaCountGroupActivity(self, groupname):
-        gtool = getToolByName(self.context, 'portal_groups')
-        group = gtool.getGroupById(groupname)
-        members = group.getGroupMembers()
-        catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
-        return len(activitat)
-
-
+class groupPlaylists(FatacDashboardCommon):
+    """ View related group-playlists.pt """
 
 
 class deleteUserGroup(grok.View):
-    """
-       View for deleting Group of the User
+    """ View for deleting Group of the User
     """
     grok.context(FatacPortalDefaultDashboard)
     grok.require('zope2.View')
@@ -225,7 +210,7 @@ class deleteUserGroup(grok.View):
         if groupId != None:
             #Get the current member
             mt = getToolByName(self.context, 'portal_membership')
-            if not mt.isAnonymousUser(): # the user has not logged in
+            if not mt.isAnonymousUser():  # the user has not logged in
                 member = mt.getAuthenticatedMember()
                 username = member.getUserName()
 
@@ -241,18 +226,16 @@ class deleteUserGroup(grok.View):
         else:
             print 'No group ID'
 
-
     def render(self):
         #Get the current member
         mt = getToolByName(self.context, 'portal_membership')
-        if mt.isAnonymousUser(): # the user has not logged in
+        if mt.isAnonymousUser():  # the user has not logged in
             print 'User not logged in (deleteUserGroup)'
 
 
-
-
 class ControlPanelView(BrowserView):
-    """A simple view to be used as a basis for control panel screens."""
+    """ A simple view to be used as a basis for control panel screens.
+    """
 
     implements(IPloneControlPanelView)
 
@@ -282,14 +265,13 @@ class UsersGroupsControlPanelView(ControlPanelView):
         return make_query(**kw)
 
     def membershipSearch(self, searchString='', searchUsers=True, searchGroups=True, ignore=[]):
-        """Search for users and/or groups, returning actual member and group items
-           Replaces the now-deprecated prefs_user_groups_search.py script"""
+        """ Search for users and/or groups, returning actual member and group items
+            Replaces the now-deprecated prefs_user_groups_search.py script
+        """
         groupResults = userResults = []
 
         gtool = getToolByName(self, 'portal_groups')
         mtool = getToolByName(self, 'portal_membership')
-        if not mtool.isAnonymousUser(): # the user has not logged in
-            member = mtool.getAuthenticatedMember()
 
         searchView = getMultiAdapter((aq_inner(self.context), self.request), name='pas_search')
 
@@ -350,7 +332,6 @@ class UsersGroupsControlPanelView(ControlPanelView):
         return False
 
 
-
 class ManageGroupsPanel(UsersGroupsControlPanelView):
 
     def __call__(self):
@@ -377,7 +358,8 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
         return self.index()
 
     def doSearch(self, searchString):
-        """ Search for a group by id or title"""
+        """ Search for a group by id or title
+        """
         acl = getToolByName(self, 'acl_users')
         rolemakers = acl.plugins.listPlugins(IRolesPlugin)
 
@@ -423,9 +405,9 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
                 canAssign = group.canAssignRole(role)
                 if role == 'Manager' and not self.is_zope_manager:
                     canAssign = False
-                roleList[role]={'canAssign': canAssign,
+                roleList[role] = {'canAssign': canAssign,
                                 'explicit': role in explicitlyAssignedRoles,
-                                'inherited': role in allInheritedRoles[groupId] }
+                                'inherited': role in allInheritedRoles[groupId]}
 
             canDelete = group.canDelete()
             if roleList['Manager']['explicit'] or roleList['Manager']['inherited']:
@@ -446,14 +428,14 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
         CheckAuthenticator(self.request)
         context = aq_inner(self.context)
 
-        groupstool=context.portal_groups
+        groupstool = context.portal_groups
         utils = getToolByName(context, 'plone_utils')
         groupstool = getToolByName(context, 'portal_groups')
 
         message = _(u'No changes made.')
 
         for group in groups:
-            roles=[r for r in self.request.form['group_' + group] if r]
+            roles = [r for r in self.request.form['group_' + group] if r]
             group_obj = groupstool.getGroupById(group)
             current_roles = group_obj.getRoles()
             if not self.is_zope_manager:
@@ -471,7 +453,7 @@ class ManageGroupsPanel(UsersGroupsControlPanelView):
                     raise Forbidden
 
             groupstool.removeGroups(delete)
-            message=_(u'Group(s) deleted.')
+            message = _(u'Group(s) deleted.')
 
         utils.addPortalMessage(message)
 
@@ -546,7 +528,6 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
                     else:
                         self.searchResults = grupsPotencials
 
-
             if search or findAll:
                 self.newSearch = True
 
@@ -579,12 +560,12 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
 
     def retornaCountPlaylists(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults( portal_type = 'fatac.playlist', creator = memberid )
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=memberid)
         return len(playlists)
 
     def retornaCountActivitat(self, memberid):
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults( portal_type = ['fatac.playlist', 'File'], creator = memberid )
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'File'], Creator=memberid)
         return len(activitat)
 
     def retornaCountGroupMembers(self, groupname):
@@ -598,7 +579,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        playlists = catalog.searchResults(portal_type='fatac.playlist', creator=members)
+        playlists = catalog.searchResults(portal_type='fatac.playlist', Creator=members)
         return len(playlists)
 
     def retornaCountGroupActivity(self, groupname):
@@ -606,7 +587,7 @@ class UserMembershipControlPanel(UsersGroupsControlPanelView):
         group = gtool.getGroupById(groupname)
         members = group.getGroupMembers()
         catalog = getToolByName(self.context, 'portal_catalog')
-        activitat = catalog.searchResults(portal_type=['fatac.playlist','plone.Comment'], creator=members)
+        activitat = catalog.searchResults(portal_type=['fatac.playlist', 'plone.Comment'], Creator=members)
         return len(activitat)
 
 
@@ -617,6 +598,7 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
     def __call__(self):
 
         context = aq_inner(self.context)
+        ploneview = getMultiAdapter((self.context, self.request), name=u'plone')
 
         self.gtool = getToolByName(context, 'portal_groups')
         self.gdtool = getToolByName(context, 'portal_groupdata')
@@ -641,7 +623,9 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
 
             title = self.request.form.get('title', None)
             description = self.request.form.get('description', None)
-            addname = self.request.form.get('addname', None)
+
+            #addname = self.request.form.get('addname', None)
+            addname = ploneview.normalizeString(title)
 
             if addname:
                 if not self.regtool.isMemberIdAllowed(addname):
@@ -661,7 +645,11 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
                     portal = getToolByName(self, 'portal_url').getPortalObject()
                     # Si no existeix la carpeta de grup la creem
                     if addname not in portal.Groups.objectIds():
-                        crearObjecte(portal, addname, 'Folder', title, description)
+                        crearObjecte(portal.Groups, addname, 'Folder', title, description)
+                        newgroup = portal.Groups[addname]
+                        # Giving the group permissions to the recently created folder
+                        newgroup.manage_setLocalRoles(addname, ['Owner'])
+                        newgroup.indexObject()
 
                     # Afegim el creador a la llista de managers del grup
                     flagAdded = True
@@ -696,8 +684,15 @@ class GroupDetailsControlPanel(UsersGroupsControlPanelView):
 
             IStatusMessage(self.request).add(msg, type=self.group and 'info' or 'error')
             if self.group and not self.groupname:
-                target_url = '%s/%s' % (self.context.absolute_url(), '@@usergroup-groupprefs')
+                target_url = '%s/%s' % (self.context.absolute_url(), '@@manage-groups')
                 self.request.response.redirect(target_url)
                 return ''
 
         return self.index()
+
+    def getCreateGroupFields(self):
+        """ Rearrange and choose the fields we want to be shown when creating a group"""
+        context = aq_inner(self.context)
+        self.gdtool = getToolByName(context, 'portal_groupdata')
+        fields = [fields for fields in self.gdtool.propertyMap() if fields['id'] != 'email']
+        return tuple(fields)

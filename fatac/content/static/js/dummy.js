@@ -11,6 +11,25 @@ $(document).ready(function() {
 
 });
 
+function updateTips( t ) {
+    tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+    setTimeout(function() {
+        tips.removeClass( "ui-state-highlight", 1500 );
+    }, 500 );
+}
+
+function checkLength( o, n, min, max ) {
+    if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTips( "Length of " + n + " must be between " +
+            min + " and " + max + "." );
+        return false;
+    } else {
+        return true;
+    }
+}
 
 
 // Parse url to get the correct path of the object
@@ -78,6 +97,7 @@ function imageTagger(pathname)
 
             // Default to turned on.
             isTagCreationEnabled: true,
+            isTagDeletionEnabled: true,
         });
 
 

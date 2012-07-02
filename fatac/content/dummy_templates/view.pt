@@ -31,6 +31,7 @@
                     <script type="text/javascript">
                         $(document).ready(function() {
 
+                            // TODO: diria que auqesta crida només funciona si hi ha un únic scrollable, perquè fa la crida post i perd a quin "nom" correspone per fer "$('.items_' + nom).replaceWith(data);"
                             $('input.nom_dada').each(function () {
                                 var nom = $(this).attr('value');
                                 var llista_ids = ($('#llista_ids_' + nom).attr('value')).split(',');
@@ -76,6 +77,17 @@
                         });
                     </script>
 
+                    <!-- Photo Tagging Message Dialogs -->
+                    <div id="dialog-form" title="Comentari del retall">
+                        <form>
+                            <textarea name="comentari" id="comentari" class="text ui-widget-content ui-corner-all"></textarea>
+                        </form>
+                    </div>
+                    <div id="dialog-confirm" title="Esborrar el comentari?">
+                        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>Aquest comentari serà esborrat permanentment i no podrà ser recuperat. Està segur?</p>
+                    </div>
+                    <!-- / Photo Tagging Message Dialogs -->
+
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
                         <div class="ac_breadcrump div_dotted_line_bottom">
@@ -94,15 +106,25 @@
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
                             <tal:def tal:define="seccions dades_objecte/dades_seccions">
+
                                 <tal:rep tal:repeat="seccio seccions">
-                                    <tal:def tal:define="slider_vertical python: dades_objecte['te_subcerca'] == 'amb_subcerca' and (seccio['nom'] == 'header' or seccio['nom'] == 'body');
+                                    <tal:def tal:define="te_subcerca python:dades_objecte['te_subcerca'] == 'amb_subcerca';
+                                                        slider_vertical python: dades_objecte['te_subcerca'] == 'amb_subcerca' and (seccio['nom'] == 'header' or seccio['nom'] == 'body');
                                                         start repeat/seccio/start; end repeat/seccio/end; es_div_content python: seccio['nom'] == 'content';
-                                                        hi_ha_content dades_objecte/hi_ha_seccio_content">
+                                                        hi_ha_content dades_objecte/hi_ha_seccio_content;
+                                                        isanon context/@@plone_portal_state/anonymous;
+                                                        nom_seccio seccio/nom">
 
                                         <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
                                         <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
+
                                         <!-- estructura: si no és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
-                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content)" tal:replace="structure string:</div>" />
+                                        <tal:repl tal:define="num view/retNumComentaris"
+                                                  tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon==False)"
+                                                  tal:replace="structure string:<img class='addPlaylist' tal:attributes='rel dades_objecte/id' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions'>${num} <span i18n:translate=''>aportacions</span></div></div>" />
+
+                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon)" tal:replace="structure string:</div>" />
+
 
                                         <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades georgia13c333333' or 'seccio_dades georgia13c333333'" tal:condition="seccio/dades">
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; l'obrim -->
@@ -110,10 +132,8 @@
 
                                             <tal:rep tal:repeat="dada seccio/dades">
                                                 <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
-
-                                                <tal:co tal:define="isanon context/@@plone_portal_state/anonymous; start repeat/dada/start"
-                                                        tal:condition="python: not isanon and seccio['nom'] == 'header' and start">
-                                                    <img class="addPlaylist" tal:attributes="rel dades_objecte/id" src="++resource++fatac.content/images/add_playlist.png" />
+                                                <tal:co tal:define="start_dada repeat/dada/start" tal:condition="python: nom_seccio=='header' and start_dada">
+                                                    <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
                                                 </tal:co>
                                                 <br/>
                                             </tal:rep>

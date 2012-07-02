@@ -38,6 +38,13 @@
 
 /* ---------------------------------------------------------------------------- Butons Dashboard (Accions) */
 
+#playlist_add {
+    float:right;
+    border-radius: 0.2em;
+    border-width: 1px !important;
+    color:#339933 !important;
+}
+
 .menuButtons {
     width: 110px;
     margin: 0.2em 0.2em;
@@ -69,11 +76,7 @@
     font-family:Arial; font-size:11px; color:#339933 !important;
 }
 
-
-
-.template-my-playlists .actionButtons,
-.template-manage-groups .actionButtons,
-.template-my-activity .actionButtons {
+/*.template-my-activity .actionButtons {
     float:right;
     margin-right: 3px;
     padding-right:20px;
@@ -82,7 +85,7 @@
     border-radius: 0.2em;
     border-width: 1px !important;
     color:#339933 !important;
-}
+}*/
 .actionButtonsSimple {
     float:right;
     margin-right: 3px;
