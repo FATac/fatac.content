@@ -182,10 +182,18 @@ class FatacDashBoard(DashboardView):
         pc = getToolByName(self.context, 'portal_catalog')
         portal_state = getMultiAdapter((self.context, self.request), name="plone_portal_state")
         member = portal_state.member()
-        return pc.searchResults(portal_type='fatac.playlist',
+        playlist_search = pc.searchResults(portal_type='fatac.playlist',
                                              Creator=member.getId(),
                                              sort_on='modified',
                                              sort_order='reverse',)
+        playlists = []
+        for playlist in playlist_search:
+            obj = playlist.getObject()
+            playlists.append(dict(id=playlist.id,
+                                 Title=playlist.Title,
+                                 objects=','.join([a[1] for a in sorted(obj.orderedList, key=lambda x: x[0])]))
+                                )
+        return playlists
 
 
 class groupActivity(FatacDashboardCommon):
