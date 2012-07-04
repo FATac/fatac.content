@@ -88,6 +88,7 @@
                     </div>
                     <!-- / Photo Tagging Message Dialogs -->
 
+                    <!-- Receive the data needed to render this section with the information of the object itself (JSON) -->
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
                         <div class="ac_breadcrump div_dotted_line_bottom">
@@ -95,6 +96,7 @@
                             <span class="BreadCrumbSecondary" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
                             <span class="BreadCrumbSecondary" i18n:translate="" tal:content="dades_objecte/titol" />
                         </div>
+
                         <tal:comment tal:replace="nothing">
                             <!-- TODO: esborrar, per petició del diseñador aquest bloc no ha d'exisitir -->
                             <div class="div_dotted_line_bottom">
@@ -103,14 +105,19 @@
                                 <span class="georgia13c999999" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
                             </div>
                         </tal:comment>
+
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
+                            <!-- Data de les seccions (header, footer, etc...) -->
                             <tal:def tal:define="seccions dades_objecte/dades_seccions">
-
+<span tal:content="seccions"></span>
                                 <tal:rep tal:repeat="seccio seccions">
+
                                     <tal:def tal:define="te_subcerca python:dades_objecte['te_subcerca'] == 'amb_subcerca';
                                                         slider_vertical python: dades_objecte['te_subcerca'] == 'amb_subcerca' and (seccio['nom'] == 'header' or seccio['nom'] == 'body');
-                                                        start repeat/seccio/start; end repeat/seccio/end; es_div_content python: seccio['nom'] == 'content';
+                                                        start repeat/seccio/start;
+                                                        end repeat/seccio/end;
+                                                        es_div_content python: seccio['nom'] == 'content';
                                                         hi_ha_content dades_objecte/hi_ha_seccio_content;
                                                         isanon context/@@plone_portal_state/anonymous;
                                                         nom_seccio seccio/nom">
