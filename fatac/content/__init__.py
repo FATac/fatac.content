@@ -1,5 +1,5 @@
 from zope.i18nmessageid import MessageFactory
-PlaylistMessageFactory = MessageFactory('fatac.content')
+PlaylistMessageFactory = MessageFactory('fatac.theme')
 
 
 def initialize(context):
