@@ -109,29 +109,42 @@
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
                             <!-- Data de les seccions (header, footer, etc...) -->
-                            <tal:def tal:define="seccions dades_objecte/dades_seccions">
+                            <tal:def tal:define="seccions dades_objecte/dades_seccions;
+                                                 seccions python:view.jsonFixer(seccions)">
 <span tal:content="seccions"></span>
-                                <tal:rep tal:repeat="seccio seccions">
 
+                                <div class='divs_esq'>
+                                <!-- Carles, no ho toquis, ja ho acabo jo dema -->
+                                <!-- <tal:rep tal:repeat="seccio seccions"> -->
+                                    <!-- Cal pujar els defines adalt i fer que la classe del divs_esq sigui la que rebi el columns si fa falta -->
                                     <tal:def tal:define="te_subcerca python:dades_objecte['te_subcerca'] == 'amb_subcerca';
                                                         slider_vertical python: dades_objecte['te_subcerca'] == 'amb_subcerca' and (seccio['nom'] == 'header' or seccio['nom'] == 'body');
-                                                        start repeat/seccio/start;
-                                                        end repeat/seccio/end;
                                                         es_div_content python: seccio['nom'] == 'content';
                                                         hi_ha_content dades_objecte/hi_ha_seccio_content;
                                                         isanon context/@@plone_portal_state/anonymous;
                                                         nom_seccio seccio/nom">
 
                                         <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
-                                        <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
+                                        <!-- <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" /> -->
 
                                         <!-- estructura: si no AAA és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
-                                        <tal:repl tal:define="num view/retNumComentaris"
+<!--                                         <tal:repl tal:define="num view/retNumComentaris"
                                                   tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon==False)"
                                                   tal:replace="structure string:<img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions'>${num} <span i18n:translate=''>aportacions</span></div></div>" />
+ -->
+                                        <!-- <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon)" tal:replace="structure string:</div>" /> -->
 
-                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon)" tal:replace="structure string:</div>" />
 
+                                        <!-- Nova estructura: si hi ha subcerca, header y body tenen slider vertcal -->
+                                            <!-- Pintar header -->
+                                            <!-- Pintar body-->
+                                            <!-- Pintar content-->
+                                            <!-- Pintar footer-->
+                                        <!-- Nova estructura: si NO hi ha subcerca, header y body tenen slider vertcal, no tenen el div_interior-->
+                                            <!-- Pintar header -->
+                                            <!-- Pintar body-->
+                                            <!-- Pintar content-->
+                                            <!-- Pintar footer-->
 
                                         <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades georgia13c333333' or 'seccio_dades georgia13c333333'" tal:condition="seccio/dades">
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; l'obrim -->
@@ -150,7 +163,8 @@
                                         </div>
 
                                     </tal:def>
-                                </tal:rep>
+                                <!-- </tal:rep> -->
+                                </div>
                             </tal:def>
 
                         </div>

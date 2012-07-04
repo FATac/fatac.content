@@ -35,6 +35,13 @@ class View(grok.View, genericView):
         super(grok.View, self).__init__(context, request)
         super(genericView, self).__init__(context, request)
 
+    def jsonFixer(self, sections):
+        result = {}
+        for section in sections:
+            result[section.get('nom')] = {key: section.get(key) for key in section.keys() if key != 'nom'}
+
+        return result
+
 
 class loadTags(grok.View):
     """ Metode que retorna els tags
