@@ -39,13 +39,13 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
         )
 
     # Llista del grups en els que es pot llistar aquesta Playlist
-    form.widget(visibleInGroupsList=GroupsSelectionWidgetFactory)
-    visibleInGroupsList = schema.List(
-        title=_(u"List of Groups that has this Playlist"),
-        description=_(u"This is a list of the Groups that can show this playlist"),
-        required=False,
-        value_type=schema.TextLine(title=u"Visible in Groups"),
-        )
+    # form.widget(visibleInGroupsList=GroupsSelectionWidgetFactory)
+    # visibleInGroupsList = schema.List(
+    #     title=_(u"List of Groups that has this Playlist"),
+    #     description=_(u"This is a list of the Groups that can show this playlist"),
+    #     required=False,
+    #     value_type=schema.TextLine(title=u"Visible in Groups"),
+    #     )
 
     originalGroup = schema.TextLine(
         title=_(u"Original Group"),
@@ -56,6 +56,7 @@ class IPlaylist(form.Schema, IImageScaleTraversable):
     #Amaguem els camps a l'edicio
     form.omitted('orderedList')
     form.mode(originalGroup="hidden")
+    # form.mode(visibleInGroupsList="hidden")
 
 
 @form.default_value(field=IPlaylist['originalGroup'])
@@ -63,14 +64,14 @@ def originalGroupDefaultValue(data):
     return data.context.id
 
 
-@indexer(IPlaylist)
-def vigListIndexer(playlist):
-    """ Index en el Cataleg del camp 'visibleInGroupsList' """
-    if playlist.visibleInGroupsList != None:
-        return playlist.visibleInGroupsList
-    else:
-        return []
-grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
+# @indexer(IPlaylist)
+# def vigListIndexer(playlist):
+#     """ Index en el Cataleg del camp 'visibleInGroupsList' """
+#     if playlist.visibleInGroupsList != None:
+#         return playlist.visibleInGroupsList
+#     else:
+#         return []
+# grok.global_adapter(vigListIndexer, name="visibleInGroupsList")
 
 
 @indexer(IPlaylist)

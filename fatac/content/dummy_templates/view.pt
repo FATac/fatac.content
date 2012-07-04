@@ -118,8 +118,11 @@
                                         <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
                                         <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
 
-                                        <!-- estructura: si no és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
-                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon==False)" tal:replace="structure string:<img class='addPlaylist' tal:attributes='rel dades_objecte/id' src='++resource++fatac.content/images/add_playlist.png' /></div>" />
+                                        <!-- estructura: si no AAA és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
+                                        <tal:repl tal:define="num view/retNumComentaris"
+                                                  tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon==False)"
+                                                  tal:replace="structure string:<img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions'>${num} <span i18n:translate=''>aportacions</span></div></div>" />
+
                                         <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon)" tal:replace="structure string:</div>" />
 
 

@@ -10,7 +10,7 @@
 *
 */
 
-funtion carrega_elements() {
+function carrega_elements() {
     var resultatsPerPagina = 9999;
 
     $.getJSON(pathname + "returnOrderedList", function() {
