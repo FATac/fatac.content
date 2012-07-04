@@ -1,5 +1,5 @@
 <dl class="portletFatac"
-    i18n:domain="fatac.content">
+    i18n:domain="fatac.theme">
 
     <dt>
         <span class="portletTopLeft"></span>
@@ -23,7 +23,7 @@
 
         </dd>
     </tal:items>
-    
+
     <dd class="portletFooter" i18n:domain="plone">
         <a href="#"
            class="tile"

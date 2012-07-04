@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="fatac.ghost" meta_type="Dexterity FTI"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="fatac.content">
+    i18n:domain="fatac.theme">
 
     <property name="title" i18n:translate="">Ghost</property>
     <property name="description" i18n:translate="">A fake type for store comments</property>

@@ -1,4 +1,4 @@
-<i18n:domain i18n:domain="fatac.content.playlist" tal:define="portal_url context/portal_url;">
+<i18n:domain i18n:domain="fatac.theme" tal:define="portal_url context/portal_url;">
 
     <tal:def tal:define="fieldId string:${view/id};
                          fieldName string:${view/name};
@@ -45,7 +45,7 @@
                             tal:attributes="name string:${fieldName}_to:list;
                                             id string:${fieldId}_to;
                                             onDblClick string:javascript:groups_moveKeywords('${fieldId}_to','${fieldId}_from','${fieldId}_to','${fieldId}_to')">
-    
+
                         <tal:block tal:repeat="group view/selectedItems">
                             <option tal:define="groupname python:context.portal_groups.getGroupById(group).getGroupTitleOrName()"
                                     tal:attributes="value group;"
@@ -64,7 +64,7 @@
                                 <input type="hidden" tal:attributes="name string:${view/name}:list; value group;"/>
                             </tal:hidden>
                         </span>
-                        
+
                     </select>
                 </td>
             </tr>
