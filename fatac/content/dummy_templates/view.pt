@@ -88,7 +88,6 @@
                     </div>
                     <!-- / Photo Tagging Message Dialogs -->
 
-                    <!-- Receive the data needed to render this section with the information of the object itself (JSON) -->
                     <tal:rep tal:repeat="dades_objecte view/dades_genericview_all_sections">
 
                         <div class="ac_breadcrump div_dotted_line_bottom">
@@ -96,7 +95,6 @@
                             <span class="BreadCrumbSecondary" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
                             <span class="BreadCrumbSecondary" i18n:translate="" tal:content="dades_objecte/titol" />
                         </div>
-
                         <tal:comment tal:replace="nothing">
                             <!-- TODO: esborrar, per petició del diseñador aquest bloc no ha d'exisitir -->
                             <div class="div_dotted_line_bottom">
@@ -105,46 +103,30 @@
                                 <span class="georgia13c999999" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
                             </div>
                         </tal:comment>
-
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
-                            <!-- Data de les seccions (header, footer, etc...) -->
-                            <tal:def tal:define="seccions dades_objecte/dades_seccions;
-                                                 seccions python:view.jsonFixer(seccions)">
-<span tal:content="seccions"></span>
+                            <tal:def tal:define="seccions dades_objecte/dades_seccions">
 
-                                <div class='divs_esq'>
-                                <!-- Carles, no ho toquis, ja ho acabo jo dema -->
-                                <!-- <tal:rep tal:repeat="seccio seccions"> -->
-                                    <!-- Cal pujar els defines adalt i fer que la classe del divs_esq sigui la que rebi el columns si fa falta -->
+                                <tal:rep tal:repeat="seccio seccions">
                                     <tal:def tal:define="te_subcerca python:dades_objecte['te_subcerca'] == 'amb_subcerca';
                                                         slider_vertical python: dades_objecte['te_subcerca'] == 'amb_subcerca' and (seccio['nom'] == 'header' or seccio['nom'] == 'body');
-                                                        es_div_content python: seccio['nom'] == 'content';
+                                                        start repeat/seccio/start; end repeat/seccio/end; es_div_content python: seccio['nom'] == 'content';
                                                         hi_ha_content dades_objecte/hi_ha_seccio_content;
                                                         isanon context/@@plone_portal_state/anonymous;
-                                                        nom_seccio seccio/nom">
+                                                        nom_seccio seccio/nom;
+                                                        hi_ha_dades_seccio python: len(seccio['dades']) > 0;
+                                                        num view/retNumComentaris">
 
                                         <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
-                                        <!-- <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" /> -->
+                                        <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
 
-                                        <!-- estructura: si no AAA és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
-<!--                                         <tal:repl tal:define="num view/retNumComentaris"
-                                                  tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon==False)"
-                                                  tal:replace="structure string:<img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions'>${num} <span i18n:translate=''>aportacions</span></div></div>" />
- -->
-                                        <!-- <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon)" tal:replace="structure string:</div>" /> -->
+                                        <!-- botons playlists i comentaris. cas 1/2: usuari autenticat i no hi ha títol -->
+                                        <tal:repl tal:condition="python: (isanon==False) and start and hi_ha_dades_seccio==False"
+                                                  tal:replace="structure string:<img class='miniatura_classe' src='${dades_objecte/thumbnail_classe}' /><br/><br/><img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions arial11c339933'>${num} <span i18n:translate=''>aportacions</span></div>" />
 
+                                        <!-- estructura: si no és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
+                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content)" tal:replace="structure string:</div>" />
 
-                                        <!-- Nova estructura: si hi ha subcerca, header y body tenen slider vertcal -->
-                                            <!-- Pintar header -->
-                                            <!-- Pintar body-->
-                                            <!-- Pintar content-->
-                                            <!-- Pintar footer-->
-                                        <!-- Nova estructura: si NO hi ha subcerca, header y body tenen slider vertcal, no tenen el div_interior-->
-                                            <!-- Pintar header -->
-                                            <!-- Pintar body-->
-                                            <!-- Pintar content-->
-                                            <!-- Pintar footer-->
 
                                         <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades georgia13c333333' or 'seccio_dades georgia13c333333'" tal:condition="seccio/dades">
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; l'obrim -->
@@ -156,6 +138,12 @@
                                                     <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
                                                 </tal:co>
                                                 <br/>
+
+                                                <!-- botons playlists i comentaris. cas 2/2: usuari autenticat i acabem de pintar el títol -->
+                                                <tal:repl tal:condition="python: (isanon==False) and start and hi_ha_dades_seccio"
+                                                          tal:replace="structure string:<br/><img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions arial11c339933'>${num} <span i18n:translate=''>aportacions</span></div>" />
+
+
                                             </tal:rep>
 
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; el tanquem -->
@@ -163,8 +151,7 @@
                                         </div>
 
                                     </tal:def>
-                                <!-- </tal:rep> -->
-                                </div>
+                                </tal:rep>
                             </tal:def>
 
                         </div>
