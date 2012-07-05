@@ -79,15 +79,6 @@
 
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
-            <div id="actions">
-              <a id="playlist_add"
-                 class="boto_filtres arial11c666666 actionButtons"
-                 tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
-                 i18n:translate="label_add_new_playlist">
-                 Afegeix una nova Playlist
-              </a>
-            </div>
-
             <div id="usuari">
                 <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>
                 <span class="TerminalDosis600c339933upp" tal:content="name" />
@@ -165,10 +156,17 @@
                     <div id="playlist-header" class="arial16c339933bold">
                         <img src="++resource++fatac.content/images/playlist24.gif" />
                         <span i18n:translate="">playlists</span>
+                                    <div id="actions">
+                                      <a id="playlist_add"
+                                         class="arial13c666666"
+                                         tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
+                                         i18n:translate="label_add_new_playlist">Afegeix una nova Playlist</a>
+                                    </div>
                     </div>
 
                     <tal:re tal:repeat="playlist search">
-                    <!-- Start playlists scrollables -->
+                    <div class="playlist-scrollable">
+                    <!-- Start playlists scrollable -->
                             <input type="hidden"
                                    class="nom_dada"
                                    id="nom_dada"
@@ -179,7 +177,17 @@
                                    tal:attributes="id string:llista_ids_${playlist/id};
                                                    value playlist/objects" />
                             <div tal:attributes="id string:scrollable_${playlist/id}">
-                                <tal:co tal:condition="playlist/id"><span class="arial13c999999" tal:content="playlist/Title" /></tal:co>
+                                <tal:co tal:condition="playlist/id">
+                                    <span class="playlist-title georgia15c666666italic" tal:content="playlist/Title" />
+                                    <div class="playlist-links">
+                                        <a class="arial12c999999" tal:attributes="href playlist/url" i18n:translate="" title="visualitzar">visualitzar</a>
+                                        |
+                                        <a class="arial12c999999" tal:attributes="href string:${playlist/url}/edit" i18n:translate="" title="editar">editar</a>
+                                    </div>
+
+                                </tal:co>
+
+
                                 <div class="requadre_objects">
                                     <a class="arrow_left prev browse left">
                                         <img class="arrow_up" src="++resource++fatac.theme.images/arrow_up_search.png" />
@@ -196,6 +204,7 @@
                                     </a>
                                 </div>
                             </div>
+                    </div>
 
 
 
@@ -227,45 +236,6 @@
                 </div>
 
             </div>
-
-            <!--
-                Tenim dues opcions:
-                    1. intentem fer servir macro_dades (com està aquí sota)
-                    2. intentar fer-ho similar a com es pinta la vista de playlist
-                       He copiat la funció que es fa srevir a playlists_list.js per adaptar-la
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                carrega_elements();
-                                crea_scrolls();
-                            });
-                        </script>
-
-            <div id="my-playlists" class="span10">
-                <div class="div_dotted_line_left" tal:define="playlists view/retornaPlaylists">
-
-                    <div id="playlist-header" class="arial16c339933bold">
-                        <img src="++resource++fatac.content/images/playlist24.gif" />
-                        <span i18n:translate="">playlists</span>
-                    </div>
-
-                    < ! - - scroll objectes:
-                    - per cada scroll que vull crear:
-                        - defineixo la variable dada:
-                            {'nom': playlist.id, 'tipus': 'objects', 'valor': ids}
-                        - crido la macro dadaObjecte
-                    - quan el document ha carregat, crido omple_scrolls_objectes()
-                    - - >
-
-                    <tal:re tal:repeat="playlist playlists">
-                        <tal:def tal:define="dada playlist/dada">
-                            <span metal:use-macro="context/macro_dades/macros/dadaObjecte">x</span>
-                        </tal:def>
-                    </tal:re>
-
-                </div>
-            </div>
-        -->
-
 
         </div>
 

@@ -61,7 +61,15 @@ class FatacDashboardCommon(BrowserView):
                                    Creator=groupmembers,
                                    sort_on='modified',
                                    sort_order='reverse',)
-        return results
+        playlists = []
+        for playlist in results:
+            obj = playlist.getObject()
+            playlists.append(dict(id=playlist.id,
+                                 Title=playlist.Title,
+                                 url=obj.absolute_url(),
+                                 objects=','.join([a[1] for a in sorted(obj.orderedList, key=lambda x: x[0])]))
+                                )
+        return playlists
 
     def searchActivityResults(self, groupmembers, groupname):
         context = self.context
@@ -191,6 +199,7 @@ class FatacDashBoard(DashboardView):
             obj = playlist.getObject()
             playlists.append(dict(id=playlist.id,
                                  Title=playlist.Title,
+                                 url=obj.absolute_url(),
                                  objects=','.join([a[1] for a in sorted(obj.orderedList, key=lambda x: x[0])]))
                                 )
         return playlists
