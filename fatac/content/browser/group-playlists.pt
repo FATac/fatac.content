@@ -82,15 +82,6 @@
 
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
-            <div id="actions">
-                      <a id="playlist_add"
-                         class="boto_filtres arial11c666666 actionButtons"
-                         tal:attributes="href string:${context/portal_url}/Groups/${groupname}/++add++fatac.playlist"
-                         i18n:translate="label_add_new_playlist">
-                         Afegeix una nova Playlist
-                      </a>
-            </div>
-
             <div id="usuari">
                 <span class="TerminalDosis600c339933upp" i18n:translate="">Grups ></span>
                 <span class="TerminalDosis600c339933upp" tal:content="group/getGroupTitleOrName" />
@@ -163,7 +154,7 @@
                                     <div id="actions">
                                       <a id="playlist_add"
                                          class="arial13c666666"
-                                         tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
+                                         tal:attributes="href string:${context/portal_url}/Groups/${groupname}/++add++fatac.playlist"
                                          i18n:translate="label_add_new_playlist">Afegeix una nova Playlist</a>
                                     </div>
                     </div>
