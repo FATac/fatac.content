@@ -41,7 +41,7 @@
 
             <dl class="llista_desplegable llista_desplegable_gris actionMenu actionMenuFatac deactivated" tal:define="llista_tipus view/retTipusOrdre" tal:condition="llista_tipus/opcio_selec">
                 <dt class="actionMenuHeader">
-                    <a i18n:attributes="title mes_opcions" i18n:translate="" href="" class="arial11c666666" tal:condition="llista_tipus/altres_opcions">
+                    <a i18n:attributes="title mes_opcions" href="" class="arial11c666666" tal:condition="llista_tipus/altres_opcions">
                         <span i18n:translate="">Ordre:</span> <span id="tipus_entrada" tal:content="llista_tipus/opcio_selec/nom" i18n:translate=""/> <span class="arrowDownAlternative"><img src="++resource++fatac.theme.images/arrow_down_grey.gif" /></span>
                     </a>
                     <tal:co tal:condition="not: llista_tipus/altres_opcions">
