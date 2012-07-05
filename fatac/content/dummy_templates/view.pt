@@ -113,17 +113,19 @@
                                                         start repeat/seccio/start; end repeat/seccio/end; es_div_content python: seccio['nom'] == 'content';
                                                         hi_ha_content dades_objecte/hi_ha_seccio_content;
                                                         isanon context/@@plone_portal_state/anonymous;
-                                                        nom_seccio seccio/nom">
+                                                        nom_seccio seccio/nom;
+                                                        hi_ha_dades_seccio python: len(seccio['dades']) > 0;
+                                                        num view/retNumComentaris">
 
                                         <!-- estructura: si és el primer div i no és el div content obrim div columna esquerra -->
                                         <tal:repl tal:condition="python: hi_ha_content and start and es_div_content==False" tal:replace="structure string:<div class='divs_esq'>" />
 
-                                        <!-- estructura: si no AAA és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
-                                        <tal:repl tal:define="num view/retNumComentaris"
-                                                  tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon==False)"
-                                                  tal:replace="structure string:<img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions'>${num} <span i18n:translate=''>aportacions</span></div></div>" />
+                                        <!-- botons playlists i comentaris. cas 1/2: usuari autenticat i no hi ha títol -->
+                                        <tal:repl tal:condition="python: (isanon==False) and start and hi_ha_dades_seccio==False"
+                                                  tal:replace="structure string:<img class='miniatura_classe' src='${dades_objecte/thumbnail_classe}' /><br/><br/><img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions arial11c339933'>${num} <span i18n:translate=''>aportacions</span></div>" />
 
-                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content and isanon)" tal:replace="structure string:</div>" />
+                                        <!-- estructura: si no és el primer div i és el div content, o és l'últim div, tanquem columna esquerra -->
+                                        <tal:repl tal:condition="python: (hi_ha_content and start==False and es_div_content)" tal:replace="structure string:</div>" />
 
 
                                         <div tal:attributes="id string:${seccio/nom}_objecte; class python:slider_vertical and 'slider_vertical seccio_dades georgia13c333333' or 'seccio_dades georgia13c333333'" tal:condition="seccio/dades">
@@ -136,6 +138,12 @@
                                                     <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
                                                 </tal:co>
                                                 <br/>
+
+                                                <!-- botons playlists i comentaris. cas 2/2: usuari autenticat i acabem de pintar el títol -->
+                                                <tal:repl tal:condition="python: (isanon==False) and start and hi_ha_dades_seccio"
+                                                          tal:replace="structure string:<br/><img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions arial11c339933'>${num} <span i18n:translate=''>aportacions</span></div>" />
+
+
                                             </tal:rep>
 
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; el tanquem -->
