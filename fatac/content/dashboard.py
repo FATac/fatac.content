@@ -191,6 +191,7 @@ class FatacDashBoard(DashboardView):
             obj = playlist.getObject()
             playlists.append(dict(id=playlist.id,
                                  Title=playlist.Title,
+                                 url=obj.absolute_url(),
                                  objects=','.join([a[1] for a in sorted(obj.orderedList, key=lambda x: x[0])]))
                                 )
         return playlists

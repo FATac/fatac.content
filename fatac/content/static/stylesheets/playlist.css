@@ -86,3 +86,13 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
 
 .genericview_fitxa_cerca.hover { background-color: #ECECEC; }
 
+#playlist-header { border-bottom:1px dotted #888888; padding-bottom: 10px; }
+
+#my-playlists {margin-top:10px;}
+#my-playlists .playlist-links{position:absolute; top:0px; right:0px; color:#999; }
+#my-playlists .playlist-title{ display:block;margin:10px 0px;}
+#my-playlists .playlist-scrollable {margin-top:40px;}
+#my-playlists .playlist-scrollable>div{position:relative;}
+
+#my-playlists .div_dotted_line_left {padding-left:15px;}
+
