@@ -67,8 +67,7 @@
 
                     <div id="grups-menu" class="menuButtons">
                         <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;"
-                           i18n:translate="">
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;">
                             <img src="++resource++fatac.content/images/groups_icon.gif" />
                             <span i18n:translate="">Members</span>
                             [<span tal:content="python: len(groupmembers)"/>]
@@ -77,8 +76,7 @@
 
                     <div id="playlists-menu" class="menuButtons">
                         <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-playlists?groupname=${groupname};"
-                           i18n:translate="">
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-playlists?groupname=${groupname};">
                             <img src="++resource++fatac.content/images/playlist_icon.gif" />
                             <span i18n:translate="">Playlists</span>
                             [<span tal:content="python: view.retornaCountGroupPlaylists(groupmembers, groupname)"/>]
@@ -87,8 +85,7 @@
 
                     <div id="activitat-menu" class="menuButtonsSelected">
                         <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};"
-                           i18n:translate="">
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};">
                             <img src="++resource++fatac.content/images/activitat_icon.gif" />
                             <span i18n:translate="">Activitat</span>
                             [<span tal:content="python: len(results_activity)"/>]
@@ -106,7 +103,7 @@
                 <div class="div_dotted_line_left">
 
                     <div id="groups-header" class="arial16c339933bold"
-                          i18n:translate="" style="margin-bottom: 1em;">
+                         style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/activitat24.gif" />
                         Canvis recents del grup: <span tal:content="group/getGroupTitleOrName" />
                     </div>

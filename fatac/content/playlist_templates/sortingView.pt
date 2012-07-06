@@ -21,7 +21,7 @@
             Portal status message
         </div>
 
-        <div id="playlist-header" class="arial16c339933bold" i18n:translate="" style="margin-bottom: 1em;">
+        <div id="playlist-header" class="arial16c339933bold" style="margin-bottom: 1em;">
             <img src="++resource++fatac.content/images/playlist24.gif" />
             <span i18n:translate="">playlist</span>
         </div>

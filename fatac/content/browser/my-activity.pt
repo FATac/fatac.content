@@ -77,8 +77,7 @@
 
                     <div id="grups-menu" class="menuButtons">
                         <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups"
-                           i18n:translate="">
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups">
                             <img src="++resource++fatac.content/images/groups_icon.gif" />
                             <span i18n:translate="">Grups</span>
                             [<span tal:content="python: view.retornaCountGrups(member.getId())"/>]
@@ -87,8 +86,7 @@
 
                     <div id="playlists-menu" class="menuButtons">
                         <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists"
-                           i18n:translate="">
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists">
                             <img src="++resource++fatac.content/images/playlist_icon.gif" />
                             <span i18n:translate="">Playlists</span>
                             [<span tal:content="python: view.retornaCountPlaylists(member.getId())"/>]
@@ -97,8 +95,7 @@
 
                     <div id="activitat-menu" class="menuButtonsSelected">
                         <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity"
-                           i18n:translate="">
+                           tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity">
                             <img src="++resource++fatac.content/images/activitat_icon.gif" />
                             <span i18n:translate="">Activitat</span>
                             [<span tal:content="python: view.retornaCountActivitat(member.getId())"/>]
@@ -123,7 +120,7 @@
                                                                                     sort_order='reverse',
                                                                                     sort_limit=20)[:20]">
                     <div id="dashboard-header" class="arial16c339933bold"
-                          i18n:translate="" style="margin-bottom: 1em;">
+                         style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/activitat24.gif" />
                         <span i18n:translate="">Canvis Recents</span>
                     </div>
