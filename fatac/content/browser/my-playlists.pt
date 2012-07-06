@@ -74,6 +74,13 @@
 
         <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
 
+            <div id="actions">
+              <a id="playlist_add"
+                 class="boto_filtres arial11c666666 actionButtons"
+                 tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
+                 i18n:translate="label_add_new_playlist">Afegeix una nova Playlist</a>
+            </div>
+
             <div id="usuari">
                 <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>
                 <span class="TerminalDosis600c339933upp" tal:content="name" />
@@ -148,12 +155,7 @@
                     <div id="playlist-header" class="arial16c339933bold">
                         <img src="++resource++fatac.content/images/playlist24.gif" />
                         <span i18n:translate="">playlists</span>
-                                    <div id="actions">
-                                      <a id="playlist_add"
-                                         class="arial13c666666"
-                                         tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
-                                         i18n:translate="label_add_new_playlist">Afegeix una nova Playlist</a>
-                                    </div>
+
                     </div>
 
                     <tal:re tal:repeat="playlist search">
