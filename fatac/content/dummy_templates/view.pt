@@ -54,10 +54,7 @@
                                         $(this).addClass('fila' + nova_fila);
                                     });
                                     $('.scrollable_' + nom + ' .fila' + fila_actual).wrapAll( '<div class="fila fila' + fila_actual + '" />' );
-                                    if (fila_actual === 1) {
-                                        $('#scrollable_' + nom + ' .arrow_up').addClass("hidden");
-                                        $('#scrollable_' + nom + ' .arrow_down').addClass("hidden");
-                                    }
+
 
                                     $('.scrollable_' + nom).scrollable({api:true, vertical: true, mousewheel: true});
                                 });
