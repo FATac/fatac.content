@@ -130,17 +130,19 @@
                                             <tal:repl tal:condition="slider_vertical" tal:replace="structure string:<div class='div_interior'>" />
 
                                             <tal:rep tal:repeat="dada seccio/dades">
-                                                <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
-                                                <tal:co tal:define="start_dada repeat/dada/start" tal:condition="python: nom_seccio=='header' and start_dada">
-                                                    <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
-                                                </tal:co>
-                                                <br/>
+                                                <tal:def tal:define="start_dada repeat/dada/start">
+                                                    <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
 
-                                                <!-- botons playlists i comentaris. cas 2/2: usuari autenticat i acabem de pintar el títol -->
-                                                <tal:repl tal:condition="python: (isanon==False) and start and hi_ha_dades_seccio"
-                                                          tal:replace="structure string:<br/><img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions arial11c339933'>${num} <span i18n:translate=''>aportacions</span></div>" />
+                                                    <tal:co tal:condition="python: nom_seccio=='header' and start_dada">
+                                                        <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
+                                                    </tal:co>
+                                                    <br/>
 
+                                                    <!-- botons playlists i comentaris. cas 2/2: usuari autenticat i acabem de pintar el títol -->
+                                                    <tal:repl tal:condition="python: (isanon==False) and start and start_dada and hi_ha_dades_seccio"
+                                                              tal:replace="structure string:<br/><img class='addPlaylist' rel='${dades_objecte/id}' src='++resource++fatac.content/images/add_playlist.png' /><div class='num_aportacions arial11c339933'>${num} <span i18n:translate=''>aportacions</span></div>" />
 
+                                                </tal:def>
                                             </tal:rep>
 
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; el tanquem -->
