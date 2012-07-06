@@ -77,7 +77,7 @@
             Portal status message
         </div>
 
-        <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
+        <div class="div_dotted_line_bottom">
 
             <div id="usuari">
                 <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>

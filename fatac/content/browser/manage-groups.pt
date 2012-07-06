@@ -63,7 +63,7 @@
         </div>
         <!-- / Message Dialogs -->
 
-        <div class="div_dotted_line_bottom"  style="margin-top: 1.5em;">
+        <div class="div_dotted_line_bottom">
 
             <div id="actions">
               <a id="playlist_add"
