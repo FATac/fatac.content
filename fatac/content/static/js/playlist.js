@@ -54,7 +54,6 @@ $(document).ready(function() {
                         update: function() {
                             pathname = getPath();
                             order = getOrder();
-
                             updateList(pathname.split('sortingView')[0], order);
                         }
                     });
