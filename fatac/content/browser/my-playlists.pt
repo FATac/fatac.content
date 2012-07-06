@@ -56,11 +56,6 @@
                                         $(this).addClass('fila' + nova_fila);
                                     });
                                     $('.scrollable_' + nom + ' .fila' + fila_actual).wrapAll( '<div class="fila fila' + fila_actual + '" />' );
-                                    if (fila_actual === 1) {
-                                        $('#scrollable_' + nom + ' .arrow_up').addClass("hidden");
-                                        $('#scrollable_' + nom + ' .arrow_down').addClass("hidden");
-                                    }
-
                                     $('.scrollable_' + nom).scrollable({api:true, vertical: true, mousewheel: true});
                                 });
 
@@ -205,31 +200,6 @@
                                 </div>
                             </div>
                     </div>
-
-
-
-
-<!--
-                      <a href="" tal:attributes="href playlist/getURL">
-                        <div class="genericview_my_dades" style="display: inline-block;">
-                            <div id="descImage" style="float: left; padding: 0.5em;">
-                                <tal:cond tal:define="objecte playlist/getObject"
-                                          tal:condition="python: objecte.Type()=='Playlist'">
-                                    <img tal:condition="objecte/descImage"
-                                         tal:replace="structure objecte/@@images/descImage/thumb" />
-                                </tal:cond>
-                            </div>
-                            <div id="info">
-                                <span class="playlistTitle" tal:content="playlist/Title" />
-                                <p tal:condition="playlist/Description">
-                                    <span tal:content="python: playlist.Description[:400] + '...'" />
-                                </p>
-                            </div>
-                        </div>
-                      </a> -->
-
-
-
 
                       <!-- End playlists scrollables -->
                     </tal:re>
