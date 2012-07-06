@@ -31,7 +31,14 @@
         </div>
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
-        <span tal:content="context/orderedList">asd</span>
+        <!-- <span tal:content="context/orderedList">asd</span> -->
+
+        <!-- Message Dialogs -->
+        <div id="dialog-confirm" title="Esborrar l'element?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>Aquest element serà esborrat de la playlist i no podrà ser recuperat. <br /> Està segur?</p>
+        </div>
+        <!-- / Message Dialogs -->
+
         <div id="zona_resultats">
             <!-- -->
         </div>
