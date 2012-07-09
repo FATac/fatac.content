@@ -10,7 +10,7 @@ $(document).ready(function() {
     if ((window.location.pathname.indexOf("edit") == -1) &&
         (window.location.pathname.indexOf("@@edit") == -1))
     {
-        var resultatsPerPagina = 66;
+        resultatsPerPagina = 66;
 
         if (pathname.indexOf("sortingView") != -1)
         {
@@ -18,55 +18,8 @@ $(document).ready(function() {
             resultatsPerPagina = 400;
         }
 
-        $.getJSON(pathname + "returnOrderedList", function() {
-        })
-        .error(function() { alert("No s'ha pogut carregar la llista d'objectes"); })
-        .complete(function( data ) {
+        response = drawOrderedList(pathname, resultatsPerPagina);
 
-            var llista_ids = ['Expedient_Ana_Mendieta', 'Expedient_Antoni_Tapies_Els_llocs_de_lart'];
-
-            llista_ids = jQuery.parseJSON( data.responseText );
-
-            parametres_visualitzacio = {llista_ids: llista_ids['Ids'], visualitzacio: 'imatge', zoom: '1', pagina_actual: 1, resultats_per_pagina: resultatsPerPagina};
-
-            $('#visual-portal-wrapper').get(0).parametres_visualitzacio = parametres_visualitzacio;
-
-            parametres_visualitzacio_json = JSON.stringify(parametres_visualitzacio);
-
-            var currentView = '';
-            if (window.location.pathname.indexOf("sortingView") != -1)
-            {
-                currentView = 'orderPlaylistView';
-            }
-            else
-            {
-                currentView = 'playlistView';
-            }
-
-            $.post(pathname + currentView, {parametres_visualitzacio: parametres_visualitzacio_json}, function(data){
-                $('div#zona_resultats').replaceWith(data);
-            })
-            .complete(function( data ){
-                // The sortable list of objects
-                if (currentView == 'orderPlaylistView')
-                {
-                    $('#sortable').sortable({
-                        update: function() {
-                            pathname = getPath();
-                            order = getOrder();
-                            updateList(pathname.split('sortingView')[0], order);
-                        }
-                    });
-                // Enable bind to be able to delete elements from the playlist
-                $("#sortable").on("click", ".trashbin", function(event) {
-                    event.preventDefault();
-                    removeSelectedObject($(this).attr("data-id"), $(this).attr("data-order"));
-                });
-                }
-
-
-            });
-        });
     }
 
 /*
@@ -116,6 +69,57 @@ $(document).ready(function() {
 
 });
 
+function drawOrderedList(pathname, resultatsPerPagina) {
+    $.getJSON(pathname + "returnOrderedList", function() {})
+        .error(function() { alert("No s'ha pogut carregar la llista d'objectes"); })
+        .complete(function( data ) {
+
+            // var llista_ids = ['Expedient_Ana_Mendieta', 'Expedient_Antoni_Tapies_Els_llocs_de_lart'];
+
+            llista_ids = jQuery.parseJSON( data.responseText );
+
+            parametres_visualitzacio = {llista_ids: llista_ids['Ids'], visualitzacio: 'imatge', zoom: '1', pagina_actual: 1, resultats_per_pagina: resultatsPerPagina};
+
+            $('#visual-portal-wrapper').get(0).parametres_visualitzacio = parametres_visualitzacio;
+
+            parametres_visualitzacio_json = JSON.stringify(parametres_visualitzacio);
+
+            var currentView = '';
+            if (window.location.pathname.indexOf("sortingView") != -1)
+            {
+                currentView = 'orderPlaylistView';
+            }
+            else
+            {
+                currentView = 'playlistView';
+            }
+
+            $.post(pathname + currentView, {parametres_visualitzacio: parametres_visualitzacio_json}, function(data){
+                $('div#zona_resultats').replaceWith(data);
+            })
+            .complete(function( data ){
+                // The sortable list of objects
+                if (currentView == 'orderPlaylistView')
+                {
+                    $('#sortable').sortable({
+                        update: function() {
+                            pathname = getPath();
+                            order = getOrder();
+                            updateList(pathname.split('sortingView')[0], order);
+                        }
+                    });
+                // Enable bind to be able to delete elements from the playlist
+                $("#sortable").on("click", ".trashbin", function(event) {
+                    event.preventDefault();
+                    removeSelectedObject($(this).attr("data-id"), $(this).attr("data-order"));
+                });
+                }
+
+
+            });
+        });
+};
+
 // Returns the order of the sortable list
 function getOrder()
 {
@@ -162,7 +166,13 @@ function getPath()
 function updateList(pathname, order)
 {
     //Send the new List and update async.
-    $.ajax({url: pathname + "updateList?order=[" + order + "]", type: "post", error: function(){alert("Ha donat un error al ordenar la llista! No s'han guardat els canvis");}});
+    $.ajax({
+        url: pathname + "updateList?order=[" + order + "]",
+        type: "post",
+        error: function(){alert("Ha donat un error al ordenar la llista! No s'han guardat els canvis");},
+        success: function(){drawOrderedList(pathname, resultatsPerPagina)}
+    });
+
 }
 
 
