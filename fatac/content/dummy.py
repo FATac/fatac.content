@@ -42,6 +42,14 @@ class View(grok.View, genericView):
 
         return result
 
+    def sectionFontType(self, sectionName):
+        if sectionName == 'header':
+            return 'georgia13c333333'
+        elif sectionName == 'content':
+            return 'georgia13c333333'
+        else:
+            return 'arial13c666666'
+
 
 class loadTags(grok.View):
     """ Metode que retorna els tags

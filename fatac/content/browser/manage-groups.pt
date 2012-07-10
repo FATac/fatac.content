@@ -158,8 +158,8 @@
                           <table tal:condition="groups" class="dashboardListing" summary="Group Memberships Listing">
                             <tr>
                               <th i18n:translate="listingheader_group_name">Group Name</th>
-                              <th>Manage</th>
-                              <th i18n:translate="listingheader_group_remove">Remove</th>
+                              <th i18n:translate="listingheader_group_edit">Edita</th>
+                              <th i18n:translate="listingheader_group_remov">Baixa del grup</th>
                             </tr>
                             <tal:block repeat="group groups">
                                 <tr tal:define="oddrow repeat/group/odd;
