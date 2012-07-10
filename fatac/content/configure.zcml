@@ -140,12 +140,12 @@
       permission="zope2.View"
       />
 
-  <browser:page
+<!--   <browser:page
       name="retornaUserRoles"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".retornaUserRoles.retornaUserRoles"
       permission="zope2.View"
-      />
+      /> -->
 
 
 
