@@ -46,7 +46,7 @@ class View(grok.View, genericView):
         if sectionName == 'header':
             return 'georgia13c333333'
         elif sectionName == 'content':
-            return 'georgia13c333333'
+            return 'georgia11c666666'
         else:
             return 'arial13c666666'
 

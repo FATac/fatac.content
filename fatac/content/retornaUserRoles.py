@@ -1,3 +1,4 @@
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFCore.utils import getToolByName
 from zope.interface import Interface
 from five import grok
@@ -21,11 +22,14 @@ class retornaUserRoles(grok.View):
         Vista que retorna els rols d'un usuari
     """
 
-    grok.context(IRetornaUserRoles)
+    grok.context(IPloneSiteRoot)
     grok.require('zope2.View')
     grok.name('retornaUserRoles')
 
-    def update(self):
+    def render(self):
+        """
+            Render, retornem la llista de rols separat per comes
+        """
         context = self.context
         request = self.request
 
@@ -43,22 +47,12 @@ class retornaUserRoles(grok.View):
 
             # Retorna els grups de l'usuari
             member = mtool.getMemberById(self.userId)
-            mRoles = member.getRoles()
 
-            for role in mRoles:
-                self.roles.append(role)
-
-
-
-    def render(self):
-        """
-            Render, retornem la llista de rols separat per comes
-        """
-
-        rolesString = ""
-        for role in self.roles:
-            if rolesString == "":
-                rolesString = role
+            if member == None:
+                return 'no_such_user'
             else:
-                rolesString = rolesString + ',' + role
-        return rolesString
+                mRoles = member.getRoles()
+                for role in mRoles:
+                    self.roles.append(role)
+
+        return ','.join(self.roles)
