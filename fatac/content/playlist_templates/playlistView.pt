@@ -93,7 +93,7 @@
                     <span i18n:translate="de">de</span>
                     <span id="pagina_total" tal:attributes="rel dades_paginacio/num_total_pagines" tal:content="dades_paginacio/num_total_pagines">5</span>
                     /
-                    <span i18n:translate="arxius" id="arxius">arxius</span>:
+                    <span i18n:translate="results" id="arxius">Results</span>:
                     <span id="arxiu_inicial" tal:content="dades_paginacio/num_obj_inicial">15</span>
                     -
                     <span id="arxiu_final" tal:content="dades_paginacio/num_obj_final">75</span>

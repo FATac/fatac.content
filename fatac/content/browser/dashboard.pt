@@ -78,7 +78,7 @@
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard">
                             <img src="++resource++fatac.content/images/dashboard_icon.gif" />
-                            <span i18n:translate="label_dashboard">Dashboard</span>
+                            <span i18n:translate="escritorio">Dashboard</span>
                         </a>
                     </div>
 
@@ -121,11 +121,11 @@
                     <div id="dashboard-header" class="arial16c339933bold"
                          style="margin-bottom: 1em;">
                         <img src="++resource++fatac.content/images/dashboard24.gif" />
-                        <span i18n:translate="label_dashboard">Dashboard</span>
+                        <span i18n:translate="escritorio">Dashboard</span>
                     </div>
 
 
-                    <div id="escriptoriDisclaimer">
+                    <div id="escriptoriDisclaimer" i18n:translate="desc_escritorio">
                         Aquí el disclaimer/informació sobre l'escriptori dels usuaris.
                     </div>
 
