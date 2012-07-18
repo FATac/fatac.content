@@ -170,5 +170,6 @@
         tal:condition="not: isanon">
     <script type="text/javascript">
         addPlaylistMenu();
+        mostrarAmagarAportacions()
     </script>
 </tal:co>

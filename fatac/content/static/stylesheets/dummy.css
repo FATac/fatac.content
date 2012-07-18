@@ -163,3 +163,10 @@ div.photo-container {
 .row .discussion label {
     font-weight:bold;
 }
+
+.portaltype-fatac-dummy #viewlet-below-content {
+    display:none;
+}
+.num_aportacions {
+    cursor:pointer;
+}

@@ -8,8 +8,19 @@ $(document).ready(function() {
 
     //Start Image Tagger
     imageTagger(pathname);
+    console.error('akiiiiiiiiiiiiiiiiiiiiiiiiii');
 
 });
+
+function mostrarAmagarAportacions() {
+    // Fa que quan cliquem sobre un element amb classe num_aportacions es
+    // mostri o s'amagui l'element amb id viewlet-below-content
+
+    $('.num_aportacions').click(function(){
+        $('#viewlet-below-content').slideToggle();
+    });
+}
+
 
 function updateTips( t ) {
     tips
