@@ -116,11 +116,11 @@ jQuery(function($){
         {
             subtype: 'ajax',
             filter: common_content_filter,
-            formselector: 'form',            
+            formselector: 'form',
             noform: function(el) {return $.plonepopups.noformerrorshow(el, 'reload');},
             redirect: function () {return location.href;}
         }
-    );    
+    );
 
 });
 
@@ -177,12 +177,25 @@ $(document).ready(function() {
         removeSelectedGroup($(this).attr("id"));
     });
 
+    // $("body").on("focus", "#__ac_name", function () {
+    //     if ($(this).val()=="Correu electrònic") {$(this).val("")}
+    // });
+    // $("body").on("blur", "#__ac_name", function () {
+    //     if ($(this).val()=="") {$(this).val("Correu electrònic")}
+    // });
+
     $("body").on("focus", "#__ac_name", function () {
-        if ($(this).val()=="Correu electrònic") {$(this).val("")}
+        if (($(this).val()).length > 0) {
+            text_camp_email = $(this).val();
+            $(this).val("");
+        }
     });
     $("body").on("blur", "#__ac_name", function () {
-        if ($(this).val()=="") {$(this).val("Correu electrònic")}
+        if ($(this).val()=="") {
+            $(this).val(text_camp_email)
+        }
     });
+
     $("body").on("focus", "#fake_password", function () {
         $(this).hide();
         $("#__ac_password").show();
