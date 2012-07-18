@@ -91,6 +91,11 @@
                             <span class="TerminalDosis600" style="text-transform:uppercase;" i18n:translate="" tal:content="dades_objecte/classe" />
                             <span class="BreadCrumbSecondary" >&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
                             <span class="BreadCrumbSecondary" i18n:translate="" tal:content="dades_objecte/titol" />
+
+                            <div class="ac_search_biblio">
+                                <a class="arial12c999999 link_biblioteca" i18n:translate="" href="javascript:void(0);" onclick="history.back();">Tornar</a>
+                            </div>
+
                         </div>
                         <tal:comment tal:replace="nothing">
                             <!-- TODO: esborrar, per petició del diseñador aquest bloc no ha d'exisitir -->
