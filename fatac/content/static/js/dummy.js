@@ -8,7 +8,6 @@ $(document).ready(function() {
 
     //Start Image Tagger
     imageTagger(pathname);
-    console.error('akiiiiiiiiiiiiiiiiiiiiiiiiii');
 
 });
 
