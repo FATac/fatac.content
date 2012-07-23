@@ -51,6 +51,7 @@
                     <p class="arial15c999999" style="padding: 0.5em;"
                         tal:condition="context/description"
                         tal:content="context/description" />
+                    <span class="autor georgia11c999999" tal:content="context/Creator" />
                 </div>
             </div>
         </div>

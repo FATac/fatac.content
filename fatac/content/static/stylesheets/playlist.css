@@ -101,6 +101,7 @@ button.btn::-moz-focus-inner,input[type=submit].btn::-moz-focus-inner{padding:0;
 #llista_playlists { float:left; width: 94%; padding:0 3%; height:480px; }
 #llista_playlists .una_playlist { width:279px !important; }
 #llista_playlists .una_playlist .thumbnail img {  }
-.template-allPlaylistsView .listingBar { float:left; width:100%; margin-top:-250px; }
+/* height 1px perque puguem fer hover sobre els elements de sota */
+.template-allPlaylistsView .listingBar { float:left; width:100%; margin-top:-250px; height:1px; }
 .template-allPlaylistsView .listingBar a,
 .template-allPlaylistsView .listingBar a:hover { border:0; background-color: transparent; padding:0.25em 1em 0.25em 0; }
