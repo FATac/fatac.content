@@ -97,14 +97,16 @@
                             </div>
 
                         </div>
+
                         <tal:comment tal:replace="nothing">
-                            <!-- TODO: esborrar, per petició del diseñador aquest bloc no ha d'exisitir -->
+                            <!-- esborrat, per petició del diseñador aquest bloc no ha d'exisitir -->
                             <div class="div_dotted_line_bottom">
                                 <img tal:attributes="rel dades_objecte/id; class string:arrow_top ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_up.png" />
                                 <img tal:attributes="rel dades_objecte/id; class string:arrow_bottom hidden ${dades_objecte/id}" src="++resource++fatac.theme.images/ico_arrow_down.png" />
                                 <span class="georgia13c999999" tal:define="literal string:fitxa_${dades_objecte/classe}" i18n:translate="" tal:content="literal" />
                             </div>
                         </tal:comment>
+
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
                             <tal:def tal:define="seccions dades_objecte/dades_seccions">
