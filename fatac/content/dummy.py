@@ -87,10 +87,10 @@ class saveTag(grok.View):
         request = self.request
         request.response.setHeader("content-type", "application/json")
 
-        pm = getToolByName(context, "portal_membership")
-        member = pm.getAuthenticatedMember().getId()
+        # pm = getToolByName(context, "portal_membership")
+        # member = pm.getAuthenticatedMember().getId()
         tag = request.form
-        tag['user'] = member
+        tag['user'] = self.retNomCreator()
         tag['date'] = time.strftime("(%d/%m/%Y)", time.localtime())
         tag['id'] = str(time.time())
 
@@ -99,6 +99,17 @@ class saveTag(grok.View):
         context.tagList = tag_list
 
         return json.dumps({"user": tag['user'], "date": tag['date'], "id": tag['id']})
+
+    def retNomCreator(self):
+        """ retorna el Full name de l'usuari que ha creat la playlist.
+        Copiada de fatac.content.playlists.py
+        """
+        pm = getToolByName(self.context, "portal_membership")
+        member = pm.getAuthenticatedMember()
+        fullname = member.getProperty('fullname')
+        if not fullname:
+            fullname = member.getUserName()
+        return fullname
 
 
 class deleteTag(grok.View):
