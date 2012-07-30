@@ -136,6 +136,15 @@ class View(grok.View, funcionsCerca):
     grok.require('zope2.View')
     grok.name('view')
 
+    def retNomCreator(self):
+        """ retorna el Full name de l'usuari que ha creat la playlist
+        """
+        owner = self.context.getOwner()
+        fullname = owner.getProperty('fullname')
+        if not fullname:
+            fullname = owner.getUserName()
+        return fullname
+
 
 class playlistView(grok.View, resultatsView):
     """ Pinta els resultats i les dades referents a la paginacio i les opcions
