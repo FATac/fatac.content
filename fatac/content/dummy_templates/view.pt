@@ -141,12 +141,14 @@
                                                 <tal:def tal:define="start_dada repeat/dada/start"
                                                          tal:condition="dada/valor">
 
-                                                    <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
+                                                    <div class="envolcall_dada">
+                                                        <b metal:use-macro="context/macro_dades/macros/dadaObjecte">x</b>
 
-                                                    <tal:co tal:condition="python: nom_seccio=='header' and start_dada">
-                                                        <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
-                                                    </tal:co>
-                                                    <br/><br/>
+                                                        <tal:co tal:condition="python: nom_seccio=='header' and start_dada">
+                                                            <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
+                                                        </tal:co>
+                                                    </div>
+                                                    <!-- <br/><br/> -->
 
                                                     <!-- botons playlists i comentaris. cas 2/2: usuari autenticat i acabem de pintar el títol -->
                                                     <tal:repl tal:condition="python: (isanon==False) and start and start_dada and hi_ha_dades_seccio"
