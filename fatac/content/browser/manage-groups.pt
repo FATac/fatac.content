@@ -100,7 +100,7 @@
                     <div id="dash-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
+                            <img src="++resource++fatac.content/images/dashboard_icon.png" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
@@ -108,7 +108,7 @@
                     <div id="grups-menu" class="menuButtonsSelected">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@manage-groups">
-                            <img src="++resource++fatac.content/images/groups_icon.gif" />
+                            <img src="++resource++fatac.content/images/groups_icon.png" />
                             <span i18n:translate="">Grups</span>
                             [<span tal:content="python: view.retornaCountGrups(member.getId())"/>]
                         </a>
@@ -117,7 +117,7 @@
                     <div id="playlists-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-playlists">
-                            <img src="++resource++fatac.content/images/playlist_icon.gif" />
+                            <img src="++resource++fatac.content/images/playlist_icon.png" />
                             <span i18n:translate="">Playlists</span>
                             [<span tal:content="python: view.retornaCountPlaylists(member.getId())"/>]
                         </a>
@@ -126,7 +126,7 @@
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@my-activity">
-                            <img src="++resource++fatac.content/images/activitat_icon.gif" />
+                            <img src="++resource++fatac.content/images/activitat_icon.png" />
                             <span i18n:translate="">Activitat</span>
                             [<span tal:content="python: view.retornaCountActivitat(member.getId())"/>]
                         </a>
@@ -146,7 +146,7 @@
 
                     <div id="dashboard-header" class="arial16c339933bold"
                          style="margin-bottom: 1em;">
-                        <img src="++resource++fatac.content/images/groups24.gif" />
+                        <img src="++resource++fatac.content/images/groups24.png" />
                         <span i18n:translate="">grups</span>
                     </div>
 

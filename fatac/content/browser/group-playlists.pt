@@ -107,7 +107,7 @@
                     <div id="dash-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-view?groupname=${groupname};">
-                            <img src="++resource++fatac.content/images/dashboard_icon.gif" />
+                            <img src="++resource++fatac.content/images/dashboard_icon.png" />
                             <span i18n:translate="label_dashboard">Dashboard</span>
                         </a>
                     </div>
@@ -115,7 +115,7 @@
                     <div id="grups-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-members?groupname=${groupname}&fm=True;">
-                            <img src="++resource++fatac.content/images/groups_icon.gif" />
+                            <img src="++resource++fatac.content/images/groups_icon.png" />
                             <span i18n:translate="">Members</span>
                             [<span tal:content="python: len(groupmembers)"/>]
                         </a>
@@ -124,7 +124,7 @@
                     <div id="playlists-menu" class="menuButtonsSelected">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-playlists?groupname=${groupname};">
-                            <img src="++resource++fatac.content/images/playlist_icon.gif" />
+                            <img src="++resource++fatac.content/images/playlist_icon.png" />
                             <span i18n:translate="">Playlists</span>
                             [<span tal:content="python: len(group_playlists)"/>]
                         </a>
@@ -133,7 +133,7 @@
                     <div id="activitat-menu" class="menuButtons">
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/@@group-activity?groupname=${groupname};">
-                            <img src="++resource++fatac.content/images/activitat_icon.gif" />
+                            <img src="++resource++fatac.content/images/activitat_icon.png" />
                             <span i18n:translate="">Activitat</span>
                             [<span tal:content="python: view.retornaCountGroupActivity(groupmembers, groupname)"/>]
                         </a>
@@ -151,7 +151,7 @@
 
                 <div class="div_dotted_line_left">
                     <div id="playlist-header" class="arial16c339933bold">
-                        <img src="++resource++fatac.content/images/playlist24.gif" />
+                        <img src="++resource++fatac.content/images/playlist24.png" />
                         <span i18n:translate="">group playlists</span>
 
                     </div>
@@ -220,7 +220,7 @@
                 <div class="div_dotted_line_left">
 
                     <div id="playlist-header" class="arial16c339933bold">
-                        <img src="++resource++fatac.content/images/playlist24.gif" />
+                        <img src="++resource++fatac.content/images/playlist24.png" />
                         <span i18n:translate="">group playlists</span>
                     </div>
 

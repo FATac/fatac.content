@@ -29,7 +29,7 @@
         <div id="dashboard-header"
              class="arial16c339933bold"
              style="margin-bottom: 1em;">
-            <img src="++resource++fatac.content/images/playlist24.gif" />
+            <img src="++resource++fatac.content/images/playlist24.png" />
             <span i18n:translate="">playlist</span>
         </div>
 
