@@ -35,14 +35,14 @@
 
         <div class="div_dotted_line_bottom">
 
-            <div id="actions">
+<!--             <div id="actions">
                 <a id="playlist_add"
                    class="boto_filtres arial11c666666 actionButtons"
                    tal:attributes="href string:${context/portal_membership/getHomeUrl}/++add++fatac.playlist"
                    i18n:translate="label_add_new_playlist">
                    Afegeix una nova Playlist
                 </a>
-            </div>
+            </div> -->
 
             <div id="usuari">
                 <span class="TerminalDosis600c339933upp" i18n:translate="">Usuari ></span>

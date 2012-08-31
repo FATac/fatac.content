@@ -96,9 +96,9 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
 
     // _ és una funció definida a fatac.js que retorna l'entrada del
     // diccionari corresponent a l'idioma actual.
-    text_afegir_a = _({'ca': 'afegir a:',
-                     'en': 'add to:',
-                     'es': 'añadir a:'});
+    text_afegir_a = _({'ca': 'Afegir a:',
+                     'en': 'Add to:',
+                     'es': 'Añadir a:'});
     text_error_afegir = _({'ca': "S'ha produït un error. No s'han guardat els canvis",
                            'en': 'An error occurred. No changes have been saved.',
                            'es': 'Se ha producido un error. No se han guardado los cambios.'});
@@ -108,9 +108,9 @@ function afageixPlaylistsMenu(element, llistaPlaylists) {
     text_error_playlist = _({'ca': "S'ha produït un error. No s'ha pogut recuperar l'identificador de la nova playlist",
                              'en': 'An error occurred. Unable to retrieve the new playlist identifier.',
                              'es': 'Se ha producido un error. No se ha podido recuperar el identificador de la nueva playlist.'});
-    text_nou_album = _({'ca': 'nou àlbum',
-                        'en': 'new playlist',
-                        'es': 'nuevo álbum'});
+    text_nou_album = _({'ca': 'Crear Playlist',
+                        'en': 'Crear Playlist',
+                        'es': 'Add Playlist'});
 
     var titol;
     var idPlaylist;
