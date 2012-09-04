@@ -41,12 +41,15 @@
                                 var parametres_visualitzacio_json = JSON.stringify(parametres_visualitzacio);
                                 $.post('displayResultatsPaginaView', {parametres_visualitzacio: parametres_visualitzacio_json}, function(data){
                                     $('.items_' + nom).replaceWith(data);
-
-                                    //envolcallem cada 3 elements en un div, xq funcioni l'scrollable
+                                    //envolcallem cada 3 o 5 elements en un div, xq funcioni l'scrollable
+                                    var num_elements = 3;
+                                    if ($('.scrollable_RelatedDocuments').parents('#footer_objecte').length > 0) {
+                                        num_elements = 5;
+                                    }
                                     var fila_actual = 1;
                                     var nova_fila = 1;
                                     $('.scrollable_' + nom + ' .genericview_fitxa_home').each(function(i) {
-                                        nova_fila = (parseInt(i/3) + 1);
+                                        nova_fila = (parseInt(i/num_elements) + 1);
                                         if (nova_fila !== fila_actual) {
                                             $('.scrollable_' + nom + ' .fila' + fila_actual).wrapAll( '<div class="fila fila' + fila_actual + '" />' );
                                             fila_actual = nova_fila;
