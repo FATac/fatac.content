@@ -865,49 +865,58 @@
                 // var message = prompt( "Message:", "" );
                 var message = $("#comentari");
                 // $( "#dialog-form" ).dialog( "open" );
+
+                // _ és una funció definida a fatac.js que retorna l'entrada del
+                // diccionari corresponent a l'idioma actual.
+                var text_crea = _({'ca': 'Crea el comentari',
+                                      'en': 'Create comment',
+                                      'es': 'Crear el comentario'});
+                var text_cancela = _({'ca': 'Cancel·la',
+                                      'en': 'Cancel',
+                                      'es': 'Cancela'});
+
+                buttons = {}
+                buttons[text_crea] =  function() {
+                    var bValid = true;
+                    console.log(message.val());
+                    bValid = bValid && checkLength( message, "comentari", 3, 100 );
+
+                    if ( bValid ) {
+                        // Create a tag based on our pending tag. We
+                        // know everything BUT the ID at this point.
+                        var tag = self.addTag(
+                            "",
+                            self.pendingTag.position().left,
+                            self.pendingTag.position().top,
+                            self.pendingTag.width(),
+                            self.pendingTag.height(),
+                            message.val()
+                        );
+
+                        // Save this tag (to the server).
+                        self.saveTag( tag );
+                        // Remove the pending tag from the container - it has
+                        // no purpose for us anymore (if the user draws again,
+                        // another pending tag will be created).
+                        self.pendingTag.remove();
+                        // Regardless of whether or not the tag was created,
+                        // we no longer need to keep track of it.
+                        self.pendingTag = null;
+                        $( this ).dialog( "close" );
+                    }}
+
+                buttons[text_cancela] = function() {
+                        $( this ).dialog( "close" );
+                    }
+
+
                 $( "#dialog-form" ).dialog({
                     autoOpen: true,
                     height: 200,
                     width: 280,
                     modal: true,
-                    buttons: {
-                        "Crea el comentari": function() {
-                            var bValid = true;
-                            console.log(message.val());
-                            bValid = bValid && checkLength( message, "comentari", 3, 100 );
-
-                            if ( bValid ) {
-                                // Create a tag based on our pending tag. We
-                                // know everything BUT the ID at this point.
-                                var tag = self.addTag(
-                                    "",
-                                    self.pendingTag.position().left,
-                                    self.pendingTag.position().top,
-                                    self.pendingTag.width(),
-                                    self.pendingTag.height(),
-                                    message.val()
-                                );
-
-                                // Save this tag (to the server).
-                                self.saveTag( tag );
-                                // Remove the pending tag from the container - it has
-                                // no purpose for us anymore (if the user draws again,
-                                // another pending tag will be created).
-                                self.pendingTag.remove();
-                                // Regardless of whether or not the tag was created,
-                                // we no longer need to keep track of it.
-                                self.pendingTag = null;
-                                $( this ).dialog( "close" );
-                            }
-                        },
-                        "Cancel·la": function() {
-                            $( this ).dialog( "close" );
-                        }
-                    },
-                    close: function() {
-
-                    }
-                    });
+                    buttons: buttons
+                });
 
                 // Check to see if the message was returned (if
                 // the user cancelled out, then we are going to

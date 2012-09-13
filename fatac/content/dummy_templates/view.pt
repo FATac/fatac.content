@@ -78,7 +78,7 @@
                     </script>
 
                     <!-- Photo Tagging Message Dialogs -->
-                    <div id="dialog-form" title="Comentari del retall">
+                    <div id="dialog-form" i18n:domain="fatac.theme" i18n:attributes="title comentari_retall">
                         <form>
                             <textarea name="comentari" id="comentari" class="text ui-widget-content ui-corner-all"></textarea>
                         </form>
