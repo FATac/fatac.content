@@ -87,18 +87,20 @@ class saveTag(grok.View):
         request = self.request
         request.response.setHeader("content-type", "application/json")
 
-        # pm = getToolByName(context, "portal_membership")
-        # member = pm.getAuthenticatedMember().getId()
+        pm = getToolByName(context, "portal_membership")
+        member = pm.getAuthenticatedMember().getId()
+
         tag = request.form
         tag['user'] = self.retNomCreator()
         tag['date'] = time.strftime("(%d/%m/%Y)", time.localtime())
         tag['id'] = str(time.time())
+        tag['member'] = member
 
         tag_list = context.tagList
         tag_list.append(json.dumps(tag))
         context.tagList = tag_list
 
-        return json.dumps({"user": tag['user'], "date": tag['date'], "id": tag['id']})
+        return json.dumps({"info": self.context.translate("comentari_afegit",domain="fatac.theme"), "user": tag['user'], "member": tag['member'], "date": tag['date'], "id": tag['id']})
 
     def retNomCreator(self):
         """ retorna el Full name de l'usuari que ha creat la playlist.
@@ -135,7 +137,11 @@ class deleteTag(grok.View):
         for tag in context.tagList:
             if str(json.loads(tag).get("id")) == tag_to_delete:
                 # Check if current user is allowed to delete this tag or user is Manager
-                if json.loads(tag).get("user") == member or userIsManager:
+                if json.loads(tag).get("member") == member or userIsManager:
                     context.tagList.remove(tag)
                     context._p_changed = 1
-                    return json.dumps({"info": "Tag %s deleted" % tag_to_delete})
+                    # return json.dumps({"info": "Comentari %s esborrat" % tag_to_delete})
+                    return json.dumps({"info": self.context.translate("comentari_esborrat",domain="fatac.theme")})
+                else:
+                    # return json.dumps({"info": "No tens permissos per esborrar el comentari %s" % tag_to_delete})
+                    return json.dumps({"info": self.context.translate("comentari_no_esborrat", domain="fatac.theme")})

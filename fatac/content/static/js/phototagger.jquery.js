@@ -4,6 +4,8 @@
 // Copyright www.bennadel.com 2010.
 // ---
 
+// INFO: modificat pel projecte fatac (lpmayos, 13.9.2012)
+
 // Create a self-executing function that will warp the window
 // object and translate the jQuery function name.
 (function( window, $ ){
@@ -265,28 +267,35 @@
                     }
                     // Confirm that the user wants the tag to
                     // be deleted.
+
+                    // _ és una funció definida a fatac.js que retorna l'entrada del
+                    // diccionari corresponent a l'idioma actual.
+                    var text_esborra = _({'ca': 'Esborra aquest comentari',
+                                          'en': 'Delete comment',
+                                          'es': 'Borrar este comentario'});
+                    var text_cancela = _({'ca': 'Cancel·la',
+                                          'en': 'Cancel',
+                                          'es': 'Cancela'});
+
+                    buttons = {}
+                    buttons[text_esborra] =  function() {
+                            self.deleteTag( tag );
+                            $( this ).dialog( "close" );
+                        }
+
+                    buttons[text_cancela] = function() {
+                            $( this ).dialog( "close" );
+                        }
+
+
                     $( "#dialog-confirm" ).dialog({
                         resizable: false,
                         height:200,
                         width:350,
                         modal: true,
-                        buttons: {
-                            "Esborra aquest comentari": function() {
-                                self.deleteTag( tag );
-                                $( this ).dialog( "close" );
-                            },
-                            "Cancel·la": function() {
-                                $( this ).dialog( "close" );
-                            }
-                        }
+                        buttons: buttons
                     });
 
-                    // if (confirm( "Delete this tag?" )){
-
-                    //     // Delete the tag.
-                    //     self.deleteTag( tag );
-
-                    // }
                 }
             );
 
@@ -397,6 +406,7 @@
 
             // Remove the tag from the container.
             tag.remove();
+
         },
 
 
@@ -423,6 +433,13 @@
                             )
                         );
                     }
+
+                    $('<div class="purr"><div class="info"><span>' + response['info'] + '</span></div></div>').purr({
+                        fadeInSpeed: 200,
+                        fadeOutSpeed: 200,
+                        removeTimer: 2000,
+                    });
+
                 },
                 error: function(){
                     alert( self.settings.ajaxFailMessage );
@@ -745,60 +762,32 @@
         saveTagRecord: function( id, x, y, width, height, message, photoID, onSuccess ){
             var self = this;
 
-                        //Send the new List and update async.
-                        tagInfo = {"id":"", "x":x, "y":y, "width":width, "height":height, "message":message, "photoID":photoID};
-                        $.ajax({
-                               url: this.settings.saveURL,
-                               type: "post",
-                               data: tagInfo,
-                               success: function( response ){
-                                   // Pass off to handler (if it exists).
-                                   if (onSuccess){
-                                       onSuccess(
-                                           // Clean the response before handing
-                                           // it off to the handler.
-                                           self.settings.cleanAJAXResponse("save", response)
-                                       );
-                                   }
-                               },
-                               error: function(){alert("Ha donat un error al ordenar la llista! No s'han guardat els canvis");}
+            //Send the new List and update async.
+            tagInfo = {"id":"", "x":x, "y":y, "width":width, "height":height, "message":message, "photoID":photoID};
+            $.ajax({
+                   url: this.settings.saveURL,
+                   type: "post",
+                   data: tagInfo,
+                   success: function( response ){
+                       // Pass off to handler (if it exists).
+                       if (onSuccess){
+                           onSuccess(
+                               // Clean the response before handing
+                               // it off to the handler.
+                               self.settings.cleanAJAXResponse("save", response)
+                           );
+                       }
+
+                        $('<div class="purr"><div class="info"><span>' + response['info'] + '</span></div></div>').purr({
+                            fadeInSpeed: 200,
+                            fadeOutSpeed: 200,
+                            removeTimer: 2000,
                         });
 
-                        //OLD
-                        /*
-            // Delete the record using the API.
-            $.ajax({
-                method: this.settings.saveMethod,
-                url: this.settings.saveURL,
-                data: {
-                    id: id,
-                    x: x,
-                    y: y,
-                    width: width,
-                    height: height,
-                    message: message,
-                    photoID: photoID
-                },
-                dataType: "json",
-                cache: false,
-                success: function( response ){
-                    // Pass off to handler (if it exists).
-                    if (onSuccess){
-                        onSuccess(
-                            // Clean the response before handing
-                            // it off to the handler.
-                            self.settings.cleanAJAXResponse(
-                                "save",
-                                response
-                            )
-                        );
-                    }
-                },
-                error: function(){
-                    alert( self.settings.ajaxFailMessage );
-                }
+                   },
+                   error: function(){alert("S'ha produït un error en ordenar la llista! No s'han guardat els canvis");}
             });
-                        */
+
         },
 
 

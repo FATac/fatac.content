@@ -83,8 +83,11 @@
                             <textarea name="comentari" id="comentari" class="text ui-widget-content ui-corner-all"></textarea>
                         </form>
                     </div>
-                    <div id="dialog-confirm" title="Esborrar el comentari?">
-                        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>Aquest comentari serà esborrat permanentment i no podrà ser recuperat. Està segur?</p>
+                    <div id="dialog-confirm" i18n:domain="fatac.theme" i18n:attributes="title comentari_esborrar">
+                        <p>
+                            <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 30px 0;"></span>
+                            <span i18n:domain="fatac.theme" i18n:translate="comentari_confirmar">Aquest comentari serà esborrat permanentment i no podrà ser recuperat. Està segur?</span>
+                        </p>
                     </div>
                     <!-- / Photo Tagging Message Dialogs -->
 
