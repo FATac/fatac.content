@@ -108,7 +108,7 @@
                         <a href=""
                            tal:attributes="href string:${context/@@plone_portal_state/navigation_root_url}/dashboard">
                             <img src="++resource++fatac.content/images/dashboard_icon.png" />
-                            <span i18n:translate="label_dashboard">Dashboard</span>
+                            <span i18n:translate="escritorio">Dashboard</span>
                         </a>
                     </div>
 
