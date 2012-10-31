@@ -153,12 +153,12 @@
 
 
                           <div id="current-group-membership" class="div_dotted_line_bottom georgia13c333333Ital">
-                            <span i18n:translate="heading_memberships_current">Current group memberships</span>
+                            <span i18n:domain="fatac.theme" i18n:translate="heading_memberships_current">Current group memberships</span>
                           </div>
 
                           <table tal:condition="groups" class="dashboardListing" summary="Group Memberships Listing">
                             <tr>
-                              <th i18n:translate="listingheader_group_name">Group Name</th>
+                              <th i18n:domain="fatac.theme" i18n:translate="listingheader_group_name">Group Name</th>
                               <th i18n:translate="listingheader_group_edit">Edita</th>
                               <th i18n:translate="listingheader_group_remov">Baixa del grup</th>
                             </tr>
@@ -253,7 +253,7 @@
                                                alt="Select all items"
                                                i18n:attributes="title label_select_all_items; alt label_select_all_items;"/>
                                     </th>
-                                    <th i18n:translate="listingheader_group_name">Group Name</th>
+                                    <th i18n:domain="fatac.theme" i18n:translate="listingheader_group_name">Group Name</th>
                                   </tr>
                                   <tal:block repeat="obj batch">
                                     <tr tal:define="oddrow repeat/obj/odd;
