@@ -2,4 +2,7 @@
     <object name="fatac.playlist" meta_type="Dexterity FTI" />
     <object name="fatac.dummy" meta_type="Dexterity FTI" />
     <object name="fatac.ghost" meta_type="Dexterity FTI" />
+    <object name="fatac.paginaLlibre" meta_type="Dexterity FTI"/>
+    <object name="fatac.notaLlibre" meta_type="Dexterity FTI"/>
+    <object name="fatac.detallLlibre" meta_type="Dexterity FTI"/>    
 </object>

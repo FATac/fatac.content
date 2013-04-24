@@ -15,6 +15,7 @@
   <include file="permissions.zcml" />
   <grok:grok package="." />
 
+  
   <genericsetup:registerProfile
       name="default"
       title="Fatac Content"

@@ -11,6 +11,7 @@
     <property name="filter_content_types">True</property>
     <property name="allowed_content_types">
          <element value="File" />
+         <element value="fatac.paginaLlibre" />
     </property>    
     <property name="schema">fatac.content.dummy.IDummy</property>
     <property name="klass">plone.dexterity.content.Container</property>
