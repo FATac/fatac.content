@@ -15,12 +15,17 @@ class InotaLlibre(form.Schema):
     """ Nota Pagina Llibre Schema
     """
 
-    text = RichText(
+    # text = RichText(
+    #     title=_(u"Text"),
+    #     description=_(u"The displayed text"),
+    #     required=False,
+    # )
+
+    text = schema.TextLine(
         title=_(u"Text"),
         description=_(u"The displayed text"),
         required=False,
     )
-
 
 class View(DisplayForm):
     grok.context(InotaLlibre)
