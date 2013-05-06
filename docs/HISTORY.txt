@@ -5,6 +5,7 @@ Changelog
 -------------------
 - Nous tipus de contingut: pagina llibre, nota i detall pagina
 
+
 1.0 
 -------------------
 Initial version

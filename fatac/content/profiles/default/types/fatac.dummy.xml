@@ -42,4 +42,16 @@
         <permission value="Modify Portal Content" />
     </action>
 
+    <action title="Gestionar Llibre" action_id="gestionarLlibre" category="object"
+    condition_expr="" url_expr="string:${folder_url}/gestionarLlibre"
+    visible="True">
+      <permission value="Modify portal contents"/>
+    </action>
+
+    <action title="Comments" action_id="comentarisLlibre" category="object"
+    condition_expr="" url_expr="string:${folder_url}/comentarisLlibre"
+    visible="True">
+      <permission value="Modify portal contents"/>
+    </action>
+
 </object>

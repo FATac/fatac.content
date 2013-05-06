@@ -12,10 +12,24 @@ from plone.namedfile.field import NamedImage
 
 from plone.directives.dexterity import DisplayForm
 
+
 class IpaginaLlibre(form.Schema):
     """ Pagina Llibre Schema
     """   
 
+    title = schema.TextLine(
+        title = _(u'Title'),
+        required = False,
+        )
+        
+    description = schema.Text(
+        title=_(u'Description'),
+        description = _(u'help_description'),
+        required = False,
+        missing_value = u'',
+        )   
+
+    form.primary('pagina')   
     pagina = NamedImage(
         title=_(u"Pagina"),
         description=_(u"Please upload an image"),

@@ -18,9 +18,8 @@
     
     <property name="add_permission">fatac.AddPlaylist</property>
 
-    <property name="behaviors">
-        <element value="plone.app.content.interfaces.INameFromTitle" />
-        <element value="plone.app.dexterity.behaviors.metadata.IDublinCore" />
+    <property name="behaviors">    
+        <element value="plone.app.dexterity.behaviors.filename.INameFromFileName"/>      
     </property>
 
     <property name="default_view">view</property>

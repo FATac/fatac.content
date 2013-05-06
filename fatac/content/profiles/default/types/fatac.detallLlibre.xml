@@ -22,9 +22,8 @@
   <property name="add_permission">fatac.AddGhost</property>
   <property name="klass">plone.dexterity.content.Container</property>
 
-  <property name="behaviors">
-    <element value="plone.app.content.interfaces.INameFromTitle"/>
-    <element value="plone.app.dexterity.behaviors.metadata.IDublinCore"/>
+  <property name="behaviors">    
+    <element value="plone.app.dexterity.behaviors.filename.INameFromFileName"/>        
   </property>
   <property name="schema">fatac.content.detallLlibre.IdetallLlibre</property>
 

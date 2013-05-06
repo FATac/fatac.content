@@ -38,6 +38,7 @@ class View(grok.View, genericView):
     def jsonFixer(self, sections):
         result = {}
         for section in sections:
+            import ipdb; ipdb.set_trace()
             result[section.get('nom')] = {key: section.get(key) for key in section.keys() if key != 'nom'}
 
         return result
@@ -49,6 +50,8 @@ class View(grok.View, genericView):
             return 'georgia11c666666'
         else:
             return 'arial13c666666'
+
+    
 
 
 class loadTags(grok.View):
