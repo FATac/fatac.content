@@ -113,6 +113,7 @@
                             </div>
                         </tal:comment>
 
+                      
                         <div tal:attributes="id dades_objecte/id; class string:genericview_fitxa_final ${dades_objecte/te_subcerca}">
 
                             <tal:def tal:define="seccions dades_objecte/dades_seccions">
@@ -140,6 +141,7 @@
 
 
                                         <div tal:attributes="id string:${seccio/nom}_objecte; class python:(slider_vertical and 'slider_vertical seccio_dades ' or 'seccio_dades ') + secciotypeclass" tal:condition="seccio/dades">
+                                            
                                             <!-- estructura: si hi ha subcerca, header y body tenen slider vertcal; l'obrim -->
                                             <tal:repl tal:condition="slider_vertical" tal:replace="structure string:<div class='div_interior'>" />
 
@@ -154,6 +156,7 @@
                                                             <img class="miniatura_classe" tal:attributes="src dades_objecte/thumbnail_classe" />
                                                         </tal:co>
                                                     </div>
+
                                                     <!-- <br/><br/> -->
 
                                                     <!-- botons playlists i comentaris. cas 2/2: usuari autenticat i acabem de pintar el títol -->

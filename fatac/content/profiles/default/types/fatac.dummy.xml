@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="fatac.dummy" meta_type="Dexterity FTI"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="fatac.theme">
+    i18n:domain="plone">
 
     <property name="title" i18n:translate="">Dummy</property>
     <property name="description" i18n:translate="">A description of Dummy</property>
@@ -38,20 +38,22 @@
         <permission value="View" />
     </action>
 
-    <action title="Edit" action_id="edit" category="object" condition_expr="" url_expr="string:${object_url}/edit" visible="True">
-        <permission value="Modify Portal Content" />
+    <action title="Edit" action_id="edit" category="object" condition_expr=""
+        icon_expr="" link_target="" url_expr="string:${object_url}/edit"
+        visible="True">
+      <permission value="Modify portal content"/>
     </action>
-
-    <action title="Gestionar Llibre" action_id="gestionarLlibre" category="object"
-    condition_expr="" url_expr="string:${folder_url}/gestionarLlibre"
-    visible="True">
-      <permission value="Modify portal contents"/>
+    <action title="Gestionar" action_id="gestionar" category="object"
+        condition_expr="object/@@view/VisualitzaLlibre|python:True" icon_expr=""
+        link_target="" url_expr="string:${folder_url}/gestionarLlibre"
+        visible="True">
+      <permission value="Modify portal content"/>
     </action>
-
-    <action title="Comments" action_id="comentarisLlibre" category="object"
-    condition_expr="" url_expr="string:${folder_url}/comentarisLlibre"
-    visible="True">
-      <permission value="Modify portal contents"/>
+    <action title="Comentaris" action_id="comentaris" category="object"
+        condition_expr="object/@@view/VisualitzaLlibre|python:True" icon_expr=""
+        link_target="" url_expr="string:${folder_url}/comentarisLlibre"
+        visible="True">
+      <permission value="Modify portal content"/>
     </action>
 
 </object>

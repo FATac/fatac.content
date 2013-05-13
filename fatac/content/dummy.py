@@ -10,6 +10,7 @@ from AccessControl import getSecurityManager
 from Products.CMFCore import permissions
 
 
+
 class IDummy(form.Schema):
     """ Dummy Schema
     """
@@ -23,6 +24,7 @@ class IDummy(form.Schema):
         )
 
 
+
 class View(grok.View, genericView):
     """ Main View
     """
@@ -34,6 +36,23 @@ class View(grok.View, genericView):
     def __init__(self, context, request):
         super(grok.View, self).__init__(context, request)
         super(genericView, self).__init__(context, request)
+
+
+    def VisualitzaLlibre(self):
+        """Metode que retorna true si objecte te DisplayScreen a on i
+        ha de mostrar les pestanyes per gestionar el llibre i els comentaris
+        """            
+        querystring = None
+        llista_ids = self.idobjectes      
+        result = self.executaCerca(querystring, llista_ids, self.getLang(), rows=9999, start=0) 
+        if 'DisplayScreen' in result['dades_json']['response']['docs'][0]:  
+            if result['dades_json']['response']['docs'][0]['DisplayScreen'] == (u'on'):
+                return True
+            else:
+                return False
+        else:
+            return False
+       
 
     def jsonFixer(self, sections):
         result = {}
@@ -49,7 +68,6 @@ class View(grok.View, genericView):
             return 'georgia11c666666'
         else:
             return 'arial13c666666'
-
     
 
 

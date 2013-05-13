@@ -39,11 +39,15 @@
   <alias from="sharing" to="@@sharing" />
   <alias from="view" to="@@view" />
 
-  <action title="View" action_id="view" category="object" condition_expr="" url_expr="string:${folder_url}/" visible="True">
-      <permission value="View" />
+  <action title="View" action_id="view" category="object" condition_expr=""
+      icon_expr="" link_target="" url_expr="string:${folder_url}/"
+      visible="True">
+    <permission value="View"/>
+  </action>
+  <action title="Edit" action_id="edit" category="object" condition_expr=""
+      icon_expr="" link_target="" url_expr="string:${object_url}/edit"
+      visible="True">
+    <permission value="Modify portal content"/>
   </action>
 
-  <action title="Edit" action_id="edit" category="object" condition_expr="" url_expr="string:${object_url}/edit" visible="True">
-      <permission value="Modify Portal Content" />
-  </action> 
 </object>

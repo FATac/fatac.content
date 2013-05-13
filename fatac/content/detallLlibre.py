@@ -48,18 +48,3 @@ class View(DisplayForm):
         llibre = portal.portal_catalog.searchResults(portal_type="fatac.dummy", path='/fatac/ac/'+id_llibre)   
         url_llibre = llibre[0].getURL() 
         return url_llibre + '/gestionarLlibre'
-
-
-# class Edit(DisplayForm):
-#     grok.context(IdetallLlibre)
-#     grok.require('cmf.ManagePortal')
-
-#     def getLlibre(self):  
-#         detall = self.context
-#         pagina = detall.__parent__
-#         llibre = pagina.__parent__
-#         id_llibre = llibre.id
-#         portal = getToolByName(self.context, 'portal_url').getPortalObject()
-#         llibre = portal.portal_catalog.searchResults(portal_type="fatac.dummy", path='/fatac/ac/'+id_llibre)   
-#         url_llibre = llibre[0].getURL() 
-#         return url_llibre + '/gestionarLlibre'

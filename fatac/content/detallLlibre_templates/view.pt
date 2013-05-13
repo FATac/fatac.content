@@ -11,7 +11,7 @@
   <metal:content-core define-macro="content-core">
 
     <div class="buttonllibre" tal:define="llibre view/getLlibre">        
-        <a tal:attributes="href llibre">Tornar al llibre</a>
+        <a tal:attributes="href llibre"><span i18n:domain="fatac.theme" i18n:translate="tornar_llibre">Tornar al llibre</span></a>
     </div>
 
     <tal:block repeat="widget view/widgets/values">
