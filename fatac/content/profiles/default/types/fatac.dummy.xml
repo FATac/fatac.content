@@ -44,13 +44,13 @@
       <permission value="Modify portal content"/>
     </action>
     <action title="Gestionar" action_id="gestionar" category="object"
-        condition_expr="object/@@view/VisualitzaLlibre|python:True" icon_expr=""
+        condition_expr="" icon_expr=""
         link_target="" url_expr="string:${folder_url}/gestionarLlibre"
         visible="True">
       <permission value="Modify portal content"/>
     </action>
     <action title="Comentaris" action_id="comentaris" category="object"
-        condition_expr="object/@@view/VisualitzaLlibre|python:True" icon_expr=""
+        condition_expr="" icon_expr=""
         link_target="" url_expr="string:${folder_url}/comentarisLlibre"
         visible="True">
       <permission value="Modify portal content"/>

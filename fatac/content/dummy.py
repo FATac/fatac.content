@@ -10,7 +10,6 @@ from AccessControl import getSecurityManager
 from Products.CMFCore import permissions
 
 
-
 class IDummy(form.Schema):
     """ Dummy Schema
     """
@@ -38,20 +37,25 @@ class View(grok.View, genericView):
         super(genericView, self).__init__(context, request)
 
 
-    def VisualitzaLlibre(self):
-        """Metode que retorna true si objecte te DisplayScreen a on i
-        ha de mostrar les pestanyes per gestionar el llibre i els comentaris
-        """            
-        querystring = None
-        llista_ids = self.idobjectes      
-        result = self.executaCerca(querystring, llista_ids, self.getLang(), rows=9999, start=0) 
-        if 'DisplayScreen' in result['dades_json']['response']['docs'][0]:  
-            if result['dades_json']['response']['docs'][0]['DisplayScreen'] == (u'on'):
-                return True
-            else:
-                return False
-        else:
-            return False
+    #Como por ahora tapias no va a la administracion de Plone a no ser que vayan a gestionar el libro 
+    #no validamos que solo muestre la pestana gestionar libro y comentarios en el caso que sea DisplayScreen
+    #Si se tuviera que hacer deberiamos marcar cada dummy con un setattr(self.context, ATTRIBUTE_NAME, self.llibre)
+    #para que no fuera en cada dummy a executaCerca y ser mas eficiente
+    #Y anadir en el portal type del dummy en las acciones Gestionar y Comentarios esta condicion: object/@@view/VisualitzaLlibre
+    # def VisualitzaLlibre(self):
+    #     """Metode que retorna true si objecte te DisplayScreen a on i
+    #     ha de mostrar les pestanyes per gestionar el llibre i els comentaris
+    #     """ 
+    #     querystring = None
+    #     llista_ids = self.idobjectes      
+    #     result = self.executaCerca(querystring, llista_ids, self.getLang(), rows=9999, start=0) 
+    #     if 'DisplayScreen' in result['dades_json']['response']['docs'][0]:  
+    #         if result['dades_json']['response']['docs'][0]['DisplayScreen'] == (u'on'):
+    #             return True
+    #         else:
+    #             return False
+    #     else:
+    #         return False
        
 
     def jsonFixer(self, sections):

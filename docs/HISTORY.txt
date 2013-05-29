@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.1a (unreleased)
+-------------------
+- Es treu la comprovacio de que nomes mostri Gestionar i Comentaris si DisplayScreen
+
+
 1.1 (unreleased)
 -------------------
 - Nous tipus de contingut: pagina llibre, nota i detall pagina
